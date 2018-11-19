@@ -1,57 +1,618 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rdf:RDF [
+	<!ENTITY afn "http://jena.apache.org/ARQ/function#">
 	<!ENTITY dct "http://purl.org/dc/terms/">
+	<!ENTITY dedm "http://www.edmcouncil.org/ddgraph#">
+	<!ENTITY edm "http://www.edmcouncil.org/temp#">
+	<!ENTITY fibo-be-corp-corp "https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/">
+	<!ENTITY fibo-be-fct-fct "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/FunctionalEntities/">
+	<!ENTITY fibo-be-fct-pub "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/Publishers/">
+	<!ENTITY fibo-be-fctx-fne "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/FundEntities/">
+	<!ENTITY fibo-be-fctx-spv "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/SPVs/">
+	<!ENTITY fibo-be-fctx-sta "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/StateEntities/">
+	<!ENTITY fibo-be-ge-caj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/CAGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-ge-euj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/EUGovernmentEntitiesAndJurisdictions/">
 	<!ENTITY fibo-be-ge-ge "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/">
+	<!ENTITY fibo-be-ge-ukj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/UKGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-ge-usj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/USGovernmentEntitiesAndJurisdictions/">
 	<!ENTITY fibo-be-le-cb "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/">
+	<!ENTITY fibo-be-le-fbo "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/FormalBusinessOrganizations/">
+	<!ENTITY fibo-be-le-lei "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/">
+	<!ENTITY fibo-be-le-lp "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/">
+	<!ENTITY fibo-be-oac-cctl "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/">
+	<!ENTITY fibo-be-oac-cown "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/">
+	<!ENTITY fibo-be-oac-cpty "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/ControlParties/">
+	<!ENTITY fibo-be-oac-exec "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/Executives/">
+	<!ENTITY fibo-be-oac-opty "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/OwnershipParties/">
+	<!ENTITY fibo-be-plc-plc "https://spec.edmcouncil.org/fibo/ontology/BE/PrivateLimitedCompanies/PrivateLimitedCompanies/">
+	<!ENTITY fibo-be-ptr-ptr "https://spec.edmcouncil.org/fibo/ontology/BE/Partnerships/Partnerships/">
+	<!ENTITY fibo-be-sps-sps "https://spec.edmcouncil.org/fibo/ontology/BE/SoleProprietorships/SoleProprietorships/">
+	<!ENTITY fibo-be-tr-tr "https://spec.edmcouncil.org/fibo/ontology/BE/Trusts/Trusts/">
+	<!ENTITY fibo-bp-iss-ambs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/AgencyMBSIssuance/">
+	<!ENTITY fibo-bp-iss-dbti "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/DebtIssuance/">
+	<!ENTITY fibo-bp-iss-doc "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceDocuments/">
+	<!ENTITY fibo-bp-iss-ipo "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/EquitiesIPOIssuance/">
+	<!ENTITY fibo-bp-iss-mbs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MBSIssuance/">
+	<!ENTITY fibo-bp-iss-muni "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MuniIssuance/">
+	<!ENTITY fibo-bp-iss-pmbs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/PrivateLabelMBSIssuance/">
+	<!ENTITY fibo-bp-iss-prc "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcess/">
 	<!ENTITY fibo-bp-iss-trm "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcessTerms/">
+	<!ENTITY fibo-bp-prc-fcp "https://spec.edmcouncil.org/fibo/ontology/BP/Process/FinancialContextAndProcess/">
+	<!ENTITY fibo-bp-reg-req "https://spec.edmcouncil.org/fibo/ontology/BP/Regulatory/RegulatoryRequirements/">
+	<!ENTITY fibo-cae-ce-cae "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActionsEvents/">
+	<!ENTITY fibo-civ-fnd-civ "https://spec.edmcouncil.org/fibo/ontology/CIV/Funds/CIV/">
+	<!ENTITY fibo-civ-fnd-clx "https://spec.edmcouncil.org/fibo/ontology/CIV/FundsExt/CIVClassification/">
+	<!ENTITY fibo-der-ass-ass "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetDerivatives/">
+	<!ENTITY fibo-der-ass-bas "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetBaskets/">
+	<!ENTITY fibo-der-ass-bo "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondOptions/">
+	<!ENTITY fibo-der-ass-brs "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondReturnSwaps/">
+	<!ENTITY fibo-der-ass-eqf "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityForwards/">
+	<!ENTITY fibo-der-ass-eqo "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityOptions/">
+	<!ENTITY fibo-der-ass-eqs "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquitySwaps/">
+	<!ENTITY fibo-der-com-com "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/Commodities/">
+	<!ENTITY fibo-der-com-ctr "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesContracts/">
+	<!ENTITY fibo-der-com-del "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesDelivery/">
+	<!ENTITY fibo-der-com-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityForwards/">
+	<!ENTITY fibo-der-com-opt "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityOptions/">
+	<!ENTITY fibo-der-com-sp "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySpots/">
+	<!ENTITY fibo-der-com-sw "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySwaps/">
+	<!ENTITY fibo-der-cr-cds "https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/">
+	<!ENTITY fibo-der-der-cof "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/OptionContractsOnFutures/">
+	<!ENTITY fibo-der-der-ex "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ExerciseConventions/">
+	<!ENTITY fibo-der-der-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Forwards/">
+	<!ENTITY fibo-der-der-opt "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Options/">
+	<!ENTITY fibo-der-der-rsw "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ReturnSwaps/">
+	<!ENTITY fibo-der-der-sp "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Spots/">
+	<!ENTITY fibo-der-der-spn "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaptions/">
+	<!ENTITY fibo-der-derx-dbx "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContractsExt/DerivativesBasicsExt/">
+	<!ENTITY fibo-der-drc-bsc "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/DerivativesBasics/">
+	<!ENTITY fibo-der-drc-swp "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/">
+	<!ENTITY fibo-der-drc-swpind "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/SwapsIndividuals/">
+	<!ENTITY fibo-der-etd-eto "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/ExchangeTradedOptions/">
+	<!ENTITY fibo-der-etd-fstd "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesStandardizedTerms/">
+	<!ENTITY fibo-der-etd-fut "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/Futures/">
+	<!ENTITY fibo-der-etd-fxc "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesExchanges/">
+	<!ENTITY fibo-der-etd-ostd "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsStandardizedTerms/">
+	<!ENTITY fibo-der-etd-oxc "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsExchanges/">
+	<!ENTITY fibo-der-etd-std "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/DerivativesStandardizedTerms/">
+	<!ENTITY fibo-der-fx-ctr "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxContracts/">
+	<!ENTITY fibo-der-fx-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxForwards/">
+	<!ENTITY fibo-der-fx-opt "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxOptions/">
+	<!ENTITY fibo-der-fx-sp "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSpots/">
+	<!ENTITY fibo-der-fx-sw "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSwaps/">
+	<!ENTITY fibo-der-misc-cfd "https://spec.edmcouncil.org/fibo/ontology/DER/OTCMiscContracts/ContractsForDifference/">
+	<!ENTITY fibo-der-rat-fra "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/ForwardRateAgreements/">
+	<!ENTITY fibo-der-rat-indo "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/OTCIndexOptions/">
+	<!ENTITY fibo-der-rat-iro "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IROptions/">
+	<!ENTITY fibo-der-rgt-raw "https://spec.edmcouncil.org/fibo/ontology/DER/RightsInstruments/RightsAndWarrants/">
+	<!ENTITY fibo-der-rtd-irswp "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IRSwaps/">
+	<!ENTITY fibo-der-rtd-isw "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/InflationSwaps/">
+	<!ENTITY fibo-der-rtd-rtd "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/RateDerivatives/">
+	<!ENTITY fibo-fbc-2.0-abr "https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-Abridged/">
+	<!ENTITY fibo-fbc-2.0-na-ex "https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-NorthAmericanExamples/">
+	<!ENTITY fibo-fbc-dae-crf "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/CreditFacilities/">
 	<!ENTITY fibo-fbc-dae-dbt "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/">
+	<!ENTITY fibo-fbc-dae-gty "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/">
+	<!ENTITY fibo-fbc-fct-breg "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/">
+	<!ENTITY fibo-fbc-fct-cafse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CAFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-cajrga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CARegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-eufse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EUFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-eufsind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EuropeanFinancialServicesEntitiesIndividuals/">
+	<!ENTITY fibo-fbc-fct-eurga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EURegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-fse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/FinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-mkt "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/Markets/">
+	<!ENTITY fibo-fbc-fct-ra "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegistrationAuthorities/">
+	<!ENTITY fibo-fbc-fct-rga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-usfse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-usfsind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntitiesIndividuals/">
+	<!ENTITY fibo-fbc-fct-usind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USExampleIndividuals/">
+	<!ENTITY fibo-fbc-fct-usjrga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USRegulatoryAgencies/">
 	<!ENTITY fibo-fbc-fi-fi "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/">
+	<!ENTITY fibo-fbc-fi-stl "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/Settlement/">
+	<!ENTITY fibo-fbc-pas-caa "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/ClientsAndAccounts/">
 	<!ENTITY fibo-fbc-pas-fpas "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/">
+	<!ENTITY fibo-fnd-aap-agt "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/">
+	<!ENTITY fibo-fnd-aap-ppl "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/">
+	<!ENTITY fibo-fnd-acc-4217 "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/ISO4217-CurrencyCodes/">
+	<!ENTITY fibo-fnd-acc-aeq "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/AccountingEquity/">
+	<!ENTITY fibo-fnd-acc-cur "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/">
+	<!ENTITY fibo-fnd-acc-val "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/Valuation/">
+	<!ENTITY fibo-fnd-accx-acc "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AccountsMain/">
+	<!ENTITY fibo-fnd-accx-assx "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AssetExtensions/">
+	<!ENTITY fibo-fnd-accx-bal "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/BalanceSheetBalances/">
+	<!ENTITY fibo-fnd-accx-tax "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/Taxation/">
+	<!ENTITY fibo-fnd-agr-agr "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Agreements/">
 	<!ENTITY fibo-fnd-agr-ctr "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/">
+	<!ENTITY fibo-fnd-agrx-con "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractualConstructs/">
+	<!ENTITY fibo-fnd-agrx-ctrx "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractsExtensions/">
+	<!ENTITY fibo-fnd-agrx-ele "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractElements/">
+	<!ENTITY fibo-fnd-arr-arr "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Arrangements/">
+	<!ENTITY fibo-fnd-arr-cd "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Codes/">
+	<!ENTITY fibo-fnd-arr-cls "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/ClassificationSchemes/">
+	<!ENTITY fibo-fnd-arr-doc "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/">
+	<!ENTITY fibo-fnd-arr-id "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/IdentifiersAndIndices/">
+	<!ENTITY fibo-fnd-arr-lif "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/">
+	<!ENTITY fibo-fnd-arrxx-ins "https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/ToolsAndInstruments/">
+	<!ENTITY fibo-fnd-arrxx-meth "https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/MethodsAndRules/">
+	<!ENTITY fibo-fnd-bus-agc "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/AgentsContexts/">
+	<!ENTITY fibo-fnd-bus-bg "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/BusinessGoals/">
+	<!ENTITY fibo-fnd-bus-pol "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/Policy/">
+	<!ENTITY fibo-fnd-com-com "https://spec.edmcouncil.org/fibo/ontology/FND/Communication/Communication/">
+	<!ENTITY fibo-fnd-dt-bd "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/BusinessDates/">
 	<!ENTITY fibo-fnd-dt-fd "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/">
+	<!ENTITY fibo-fnd-dt-oc "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/">
+	<!ENTITY fibo-fnd-gao-gl "https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Goals/">
+	<!ENTITY fibo-fnd-gao-obj "https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Objectives/">
+	<!ENTITY fibo-fnd-inf-doc "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Documentation/">
+	<!ENTITY fibo-fnd-inf-inf "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/InfoCore/">
+	<!ENTITY fibo-fnd-inf-msg "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Messaging/">
+	<!ENTITY fibo-fnd-inf-tem "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/TemporalInfo/">
+	<!ENTITY fibo-fnd-law-cor "https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCore/">
+	<!ENTITY fibo-fnd-law-jur "https://spec.edmcouncil.org/fibo/ontology/FND/Law/Jurisdiction/">
+	<!ENTITY fibo-fnd-law-lcap "https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCapacity/">
+	<!ENTITY fibo-fnd-lawx-rst "https://spec.edmcouncil.org/fibo/ontology/FND/LawExt/RegulatoryRestrictions/">
+	<!ENTITY fibo-fnd-math-amt "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Amounts/">
+	<!ENTITY fibo-fnd-math-math "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Math/">
+	<!ENTITY fibo-fnd-math-qty "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Quantities/">
+	<!ENTITY fibo-fnd-oac-ctl "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/">
+	<!ENTITY fibo-fnd-oac-oac "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/OwnershipAndControl/">
+	<!ENTITY fibo-fnd-oac-own "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/">
+	<!ENTITY fibo-fnd-org-fm "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/FormalOrganizations/">
+	<!ENTITY fibo-fnd-org-lg "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/LegitimateOrganizations/">
+	<!ENTITY fibo-fnd-org-org "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/">
+	<!ENTITY fibo-fnd-pas-pas "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/">
+	<!ENTITY fibo-fnd-pas-psch "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/PaymentsAndSchedules/">
+	<!ENTITY fibo-fnd-plc-adr "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/">
+	<!ENTITY fibo-fnd-plc-cty "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Countries/">
+	<!ENTITY fibo-fnd-plc-fac "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/">
+	<!ENTITY fibo-fnd-plc-loc "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/">
+	<!ENTITY fibo-fnd-plc-vrt "https://spec.edmcouncil.org/fibo/ontology/FND/Places/VirtualPlaces/">
+	<!ENTITY fibo-fnd-plcx-sit "https://spec.edmcouncil.org/fibo/ontology/FND/PlacesExt/AddressSites/">
+	<!ENTITY fibo-fnd-pty-pty "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/">
 	<!ENTITY fibo-fnd-pty-rl "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Roles/">
+	<!ENTITY fibo-fnd-ptyx-prc "https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyRoleContext/">
+	<!ENTITY fibo-fnd-ptyx-ptyx "https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyExtensions/">
+	<!ENTITY fibo-fnd-pub-pub "https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/Publications/">
+	<!ENTITY fibo-fnd-pub-stdi "https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/StandardsIndividuals/">
+	<!ENTITY fibo-fnd-qt-qtu "https://spec.edmcouncil.org/fibo/ontology/FND/Quantities/QuantitiesAndUnits/">
+	<!ENTITY fibo-fnd-quax-qua "https://spec.edmcouncil.org/fibo/ontology/FND/QuantitiesExt/QuantitiesExt/">
 	<!ENTITY fibo-fnd-rel-rel "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/">
+	<!ENTITY fibo-fnd-soc-asp "https://spec.edmcouncil.org/fibo/ontology/FND/SocialConstructsExt/ConstructAspects/">
+	<!ENTITY fibo-fnd-tim-tim "https://spec.edmcouncil.org/fibo/ontology/FND/TimeExt/Time/">
+	<!ENTITY fibo-fnd-txn-ecr "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/EconomicResources/">
+	<!ENTITY fibo-fnd-txn-ev "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/TransactionEvents/">
+	<!ENTITY fibo-fnd-txn-rea "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/REATransactions/">
+	<!ENTITY fibo-fnd-txn-sec "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SecuritiesTransactions/">
+	<!ENTITY fibo-fnd-txn-sup "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SupplyTransactions/">
+	<!ENTITY fibo-fnd-utl-alx "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Analytics/">
 	<!ENTITY fibo-fnd-utl-av "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/">
+	<!ENTITY fibo-fnd-utl-bt "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/BusinessFacingTypes/">
+	<!ENTITY fibo-fnd-utl-val "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Values/">
+	<!ENTITY fibo-ind-ei-caei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/CAEconomicIndicators/">
+	<!ENTITY fibo-ind-ei-ei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/">
+	<!ENTITY fibo-ind-ei-pub "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicatorPublishers/">
+	<!ENTITY fibo-ind-ei-usei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/USEconomicIndicators/">
+	<!ENTITY fibo-ind-fx-fx "https://spec.edmcouncil.org/fibo/ontology/IND/ForeignExchange/ForeignExchange/">
+	<!ENTITY fibo-ind-ind-ind "https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/">
+	<!ENTITY fibo-ind-ir-cm "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/CommonInterestRates/">
 	<!ENTITY fibo-ind-ir-ir "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRates/">
+	<!ENTITY fibo-ind-ir-pub "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRatePublishers/">
+	<!ENTITY fibo-ind-mkt-bas "https://spec.edmcouncil.org/fibo/ontology/IND/MarketIndices/BasketIndices/">
+	<!ENTITY fibo-ln-ln-hmda "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanHMDA/">
+	<!ENTITY fibo-ln-ln-lgn "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanGeneric/">
+	<!ENTITY fibo-ln-ln-ln "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanCore/">
+	<!ENTITY fibo-loan-loan-col "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansCollateral/">
+	<!ENTITY fibo-loan-loan-gen "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGeneral/">
+	<!ENTITY fibo-loan-loan-gty "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGuaranties/">
+	<!ENTITY fibo-loan-loan-loan "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoanBasicTerms/">
+	<!ENTITY fibo-loan-loan-pty "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansParties/">
+	<!ENTITY fibo-loan-loan-reg "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansRegulatory/">
+	<!ENTITY fibo-loan-tem-app "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanApplicationsTemporal/">
+	<!ENTITY fibo-loan-tem-apr "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansAppraisal/">
+	<!ENTITY fibo-loan-tem-bor "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanBorrowersTemporal/">
+	<!ENTITY fibo-loan-tem-cl "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/ConstructionLoansTemporal/">
+	<!ENTITY fibo-loan-tem-col "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanCollateralTemporal/">
+	<!ENTITY fibo-loan-tem-ev "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansEvents/">
+	<!ENTITY fibo-loan-tem-ltv "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansLTV/">
+	<!ENTITY fibo-loan-tem-ph "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanPhases/">
+	<!ENTITY fibo-loan-tem-sta "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansStatus/">
+	<!ENTITY fibo-loan-tem-tem "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansTemporal/">
+	<!ENTITY fibo-loan-typ-cl "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/ConstructionLoans/">
+	<!ENTITY fibo-loan-typ-com "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CommercialLoans/">
+	<!ENTITY fibo-loan-typ-cr "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CreditProducts/">
+	<!ENTITY fibo-loan-typ-gen "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/GeneralLoans/">
+	<!ENTITY fibo-loan-typ-mtg "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/MortgageLoans/">
+	<!ENTITY fibo-loan-typ-per "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/PersonalLoans/">
+	<!ENTITY fibo-loan-typ-prod "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/LoanProducts/">
+	<!ENTITY fibo-loan-typ-sec "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/SecuredLoans/">
+	<!ENTITY fibo-loan-typ-stu "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/StudentLoans/">
+	<!ENTITY fibo-loan-typ-uns "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/UnsecuredLoans/">
+	<!ENTITY fibo-md-civx-fun "https://spec.edmcouncil.org/fibo/ontology/MD/CIVTemporal/FundsTemporal/">
+	<!ENTITY fibo-md-dbtx-aly "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtAnalytics/">
+	<!ENTITY fibo-md-dbtx-int "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtInterestAmounts/">
+	<!ENTITY fibo-md-dbtx-py "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtPricingYields/">
+	<!ENTITY fibo-md-dbtx-red "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtRedemptionAmounts/">
+	<!ENTITY fibo-md-der-fut "https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/FuturesTemporal/">
+	<!ENTITY fibo-md-derx-eto "https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/ETOptionsTemporal/">
+	<!ENTITY fibo-md-eqx-pri "https://spec.edmcouncil.org/fibo/ontology/MD/EquityTemporal/EquityPricing/">
+	<!ENTITY fibo-md-temx-cre "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditEvents/">
+	<!ENTITY fibo-md-temx-crr "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditRatings/">
+	<!ENTITY fibo-md-temx-crs "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityCreditStatuses/">
+	<!ENTITY fibo-md-temx-cur "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/AnalysisCurves/">
+	<!ENTITY fibo-md-temx-ins "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/InstrumentTemporalTerms/">
+	<!ENTITY fibo-md-temx-tem "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/TemporalConcepts/">
+	<!ENTITY fibo-md-temx-trs "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityTradingStatuses/">
+	<!ENTITY fibo-sec-dbt-ab-abs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-cbo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CBOs/">
+	<!ENTITY fibo-sec-dbt-ab-cdo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CDOs/">
+	<!ENTITY fibo-sec-dbt-ab-clo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CLOs/">
+	<!ENTITY fibo-sec-dbt-ab-cmo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CMOs/">
+	<!ENTITY fibo-sec-dbt-ab-mbs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/MortgageBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-pbs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/PoolBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-spv "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSPVs/">
+	<!ENTITY fibo-sec-dbt-ab-syn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/SyntheticCDOs/">
 	<!ENTITY fibo-sec-dbt-bo-bo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCommon/">
+	<!ENTITY fibo-sec-dbt-bo-cft "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowTerms/">
+	<!ENTITY fibo-sec-dbt-bo-cfv "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowVariants/">
 	<!ENTITY fibo-sec-dbt-bo-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/">
+	<!ENTITY fibo-sec-dbt-bo-li "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsListings/">
+	<!ENTITY fibo-sec-dbt-bo-str "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/STRIPs/">
 	<!ENTITY fibo-sec-dbt-bo-tax "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsTaxTreatment/">
+	<!ENTITY fibo-sec-dbt-dbt-cft "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtCashflowTerms/">
+	<!ENTITY fibo-sec-dbt-dbt-fin "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtFinance/">
+	<!ENTITY fibo-sec-dbt-dbt-gty "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtInstrumentGuaranties/">
+	<!ENTITY fibo-sec-dbt-dbt-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtIssuanceTerms/">
+	<!ENTITY fibo-sec-dbt-dbt-pn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/ParticipationNotes/">
 	<!ENTITY fibo-sec-dbt-dbti "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtInstruments/">
-	<!ENTITY fibo-sec-dbt-tstd "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/TradedShortTermDebt/">
+	<!ENTITY fibo-sec-dbt-mm-lpn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/LoanParticipationNotes/">
+	<!ENTITY fibo-sec-dbt-mm-repo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/REPOs/">
+	<!ENTITY fibo-sec-dbt-mm-td "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TermDeposits/">
+	<!ENTITY fibo-sec-dbt-mm-trd "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TradedShortTermDebt/">
+	<!ENTITY fibo-sec-eq-dr "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/DepositaryReceipts/">
+	<!ENTITY fibo-sec-eq-eq "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/">
+	<!ENTITY fibo-sec-eq-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityIssuanceTerms/">
+	<!ENTITY fibo-sec-eq-lpe "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/LimitedPartnershipEquities/">
+	<!ENTITY fibo-sec-eq-sha "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareTerms/">
+	<!ENTITY fibo-sec-eq-she "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderEquity/">
+	<!ENTITY fibo-sec-eq-shr "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderRights/">
+	<!ENTITY fibo-sec-sec-ast "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecurityAssets/">
+	<!ENTITY fibo-sec-sec-bsk "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Baskets/">
+	<!ENTITY fibo-sec-sec-cls "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesClassification/">
+	<!ENTITY fibo-sec-sec-id "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/">
+	<!ENTITY fibo-sec-sec-idind "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentificationIndividuals/">
+	<!ENTITY fibo-sec-sec-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIssuance/">
+	<!ENTITY fibo-sec-sec-lst "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesListings/">
+	<!ENTITY fibo-sec-sec-pls "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Pools/">
+	<!ENTITY fibo-sec-sec-rst "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesRestrictions/">
+	<!ENTITY fibo-sec-sec-sch "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/ParametricSchedules/">
+	<!ENTITY fibo-sec-secx-sec "https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesExt/">
+	<!ENTITY fibo-sec-secx-tax "https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesTaxTreatment/">
+	<!ENTITY gidm "http://www.globalids.com/mapping#">
+	<!ENTITY lcc-3166-1 "http://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/">
+	<!ENTITY lcc-3166-2 "http://www.omg.org/spec/LCC/Countries/ISO3166-2-SubdivisionCodes/">
+	<!ENTITY lcc-3166-2-ca "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CA/">
+	<!ENTITY lcc-3166-2-gb "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GB/">
+	<!ENTITY lcc-3166-2-us "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-US/">
+	<!ENTITY lcc-639-1 "http://www.omg.org/spec/LCC/Languages/ISO639-1-LanguageCodes/">
+	<!ENTITY lcc-639-2 "http://www.omg.org/spec/LCC/Languages/ISO639-2-LanguageCodes/">
+	<!ENTITY lcc-cr "http://www.omg.org/spec/LCC/Countries/CountryRepresentation/">
+	<!ENTITY lcc-lr "http://www.omg.org/spec/LCC/Languages/LanguageRepresentation/">
+	<!ENTITY naics-2007 "http://linkedmodel.org/vocab/industry-codes/naics-2007#">
 	<!ENTITY owl "http://www.w3.org/2002/07/owl#">
 	<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 	<!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
 	<!ENTITY skos "http://www.w3.org/2004/02/skos/core#">
+	<!ENTITY sm "http://www.omg.org/techprocess/ab/SpecificationMetadata/">
 	<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
 ]>
 <rdf:RDF xml:base="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/"
+	xmlns:afn="http://jena.apache.org/ARQ/function#"
 	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:dedm="http://www.edmcouncil.org/ddgraph#"
+	xmlns:edm="http://www.edmcouncil.org/temp#"
+	xmlns:fibo-be-corp-corp="https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/"
+	xmlns:fibo-be-fct-fct="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/FunctionalEntities/"
+	xmlns:fibo-be-fct-pub="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/Publishers/"
+	xmlns:fibo-be-fctx-fne="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/FundEntities/"
+	xmlns:fibo-be-fctx-spv="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/SPVs/"
+	xmlns:fibo-be-fctx-sta="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/StateEntities/"
+	xmlns:fibo-be-ge-caj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/CAGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-ge-euj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/EUGovernmentEntitiesAndJurisdictions/"
 	xmlns:fibo-be-ge-ge="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/"
+	xmlns:fibo-be-ge-ukj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/UKGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-ge-usj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/USGovernmentEntitiesAndJurisdictions/"
 	xmlns:fibo-be-le-cb="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/"
+	xmlns:fibo-be-le-fbo="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/FormalBusinessOrganizations/"
+	xmlns:fibo-be-le-lei="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/"
+	xmlns:fibo-be-le-lp="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/"
+	xmlns:fibo-be-oac-cctl="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/"
+	xmlns:fibo-be-oac-cown="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/"
+	xmlns:fibo-be-oac-cpty="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/ControlParties/"
+	xmlns:fibo-be-oac-exec="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/Executives/"
+	xmlns:fibo-be-oac-opty="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/OwnershipParties/"
+	xmlns:fibo-be-plc-plc="https://spec.edmcouncil.org/fibo/ontology/BE/PrivateLimitedCompanies/PrivateLimitedCompanies/"
+	xmlns:fibo-be-ptr-ptr="https://spec.edmcouncil.org/fibo/ontology/BE/Partnerships/Partnerships/"
+	xmlns:fibo-be-sps-sps="https://spec.edmcouncil.org/fibo/ontology/BE/SoleProprietorships/SoleProprietorships/"
+	xmlns:fibo-be-tr-tr="https://spec.edmcouncil.org/fibo/ontology/BE/Trusts/Trusts/"
+	xmlns:fibo-bp-iss-ambs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/AgencyMBSIssuance/"
+	xmlns:fibo-bp-iss-dbti="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/DebtIssuance/"
+	xmlns:fibo-bp-iss-doc="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceDocuments/"
+	xmlns:fibo-bp-iss-ipo="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/EquitiesIPOIssuance/"
+	xmlns:fibo-bp-iss-mbs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MBSIssuance/"
+	xmlns:fibo-bp-iss-muni="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MuniIssuance/"
+	xmlns:fibo-bp-iss-pmbs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/PrivateLabelMBSIssuance/"
+	xmlns:fibo-bp-iss-prc="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcess/"
 	xmlns:fibo-bp-iss-trm="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcessTerms/"
+	xmlns:fibo-bp-prc-fcp="https://spec.edmcouncil.org/fibo/ontology/BP/Process/FinancialContextAndProcess/"
+	xmlns:fibo-bp-reg-req="https://spec.edmcouncil.org/fibo/ontology/BP/Regulatory/RegulatoryRequirements/"
+	xmlns:fibo-cae-ce-cae="https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActionsEvents/"
+	xmlns:fibo-civ-fnd-civ="https://spec.edmcouncil.org/fibo/ontology/CIV/Funds/CIV/"
+	xmlns:fibo-civ-fnd-clx="https://spec.edmcouncil.org/fibo/ontology/CIV/FundsExt/CIVClassification/"
+	xmlns:fibo-der-ass-ass="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetDerivatives/"
+	xmlns:fibo-der-ass-bas="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetBaskets/"
+	xmlns:fibo-der-ass-bo="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondOptions/"
+	xmlns:fibo-der-ass-brs="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondReturnSwaps/"
+	xmlns:fibo-der-ass-eqf="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityForwards/"
+	xmlns:fibo-der-ass-eqo="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityOptions/"
+	xmlns:fibo-der-ass-eqs="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquitySwaps/"
+	xmlns:fibo-der-com-com="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/Commodities/"
+	xmlns:fibo-der-com-ctr="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesContracts/"
+	xmlns:fibo-der-com-del="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesDelivery/"
+	xmlns:fibo-der-com-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityForwards/"
+	xmlns:fibo-der-com-opt="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityOptions/"
+	xmlns:fibo-der-com-sp="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySpots/"
+	xmlns:fibo-der-com-sw="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySwaps/"
+	xmlns:fibo-der-cr-cds="https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/"
+	xmlns:fibo-der-der-cof="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/OptionContractsOnFutures/"
+	xmlns:fibo-der-der-ex="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ExerciseConventions/"
+	xmlns:fibo-der-der-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Forwards/"
+	xmlns:fibo-der-der-opt="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Options/"
+	xmlns:fibo-der-der-rsw="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ReturnSwaps/"
+	xmlns:fibo-der-der-sp="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Spots/"
+	xmlns:fibo-der-der-spn="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaptions/"
+	xmlns:fibo-der-derx-dbx="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContractsExt/DerivativesBasicsExt/"
+	xmlns:fibo-der-drc-bsc="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/DerivativesBasics/"
+	xmlns:fibo-der-drc-swp="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/"
+	xmlns:fibo-der-drc-swpind="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/SwapsIndividuals/"
+	xmlns:fibo-der-etd-eto="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/ExchangeTradedOptions/"
+	xmlns:fibo-der-etd-fstd="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesStandardizedTerms/"
+	xmlns:fibo-der-etd-fut="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/Futures/"
+	xmlns:fibo-der-etd-fxc="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesExchanges/"
+	xmlns:fibo-der-etd-ostd="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsStandardizedTerms/"
+	xmlns:fibo-der-etd-oxc="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsExchanges/"
+	xmlns:fibo-der-etd-std="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/DerivativesStandardizedTerms/"
+	xmlns:fibo-der-fx-ctr="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxContracts/"
+	xmlns:fibo-der-fx-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxForwards/"
+	xmlns:fibo-der-fx-opt="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxOptions/"
+	xmlns:fibo-der-fx-sp="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSpots/"
+	xmlns:fibo-der-fx-sw="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSwaps/"
+	xmlns:fibo-der-misc-cfd="https://spec.edmcouncil.org/fibo/ontology/DER/OTCMiscContracts/ContractsForDifference/"
+	xmlns:fibo-der-rat-fra="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/ForwardRateAgreements/"
+	xmlns:fibo-der-rat-indo="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/OTCIndexOptions/"
+	xmlns:fibo-der-rat-iro="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IROptions/"
+	xmlns:fibo-der-rgt-raw="https://spec.edmcouncil.org/fibo/ontology/DER/RightsInstruments/RightsAndWarrants/"
+	xmlns:fibo-der-rtd-irswp="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IRSwaps/"
+	xmlns:fibo-der-rtd-isw="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/InflationSwaps/"
+	xmlns:fibo-der-rtd-rtd="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/RateDerivatives/"
+	xmlns:fibo-fbc-2.0-abr="https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-Abridged/"
+	xmlns:fibo-fbc-2.0-na-ex="https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-NorthAmericanExamples/"
+	xmlns:fibo-fbc-dae-crf="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/CreditFacilities/"
 	xmlns:fibo-fbc-dae-dbt="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/"
+	xmlns:fibo-fbc-dae-gty="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/"
+	xmlns:fibo-fbc-fct-breg="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/"
+	xmlns:fibo-fbc-fct-cafse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CAFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-cajrga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CARegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-eufse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EUFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-eufsind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EuropeanFinancialServicesEntitiesIndividuals/"
+	xmlns:fibo-fbc-fct-eurga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EURegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-fse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/FinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-mkt="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/Markets/"
+	xmlns:fibo-fbc-fct-ra="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegistrationAuthorities/"
+	xmlns:fibo-fbc-fct-rga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-usfse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-usfsind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntitiesIndividuals/"
+	xmlns:fibo-fbc-fct-usind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USExampleIndividuals/"
+	xmlns:fibo-fbc-fct-usjrga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USRegulatoryAgencies/"
 	xmlns:fibo-fbc-fi-fi="https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/"
+	xmlns:fibo-fbc-fi-stl="https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/Settlement/"
+	xmlns:fibo-fbc-pas-caa="https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/ClientsAndAccounts/"
 	xmlns:fibo-fbc-pas-fpas="https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/"
+	xmlns:fibo-fnd-aap-agt="https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/"
+	xmlns:fibo-fnd-aap-ppl="https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/"
+	xmlns:fibo-fnd-acc-4217="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/ISO4217-CurrencyCodes/"
+	xmlns:fibo-fnd-acc-aeq="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/AccountingEquity/"
+	xmlns:fibo-fnd-acc-cur="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/"
+	xmlns:fibo-fnd-acc-val="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/Valuation/"
+	xmlns:fibo-fnd-accx-acc="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AccountsMain/"
+	xmlns:fibo-fnd-accx-assx="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AssetExtensions/"
+	xmlns:fibo-fnd-accx-bal="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/BalanceSheetBalances/"
+	xmlns:fibo-fnd-accx-tax="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/Taxation/"
+	xmlns:fibo-fnd-agr-agr="https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Agreements/"
 	xmlns:fibo-fnd-agr-ctr="https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/"
+	xmlns:fibo-fnd-agrx-con="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractualConstructs/"
+	xmlns:fibo-fnd-agrx-ctrx="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractsExtensions/"
+	xmlns:fibo-fnd-agrx-ele="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractElements/"
+	xmlns:fibo-fnd-arr-arr="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Arrangements/"
+	xmlns:fibo-fnd-arr-cd="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Codes/"
+	xmlns:fibo-fnd-arr-cls="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/ClassificationSchemes/"
+	xmlns:fibo-fnd-arr-doc="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/"
+	xmlns:fibo-fnd-arr-id="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/IdentifiersAndIndices/"
+	xmlns:fibo-fnd-arr-lif="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/"
+	xmlns:fibo-fnd-arrxx-ins="https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/ToolsAndInstruments/"
+	xmlns:fibo-fnd-arrxx-meth="https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/MethodsAndRules/"
+	xmlns:fibo-fnd-bus-agc="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/AgentsContexts/"
+	xmlns:fibo-fnd-bus-bg="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/BusinessGoals/"
+	xmlns:fibo-fnd-bus-pol="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/Policy/"
+	xmlns:fibo-fnd-com-com="https://spec.edmcouncil.org/fibo/ontology/FND/Communication/Communication/"
+	xmlns:fibo-fnd-dt-bd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/BusinessDates/"
 	xmlns:fibo-fnd-dt-fd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/"
+	xmlns:fibo-fnd-dt-oc="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/"
+	xmlns:fibo-fnd-gao-gl="https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Goals/"
+	xmlns:fibo-fnd-gao-obj="https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Objectives/"
+	xmlns:fibo-fnd-inf-doc="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Documentation/"
+	xmlns:fibo-fnd-inf-inf="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/InfoCore/"
+	xmlns:fibo-fnd-inf-msg="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Messaging/"
+	xmlns:fibo-fnd-inf-tem="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/TemporalInfo/"
+	xmlns:fibo-fnd-law-cor="https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCore/"
+	xmlns:fibo-fnd-law-jur="https://spec.edmcouncil.org/fibo/ontology/FND/Law/Jurisdiction/"
+	xmlns:fibo-fnd-law-lcap="https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCapacity/"
+	xmlns:fibo-fnd-lawx-rst="https://spec.edmcouncil.org/fibo/ontology/FND/LawExt/RegulatoryRestrictions/"
+	xmlns:fibo-fnd-math-amt="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Amounts/"
+	xmlns:fibo-fnd-math-math="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Math/"
+	xmlns:fibo-fnd-math-qty="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Quantities/"
+	xmlns:fibo-fnd-oac-ctl="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/"
+	xmlns:fibo-fnd-oac-oac="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/OwnershipAndControl/"
+	xmlns:fibo-fnd-oac-own="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/"
+	xmlns:fibo-fnd-org-fm="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/FormalOrganizations/"
+	xmlns:fibo-fnd-org-lg="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/LegitimateOrganizations/"
+	xmlns:fibo-fnd-org-org="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/"
+	xmlns:fibo-fnd-pas-pas="https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/"
+	xmlns:fibo-fnd-pas-psch="https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/PaymentsAndSchedules/"
+	xmlns:fibo-fnd-plc-adr="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/"
+	xmlns:fibo-fnd-plc-cty="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Countries/"
+	xmlns:fibo-fnd-plc-fac="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/"
+	xmlns:fibo-fnd-plc-loc="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/"
+	xmlns:fibo-fnd-plc-vrt="https://spec.edmcouncil.org/fibo/ontology/FND/Places/VirtualPlaces/"
+	xmlns:fibo-fnd-plcx-sit="https://spec.edmcouncil.org/fibo/ontology/FND/PlacesExt/AddressSites/"
+	xmlns:fibo-fnd-pty-pty="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/"
 	xmlns:fibo-fnd-pty-rl="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Roles/"
+	xmlns:fibo-fnd-ptyx-prc="https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyRoleContext/"
+	xmlns:fibo-fnd-ptyx-ptyx="https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyExtensions/"
+	xmlns:fibo-fnd-pub-pub="https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/Publications/"
+	xmlns:fibo-fnd-pub-stdi="https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/StandardsIndividuals/"
+	xmlns:fibo-fnd-qt-qtu="https://spec.edmcouncil.org/fibo/ontology/FND/Quantities/QuantitiesAndUnits/"
+	xmlns:fibo-fnd-quax-qua="https://spec.edmcouncil.org/fibo/ontology/FND/QuantitiesExt/QuantitiesExt/"
 	xmlns:fibo-fnd-rel-rel="https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/"
+	xmlns:fibo-fnd-soc-asp="https://spec.edmcouncil.org/fibo/ontology/FND/SocialConstructsExt/ConstructAspects/"
+	xmlns:fibo-fnd-tim-tim="https://spec.edmcouncil.org/fibo/ontology/FND/TimeExt/Time/"
+	xmlns:fibo-fnd-txn-ecr="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/EconomicResources/"
+	xmlns:fibo-fnd-txn-ev="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/TransactionEvents/"
+	xmlns:fibo-fnd-txn-rea="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/REATransactions/"
+	xmlns:fibo-fnd-txn-sec="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SecuritiesTransactions/"
+	xmlns:fibo-fnd-txn-sup="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SupplyTransactions/"
+	xmlns:fibo-fnd-utl-alx="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Analytics/"
 	xmlns:fibo-fnd-utl-av="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/"
+	xmlns:fibo-fnd-utl-bt="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/BusinessFacingTypes/"
+	xmlns:fibo-fnd-utl-val="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Values/"
+	xmlns:fibo-ind-ei-caei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/CAEconomicIndicators/"
+	xmlns:fibo-ind-ei-ei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/"
+	xmlns:fibo-ind-ei-pub="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicatorPublishers/"
+	xmlns:fibo-ind-ei-usei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/USEconomicIndicators/"
+	xmlns:fibo-ind-fx-fx="https://spec.edmcouncil.org/fibo/ontology/IND/ForeignExchange/ForeignExchange/"
+	xmlns:fibo-ind-ind-ind="https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/"
+	xmlns:fibo-ind-ir-cm="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/CommonInterestRates/"
 	xmlns:fibo-ind-ir-ir="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRates/"
+	xmlns:fibo-ind-ir-pub="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRatePublishers/"
+	xmlns:fibo-ind-mkt-bas="https://spec.edmcouncil.org/fibo/ontology/IND/MarketIndices/BasketIndices/"
+	xmlns:fibo-ln-ln-hmda="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanHMDA/"
+	xmlns:fibo-ln-ln-lgn="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanGeneric/"
+	xmlns:fibo-ln-ln-ln="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanCore/"
+	xmlns:fibo-loan-loan-col="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansCollateral/"
+	xmlns:fibo-loan-loan-gen="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGeneral/"
+	xmlns:fibo-loan-loan-gty="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGuaranties/"
+	xmlns:fibo-loan-loan-loan="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoanBasicTerms/"
+	xmlns:fibo-loan-loan-pty="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansParties/"
+	xmlns:fibo-loan-loan-reg="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansRegulatory/"
+	xmlns:fibo-loan-tem-app="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanApplicationsTemporal/"
+	xmlns:fibo-loan-tem-apr="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansAppraisal/"
+	xmlns:fibo-loan-tem-bor="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanBorrowersTemporal/"
+	xmlns:fibo-loan-tem-cl="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/ConstructionLoansTemporal/"
+	xmlns:fibo-loan-tem-col="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanCollateralTemporal/"
+	xmlns:fibo-loan-tem-ev="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansEvents/"
+	xmlns:fibo-loan-tem-ltv="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansLTV/"
+	xmlns:fibo-loan-tem-ph="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanPhases/"
+	xmlns:fibo-loan-tem-sta="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansStatus/"
+	xmlns:fibo-loan-tem-tem="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansTemporal/"
+	xmlns:fibo-loan-typ-cl="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/ConstructionLoans/"
+	xmlns:fibo-loan-typ-com="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CommercialLoans/"
+	xmlns:fibo-loan-typ-cr="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CreditProducts/"
+	xmlns:fibo-loan-typ-gen="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/GeneralLoans/"
+	xmlns:fibo-loan-typ-mtg="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/MortgageLoans/"
+	xmlns:fibo-loan-typ-per="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/PersonalLoans/"
+	xmlns:fibo-loan-typ-prod="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/LoanProducts/"
+	xmlns:fibo-loan-typ-sec="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/SecuredLoans/"
+	xmlns:fibo-loan-typ-stu="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/StudentLoans/"
+	xmlns:fibo-loan-typ-uns="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/UnsecuredLoans/"
+	xmlns:fibo-md-civx-fun="https://spec.edmcouncil.org/fibo/ontology/MD/CIVTemporal/FundsTemporal/"
+	xmlns:fibo-md-dbtx-aly="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtAnalytics/"
+	xmlns:fibo-md-dbtx-int="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtInterestAmounts/"
+	xmlns:fibo-md-dbtx-py="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtPricingYields/"
+	xmlns:fibo-md-dbtx-red="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtRedemptionAmounts/"
+	xmlns:fibo-md-der-fut="https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/FuturesTemporal/"
+	xmlns:fibo-md-derx-eto="https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/ETOptionsTemporal/"
+	xmlns:fibo-md-eqx-pri="https://spec.edmcouncil.org/fibo/ontology/MD/EquityTemporal/EquityPricing/"
+	xmlns:fibo-md-temx-cre="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditEvents/"
+	xmlns:fibo-md-temx-crr="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditRatings/"
+	xmlns:fibo-md-temx-crs="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityCreditStatuses/"
+	xmlns:fibo-md-temx-cur="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/AnalysisCurves/"
+	xmlns:fibo-md-temx-ins="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/InstrumentTemporalTerms/"
+	xmlns:fibo-md-temx-tem="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/TemporalConcepts/"
+	xmlns:fibo-md-temx-trs="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityTradingStatuses/"
+	xmlns:fibo-sec-dbt-ab-abs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-cbo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CBOs/"
+	xmlns:fibo-sec-dbt-ab-cdo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CDOs/"
+	xmlns:fibo-sec-dbt-ab-clo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CLOs/"
+	xmlns:fibo-sec-dbt-ab-cmo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CMOs/"
+	xmlns:fibo-sec-dbt-ab-mbs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/MortgageBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-pbs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/PoolBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-spv="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSPVs/"
+	xmlns:fibo-sec-dbt-ab-syn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/SyntheticCDOs/"
 	xmlns:fibo-sec-dbt-bo-bo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCommon/"
+	xmlns:fibo-sec-dbt-bo-cft="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowTerms/"
+	xmlns:fibo-sec-dbt-bo-cfv="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowVariants/"
 	xmlns:fibo-sec-dbt-bo-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/"
+	xmlns:fibo-sec-dbt-bo-li="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsListings/"
+	xmlns:fibo-sec-dbt-bo-str="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/STRIPs/"
 	xmlns:fibo-sec-dbt-bo-tax="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsTaxTreatment/"
+	xmlns:fibo-sec-dbt-dbt-cft="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtCashflowTerms/"
+	xmlns:fibo-sec-dbt-dbt-fin="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtFinance/"
+	xmlns:fibo-sec-dbt-dbt-gty="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtInstrumentGuaranties/"
+	xmlns:fibo-sec-dbt-dbt-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtIssuanceTerms/"
+	xmlns:fibo-sec-dbt-dbt-pn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/ParticipationNotes/"
 	xmlns:fibo-sec-dbt-dbti="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtInstruments/"
-	xmlns:fibo-sec-dbt-tstd="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/TradedShortTermDebt/"
+	xmlns:fibo-sec-dbt-mm-lpn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/LoanParticipationNotes/"
+	xmlns:fibo-sec-dbt-mm-repo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/REPOs/"
+	xmlns:fibo-sec-dbt-mm-td="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TermDeposits/"
+	xmlns:fibo-sec-dbt-mm-trd="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TradedShortTermDebt/"
+	xmlns:fibo-sec-eq-dr="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/DepositaryReceipts/"
+	xmlns:fibo-sec-eq-eq="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/"
+	xmlns:fibo-sec-eq-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityIssuanceTerms/"
+	xmlns:fibo-sec-eq-lpe="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/LimitedPartnershipEquities/"
+	xmlns:fibo-sec-eq-sha="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareTerms/"
+	xmlns:fibo-sec-eq-she="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderEquity/"
+	xmlns:fibo-sec-eq-shr="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderRights/"
+	xmlns:fibo-sec-sec-ast="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecurityAssets/"
+	xmlns:fibo-sec-sec-bsk="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Baskets/"
+	xmlns:fibo-sec-sec-cls="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesClassification/"
+	xmlns:fibo-sec-sec-id="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/"
+	xmlns:fibo-sec-sec-idind="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentificationIndividuals/"
+	xmlns:fibo-sec-sec-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIssuance/"
+	xmlns:fibo-sec-sec-lst="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesListings/"
+	xmlns:fibo-sec-sec-pls="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Pools/"
+	xmlns:fibo-sec-sec-rst="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesRestrictions/"
+	xmlns:fibo-sec-sec-sch="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/ParametricSchedules/"
+	xmlns:fibo-sec-secx-sec="https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesExt/"
+	xmlns:fibo-sec-secx-tax="https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesTaxTreatment/"
+	xmlns:gidm="http://www.globalids.com/mapping#"
+	xmlns:lcc-3166-1="http://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/"
+	xmlns:lcc-3166-2="http://www.omg.org/spec/LCC/Countries/ISO3166-2-SubdivisionCodes/"
+	xmlns:lcc-3166-2-ca="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CA/"
+	xmlns:lcc-3166-2-gb="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GB/"
+	xmlns:lcc-3166-2-us="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-US/"
+	xmlns:lcc-639-1="http://www.omg.org/spec/LCC/Languages/ISO639-1-LanguageCodes/"
+	xmlns:lcc-639-2="http://www.omg.org/spec/LCC/Languages/ISO639-2-LanguageCodes/"
+	xmlns:lcc-cr="http://www.omg.org/spec/LCC/Countries/CountryRepresentation/"
+	xmlns:lcc-lr="http://www.omg.org/spec/LCC/Languages/LanguageRepresentation/"
+	xmlns:naics-2007="http://linkedmodel.org/vocab/industry-codes/naics-2007#"
 	xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:sm="http://www.omg.org/techprocess/ab/SpecificationMetadata/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 	
 	<owl:Ontology rdf:about="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/">
-		<rdfs:label xml:lang="en">Bonds Issuer Variants</rdfs:label>
-		<dct:abstract>This ontology described different categories of bond defined by variations in their issuers. These are corporate bonds, government or sovereign bonds and municipal bonds, including a range of variants of each of these. 
+		<dct:abstract xml:lang="en">This ontology described different categories of bond defined by variations in their issuers. These are corporate bonds, government or sovereign bonds and municipal bonds, including a range of variants of each of these. 
 		Note that in reading these models, most terms for e.g. corporate bonds are inherited from bond terms more generally, while this ontology contains only the distinguishing factors by which these categories of bond are distinguished from one another.</dct:abstract>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/FunctionalEntities/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/"/>
@@ -79,33 +640,23 @@
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;AdValoremTaxProvision">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-agr-ctr;ContractualElement"/>
-		<rdfs:label xml:lang="en">ad valorem tax provision</rdfs:label>
-		<skos:definition xml:lang="en">A direct tax calculated “according to value” of property. Ad valorem tax is based on an assigned valuation (market or assessed) of real property and, in certain cases, on a valuation of tangible or intangible personal property. In virtually all jurisdictions, ad valorem tax is a lien on the property enforceable by seizure and sale of the property. An ad valorem tax is normally the one substantial tax that may be raised or lowered by a local governing body without the sanction of superior levels of government (although constitutional or statutory restrictions such as tax rate limitations may limit this right).</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;BondMaturityRegistrar">
 		<rdfs:subClassOf rdf:resource="&fibo-fbc-pas-fpas;LegalAgent"/>
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-agr-ctr;ContractThirdParty"/>
-		<rdfs:label xml:lang="en">bond maturity registrar</rdfs:label>
-		<skos:definition xml:lang="en">The person or entity responsible for maintaining records on behalf of the issuer that identify the owners of a registered bond issue. The trustee under a bond contract often also acts as registrar.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;BuildAmericaBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<rdfs:label xml:lang="en">build america bond</rdfs:label>
-		<skos:definition xml:lang="en">Taxable municipal securities issued through December 31, 2010 under the American Recovery and Reinvestment Act of 2009 (ARRA). BABs may be direct pay subsidy bonds or tax credit bonds.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;CertificateOfObligation">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
-		<rdfs:label xml:lang="en">certificate of obligation</rdfs:label>
-		<skos:definition xml:lang="en">A Certificate of Obligation is a form of debt available to governing councils in case of emergency – a God-created catastrophe – that needs immediate action without time for voter referendum. For example, when a hurricane destroys the police and emergency services building, there is no time to go through the process of voter referendum. The local council must be able to borrow the money to set up provisional buildings and necessary equipment for police and emergency services so that the community is served in continuity.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;CertificateOfParticipation">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
-		<rdfs:label xml:lang="en">certificate of participation</rdfs:label>
-		<skos:definition xml:lang="en">An instrument evidencing a pro rata share in a specific pledged revenue stream, usually lease payments by the issuer that are typically subject to annual appropriation. The certificate generally entitles the holder to receive a share, or participation, in the payments from a particular project. The payments are passed through the lessor to the certificate holders. The lessor typically assigns the lease and the payments to a trustee, which then distributes the payments to the certificate holders.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;CorporateBond">
@@ -116,11 +667,8 @@
 				<owl:someValuesFrom rdf:resource="&fibo-sec-dbt-bo-iss;CorporateBondIssuer"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">corporate bond</rdfs:label>
 		<owl:disjointWith rdf:resource="&fibo-sec-dbt-bo-iss;GovernmentBond"/>
 		<owl:disjointWith rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<skos:definition xml:lang="en">A debt security issued by a corporation, as opposed to those issued by a government or municipality.</skos:definition>
-		<skos:editorialNote xml:lang="en">Added by extension from CFI Municipal. If there are Municipal Bonds in the classification hierarchy then Corporate and Government should also be included.</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;CorporateBondIssuer">
@@ -131,29 +679,21 @@
 				<owl:someValuesFrom rdf:resource="&fibo-be-le-cb;Corporation"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">corporate bond issuer</rdfs:label>
-		<skos:definition xml:lang="en">a corporation acting in the capacity of an issuer</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;FullFaithAndCreditBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-bo;Bond"/>
-		<rdfs:label xml:lang="en">full faith and credit bond</rdfs:label>
-		<skos:definition xml:lang="en">[definition from Wes]</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;GeneralObligationMunicipalBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;FullFaithAndCreditBond"/>
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<rdfs:label xml:lang="en">general obligation municipal bond</rdfs:label>
 		<owl:disjointWith rdf:resource="&fibo-sec-dbt-bo-iss;RevenueBond"/>
-		<skos:definition xml:lang="en">A general obligation bond (GO) is issued by governmental entities and not backed by revenue from a specific project, such as a toll road. A general obligation bond is secured by an issuing government&apos;s pledge to use all available resources - even tax revenues - to repay holders of the bond.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;GovernmentBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-bo;Bond"/>
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;GovernmentIssuedDebtSecurity"/>
-		<rdfs:label xml:lang="en">government issued bond</rdfs:label>
-		<skos:definition xml:lang="en">a bond issued by some government on behalf of some polity, including sovereign and municipal bonds</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;GovernmentDebtIssuer">
@@ -170,7 +710,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-be-ge-ge;Polity"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">government debt issuer</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;GovernmentIssuedDebtSecurity">
@@ -181,20 +720,14 @@
 				<owl:someValuesFrom rdf:resource="&fibo-sec-dbt-bo-iss;GovernmentDebtIssuer"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">government issued debt security</rdfs:label>
-		<skos:definition xml:lang="en">a debt security issued by some government on behalf of some polity, including sovereign and municipal debt</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;GreenBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-bo;Bond"/>
-		<rdfs:label xml:lang="en">green bond</rdfs:label>
-		<skos:definition xml:lang="en">A green bond is a tax-exempt bond issued by federally qualified organizations or by municipalities for the development of brownfield sites. Brownfield sites are areas of land that are underutilized, have abandoned buildings or are underdeveloped, often containing low levels of industrial pollution.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;LimitedTaxGeneralObligationBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;GeneralObligationMunicipalBond"/>
-		<rdfs:label xml:lang="en">limited tax general obligation bond</rdfs:label>
-		<skos:definition xml:lang="en">A limited-tax general obligation pledge asks the issuing local government to raise property taxes if necessary to meet existing debt service obligations. However, this increase is bounded by a statutory limit. With limited-tax general obligation pledges, governments can still use a part of already-levied property taxes, use another stream of income, or raise property taxes to an amount equating to existing debt service payments to answer its debt obligations.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalBond">
@@ -206,23 +739,15 @@
 				<owl:someValuesFrom rdf:resource="&fibo-sec-dbt-bo-tax;BankQualifiedTaxExemption"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">municipal bond</rdfs:label>
-		<skos:definition xml:lang="en">A debt security issued by or on behalf of a state or its political subdivision, or an agency or instrumentality of a state, its political subdivision, or a municipal corporation. Municipal bonds, for example, may be issued by states, cities, counties, special tax districts or special agencies or authorities of state or local governments.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalBondCapitalType">
-		<rdfs:label xml:lang="en">municipal bond capital type</rdfs:label>
-		<skos:definition xml:lang="en">the allocation of municipal bond proceeds</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalBondRefundTerms">
-		<rdfs:label xml:lang="en">municipal bond refund terms</rdfs:label>
-		<skos:definition xml:lang="en">terms related to the refunding process of municipal securities</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalDebtFundsUsage">
-		<rdfs:label xml:lang="en">municipal debt funds usage</rdfs:label>
-		<skos:definition xml:lang="en">official statement identifying the application of funds in connection with a new issue of municipal securities</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalDebtIssuer">
@@ -239,27 +764,18 @@
 				<owl:someValuesFrom rdf:resource="&fibo-be-ge-ge;MunicipalEntity"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">municipal debt issuer</rdfs:label>
-		<skos:definition xml:lang="en">A Municipality, acting in the capacity of an Issuer. The Issuer of a Municipal Debt is a Municipality, which is identified as a State Actor governing on the part of a Municipal Area or City. This is equivalent to a Legal Entity.</skos:definition>
-		<skos:editorialNote xml:lang="en">identified as: The Issuer of a Municipal Debt is a Municipality, which is identified as a State Actor governing on the part of a Municipal Area or City. This is equivalent to a Legal Entity.</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalDebtObligor">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-agr-ctr;ContractThirdParty"/>
-		<rdfs:label xml:lang="en">municipal debt obligor</rdfs:label>
-		<skos:definition xml:lang="en">A party having a financial obligation or arrangement to make the payment of all or part of debt service on municipal securities. The obligor is often the issuer but may be a conduit borrower of municipal securities proceeds.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalDebtRemarketingAgent">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-agr-ctr;ContractThirdParty"/>
-		<rdfs:label xml:lang="en">municipal debt remarketing agent</rdfs:label>
-		<skos:definition xml:lang="en">The municipal securities dealer responsible for reselling to investors securities (such as variable rate demand obligations and other tender option bonds) that have been tendered for purchase by their owner. The remarketing agent also typically is responsible for resetting the interest rate for a variable rate issue and may act as tender agent</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalNote">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
-		<rdfs:label xml:lang="en">municipal note</rdfs:label>
-		<skos:definition xml:lang="en">A short-term obligation of an issuer to repay a specified principal amount on a certain date, together with interest at a stated rate, usually payable from a defined source of anticipated revenues. Notes usually mature in one year or less, although notes of longer maturities are also issued.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalSecurity">
@@ -270,28 +786,21 @@
 				<owl:someValuesFrom rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalDebtIssuer"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">municipal security</rdfs:label>
 		<owl:disjointWith rdf:resource="&fibo-sec-dbt-bo-iss;SovereignDebtInstrument"/>
-		<skos:definition xml:lang="en">Municipal Securities is a general term referring to a bond, note, warrant, certificate of participation or other obligation issued by a state or local government or their agencies or authorities (such as cities, towns, villages, counties or special districts or authorities). A prime feature of most municipal securities is that interest or other investment earnings on them are generally excluded from gross income of the bondholder for federal income tax purposes. Some municipal securities are subject to federal income tax, although the issuers or bondholders may receive other federal tax advantages for certain types of taxable municipal securities. Some examples include Build America Bonds, municipal fund securities and direct pay subsidy bonds.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;MunicipalTrustee">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-agr-ctr;ContractThirdParty"/>
-		<rdfs:label xml:lang="en">municipal trustee</rdfs:label>
-		<skos:definition xml:lang="en">A financial institution with trust powers, designated by the issuer or borrower, that acts, pursuant to a bond contract, in a fiduciary capacity for the benefit of the bondholders in enforcing the terms of the bond contract. In many cases, the trustee also acts as custodian, paying agent, registrar and/or transfer agent for the bonds</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;RevenueBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<rdfs:label xml:lang="en">revenue bond</rdfs:label>
-		<skos:definition xml:lang="en">A revenue bond is a municipal bond supported by the revenue from a specific project, such as a toll bridge, highway or local stadium. Revenue bonds are municipal bonds that finance income-producing projects and are secured by a specified revenue source. Typically, revenue bonds can be issued by any government agency or fund that is managed in the manner of a business, such as entities having both operating revenues and expenses.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;SovereignBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;FullFaithAndCreditBond"/>
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;GovernmentBond"/>
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;SovereignDebtInstrument"/>
-		<rdfs:label xml:lang="en">sovereign bond</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;SovereignDebtInstrument">
@@ -302,7 +811,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-sec-dbt-bo-iss;SovereignDebtIssuer"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">sovereign debt instrument</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;SovereignDebtIssuer">
@@ -319,37 +827,27 @@
 				<owl:someValuesFrom rdf:resource="&fibo-be-ge-ge;SovereignState"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">sovereign debt issuer</rdfs:label>
-		<skos:definition xml:lang="en">A national Government, acting in the capacity of an Issuer.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;SpecialAssessmentBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<rdfs:label xml:lang="en">special assessment bond</rdfs:label>
-		<skos:definition xml:lang="en">An obligation payable from revenues of a special assessment. A special assessment is a charge imposed against a property in a particular locality because that property receives a special benefit by virtue of some public improvement, separate and apart from the general benefit accruing to the public at large. Special assessments may be apportioned according to the value of the benefit received, rather than merely the cost of the improvement.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;SpecialObligationBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<rdfs:label xml:lang="en">special obligation bond</rdfs:label>
-		<skos:definition xml:lang="en">A bond secured by a limited revenue source or promise to pay.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;SpecialTaxBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<rdfs:label xml:lang="en">special tax bond</rdfs:label>
-		<skos:definition xml:lang="en">A bond secured by revenues derived from one or more designated taxes other than ad valorem taxes. For example, bonds for a particular purpose might be supported by sales, cigarette, fuel or business license taxes.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;TaxAllocationBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
-		<rdfs:label xml:lang="en">tax allocation bond</rdfs:label>
-		<skos:definition xml:lang="en">A bond payable from the incremental increase in tax revenues realized from any increase in property value and other economic activity, often designed to capture the economic benefit resulting from a bond financing. Tax increment bonds, also known as tax allocation bonds, often are used to finance the redevelopment of blighted areas.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;TreasuryBill">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;SovereignDebtInstrument"/>
-		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-tstd;MoneyMarketInstrument"/>
+		<rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/TradedShortTermDebt/MoneyMarketInstrument"/>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-sec-dbt-dbti;hasRelativePriceAtIssue"/>
@@ -368,141 +866,102 @@
 				<owl:someValuesFrom rdf:resource="&fibo-ind-ir-ir;ReferenceInterestRate"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">treasury bill</rdfs:label>
-		<skos:definition xml:lang="en">a short-term debt obligation backed by the Treasury Department of the U.S. government with a maturity of less than one year, sold in denominations of $1,000 up to a maximum purchase of $5 million on noncompetitive bids</skos:definition>
-		<fibo-fnd-utl-av:abbreviation xml:lang="en">T-bill</fibo-fnd-utl-av:abbreviation>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-sec-dbt-bo-iss;UnlimitedTaxGeneralObligationBond">
 		<rdfs:subClassOf rdf:resource="&fibo-sec-dbt-bo-iss;GeneralObligationMunicipalBond"/>
-		<rdfs:label xml:lang="en">unlimited tax general obligation bond</rdfs:label>
-		<skos:definition xml:lang="en">An unlimited-tax general obligation pledge is similar to the limited-tax pledge. The only difference is that the local government is asked to increase property tax rates to necessary levels - up to a maximum of 100% - to cover delinquencies from taxpayers. Local residents must first agree to increase property taxes to necessary amounts required for the bonds.</skos:definition>
 	</owl:Class>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasAdValoremTaxProvision">
-		<rdfs:label xml:lang="en">has ad valorem tax provision</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&fibo-sec-dbt-bo-iss;AdValoremTaxProvision"/>
-		<skos:definition xml:lang="en">whether the bond has ad valorem tax provision</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasAwardDate">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-dt-fd;hasDate"/>
-		<rdfs:label xml:lang="en">has award date</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;Date"/>
-		<skos:definition xml:lang="en">Date on which bonds are awarded to the lead manager or syndicate on negotiated deals or the date of bidding on competitive deals.</skos:definition>
-		<skos:editorialNote xml:lang="en">There are two kinds of award date in municipal securities issuance: verbal award date and formal award date</skos:editorialNote>
-		<fibo-fnd-utl-av:synonym xml:lang="en">has sale date</fibo-fnd-utl-av:synonym>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasFormalAwardDate">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-dt-fd;hasDate"/>
 		<rdfs:subPropertyOf rdf:resource="&fibo-sec-dbt-bo-iss;hasAwardDate"/>
-		<rdfs:label xml:lang="en">has formal award date</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;Date"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasMunicipalBondCapitalType">
-		<rdfs:label xml:lang="en">has municipal bond capital type</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBondCapitalType"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasMunicipalBondRefundTerms">
-		<rdfs:label xml:lang="en">has municipal bond refund terms</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBondRefundTerms"/>
-		<skos:definition xml:lang="en">has terms governing the refunding process of municipal securities</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasMunicipalDebtObligor">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-agr-ctr;hasThirdParty"/>
-		<rdfs:label xml:lang="en">has municipal debt obligor</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
 		<rdfs:range rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalDebtObligor"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasMunicipalTrustee">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-agr-ctr;hasThirdParty"/>
-		<rdfs:label xml:lang="en">has municipal trustee</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalTrustee"/>
-		<skos:definition xml:lang="en">The financial institution with trust powers, designated by the issuer or borrower, that acts, pursuant to a bond contract, in a fiduciary capacity for the benefit of the bondholders in enforcing the terms of the bond contract.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasMunicipalUse">
-		<rdfs:label xml:lang="en">has municipal use</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
 		<rdfs:range rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalDebtFundsUsage"/>
-		<skos:definition xml:lang="en">the application of funds in connection with a new issue of municipal securities</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasRemarketingAgent">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-agr-ctr;hasThirdParty"/>
-		<rdfs:label xml:lang="en">has remarketing agent</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
 		<rdfs:range rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalDebtRemarketingAgent"/>
-		<skos:definition xml:lang="en">The municipal securities dealer responsible for reselling to investors securities (such as variable rate demand obligations and other tender option bonds) that have been tendered for purchase by their owner.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-sec-dbt-bo-iss;hasVerbalAwardDate">
 		<rdfs:subPropertyOf rdf:resource="&fibo-sec-dbt-bo-iss;hasAwardDate"/>
-		<rdfs:label xml:lang="en">has verbal award date</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;Date"/>
-		<skos:definition xml:lang="en">has a date on which ...</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-sec-dbt-bo-iss;isBankQualified">
-		<rdfs:label xml:lang="en">is bank qualified</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Designation given to a public purpose bond offering by the issuer if it reasonably expects to issue in the calendar year of such offering no more than $10 million ($30 million for bonds issued in 2009-2010) of bonds of the type required to be included in making such calculation under section 265(b)(3) of the IRS tax code. When purchased by a commercial bank for its portfolio, the bank may deduct a portion of the interest cost of carry for the position. A bond that is bank qualified is also known as a “qualified tax-exempt obligation.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-sec-dbt-bo-iss;isFederalTaxable">
-		<rdfs:label xml:lang="en">is federal taxable</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">whether the security is taxable by the country where it is issued</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-sec-dbt-bo-iss;isLimited">
-		<rdfs:label xml:lang="en">is limited</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;AdValoremTaxProvision"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Whether the ad valorem tax is limited. An Ad Valorem Tax can be limited or unlimited</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-sec-dbt-bo-iss;isLocalTaxExempt">
-		<rdfs:label xml:lang="en">is local tax exempt</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">whether the security is taxable under local e.g. city taxation</skos:definition>
-		<skos:editorialNote xml:lang="en">It is not clear whether this property ever applies</skos:editorialNote>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-sec-dbt-bo-iss;isStateTaxable">
-		<rdfs:label xml:lang="en">is state taxable</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalSecurity"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">whether the security is taxable by the state where it is issued</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-sec-dbt-bo-iss;isSubjectToAlternateMinimumTax">
-		<rdfs:label xml:lang="en">is subject to alternate minimum tax</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">whether the bond is subject to the Alternative Minimum Tax for individuals</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-sec-dbt-bo-iss;legalOpinion">
-		<rdfs:label xml:lang="en">legal opinion</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-sec-dbt-bo-iss;MunicipalBond"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Whether legal opinion exists for municipal securities.</skos:definition>
 	</owl:DatatypeProperty>
 
 </rdf:RDF>

@@ -1,30 +1,303 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rdf:RDF [
+	<!ENTITY afn "http://jena.apache.org/ARQ/function#">
 	<!ENTITY dct "http://purl.org/dc/terms/">
+	<!ENTITY dedm "http://www.edmcouncil.org/ddgraph#">
+	<!ENTITY edm "http://www.edmcouncil.org/temp#">
 	<!ENTITY fibo-be-corp-corp "https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/">
+	<!ENTITY fibo-be-fct-fct "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/FunctionalEntities/">
+	<!ENTITY fibo-be-fct-pub "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/Publishers/">
+	<!ENTITY fibo-be-fctx-fne "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/FundEntities/">
+	<!ENTITY fibo-be-fctx-spv "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/SPVs/">
+	<!ENTITY fibo-be-fctx-sta "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/StateEntities/">
+	<!ENTITY fibo-be-ge-caj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/CAGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-ge-euj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/EUGovernmentEntitiesAndJurisdictions/">
 	<!ENTITY fibo-be-ge-ge "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/">
+	<!ENTITY fibo-be-ge-ukj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/UKGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-ge-usj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/USGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-le-cb "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/">
 	<!ENTITY fibo-be-le-fbo "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/FormalBusinessOrganizations/">
 	<!ENTITY fibo-be-le-lei "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/">
 	<!ENTITY fibo-be-le-lp "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/">
+	<!ENTITY fibo-be-oac-cctl "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/">
+	<!ENTITY fibo-be-oac-cown "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/">
+	<!ENTITY fibo-be-oac-cpty "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/ControlParties/">
+	<!ENTITY fibo-be-oac-exec "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/Executives/">
+	<!ENTITY fibo-be-oac-opty "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/OwnershipParties/">
+	<!ENTITY fibo-be-plc-plc "https://spec.edmcouncil.org/fibo/ontology/BE/PrivateLimitedCompanies/PrivateLimitedCompanies/">
+	<!ENTITY fibo-be-ptr-ptr "https://spec.edmcouncil.org/fibo/ontology/BE/Partnerships/Partnerships/">
+	<!ENTITY fibo-be-sps-sps "https://spec.edmcouncil.org/fibo/ontology/BE/SoleProprietorships/SoleProprietorships/">
+	<!ENTITY fibo-be-tr-tr "https://spec.edmcouncil.org/fibo/ontology/BE/Trusts/Trusts/">
+	<!ENTITY fibo-bp-iss-ambs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/AgencyMBSIssuance/">
+	<!ENTITY fibo-bp-iss-dbti "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/DebtIssuance/">
+	<!ENTITY fibo-bp-iss-doc "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceDocuments/">
+	<!ENTITY fibo-bp-iss-ipo "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/EquitiesIPOIssuance/">
+	<!ENTITY fibo-bp-iss-mbs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MBSIssuance/">
+	<!ENTITY fibo-bp-iss-muni "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MuniIssuance/">
+	<!ENTITY fibo-bp-iss-pmbs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/PrivateLabelMBSIssuance/">
+	<!ENTITY fibo-bp-iss-prc "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcess/">
+	<!ENTITY fibo-bp-iss-trm "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcessTerms/">
+	<!ENTITY fibo-bp-prc-fcp "https://spec.edmcouncil.org/fibo/ontology/BP/Process/FinancialContextAndProcess/">
+	<!ENTITY fibo-bp-reg-req "https://spec.edmcouncil.org/fibo/ontology/BP/Regulatory/RegulatoryRequirements/">
+	<!ENTITY fibo-cae-ce-cae "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActionsEvents/">
+	<!ENTITY fibo-civ-fnd-civ "https://spec.edmcouncil.org/fibo/ontology/CIV/Funds/CIV/">
+	<!ENTITY fibo-civ-fnd-clx "https://spec.edmcouncil.org/fibo/ontology/CIV/FundsExt/CIVClassification/">
+	<!ENTITY fibo-der-ass-ass "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetDerivatives/">
+	<!ENTITY fibo-der-ass-bas "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetBaskets/">
+	<!ENTITY fibo-der-ass-bo "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondOptions/">
+	<!ENTITY fibo-der-ass-brs "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondReturnSwaps/">
+	<!ENTITY fibo-der-ass-eqf "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityForwards/">
+	<!ENTITY fibo-der-ass-eqo "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityOptions/">
+	<!ENTITY fibo-der-ass-eqs "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquitySwaps/">
+	<!ENTITY fibo-der-com-com "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/Commodities/">
+	<!ENTITY fibo-der-com-ctr "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesContracts/">
+	<!ENTITY fibo-der-com-del "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesDelivery/">
+	<!ENTITY fibo-der-com-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityForwards/">
+	<!ENTITY fibo-der-com-opt "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityOptions/">
+	<!ENTITY fibo-der-com-sp "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySpots/">
+	<!ENTITY fibo-der-com-sw "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySwaps/">
+	<!ENTITY fibo-der-cr-cds "https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/">
+	<!ENTITY fibo-der-der-cof "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/OptionContractsOnFutures/">
+	<!ENTITY fibo-der-der-ex "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ExerciseConventions/">
+	<!ENTITY fibo-der-der-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Forwards/">
+	<!ENTITY fibo-der-der-opt "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Options/">
+	<!ENTITY fibo-der-der-rsw "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ReturnSwaps/">
+	<!ENTITY fibo-der-der-sp "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Spots/">
+	<!ENTITY fibo-der-der-spn "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaptions/">
+	<!ENTITY fibo-der-derx-dbx "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContractsExt/DerivativesBasicsExt/">
+	<!ENTITY fibo-der-drc-bsc "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/DerivativesBasics/">
+	<!ENTITY fibo-der-drc-swp "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/">
+	<!ENTITY fibo-der-drc-swpind "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/SwapsIndividuals/">
+	<!ENTITY fibo-der-etd-eto "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/ExchangeTradedOptions/">
+	<!ENTITY fibo-der-etd-fstd "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesStandardizedTerms/">
+	<!ENTITY fibo-der-etd-fut "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/Futures/">
+	<!ENTITY fibo-der-etd-fxc "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesExchanges/">
+	<!ENTITY fibo-der-etd-ostd "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsStandardizedTerms/">
+	<!ENTITY fibo-der-etd-oxc "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsExchanges/">
+	<!ENTITY fibo-der-etd-std "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/DerivativesStandardizedTerms/">
+	<!ENTITY fibo-der-fx-ctr "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxContracts/">
+	<!ENTITY fibo-der-fx-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxForwards/">
+	<!ENTITY fibo-der-fx-opt "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxOptions/">
+	<!ENTITY fibo-der-fx-sp "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSpots/">
+	<!ENTITY fibo-der-fx-sw "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSwaps/">
+	<!ENTITY fibo-der-misc-cfd "https://spec.edmcouncil.org/fibo/ontology/DER/OTCMiscContracts/ContractsForDifference/">
+	<!ENTITY fibo-der-rat-fra "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/ForwardRateAgreements/">
+	<!ENTITY fibo-der-rat-indo "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/OTCIndexOptions/">
+	<!ENTITY fibo-der-rat-iro "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IROptions/">
+	<!ENTITY fibo-der-rgt-raw "https://spec.edmcouncil.org/fibo/ontology/DER/RightsInstruments/RightsAndWarrants/">
+	<!ENTITY fibo-der-rtd-irswp "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IRSwaps/">
+	<!ENTITY fibo-der-rtd-isw "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/InflationSwaps/">
+	<!ENTITY fibo-der-rtd-rtd "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/RateDerivatives/">
+	<!ENTITY fibo-fbc-2.0-abr "https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-Abridged/">
+	<!ENTITY fibo-fbc-2.0-na-ex "https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-NorthAmericanExamples/">
+	<!ENTITY fibo-fbc-dae-crf "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/CreditFacilities/">
+	<!ENTITY fibo-fbc-dae-dbt "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/">
+	<!ENTITY fibo-fbc-dae-gty "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/">
 	<!ENTITY fibo-fbc-fct-breg "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/">
+	<!ENTITY fibo-fbc-fct-cafse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CAFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-cajrga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CARegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-eufse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EUFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-eufsind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EuropeanFinancialServicesEntitiesIndividuals/">
+	<!ENTITY fibo-fbc-fct-eurga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EURegulatoryAgencies/">
 	<!ENTITY fibo-fbc-fct-fse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/FinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-mkt "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/Markets/">
 	<!ENTITY fibo-fbc-fct-ra "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegistrationAuthorities/">
+	<!ENTITY fibo-fbc-fct-rga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-usfse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-usfsind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntitiesIndividuals/">
+	<!ENTITY fibo-fbc-fct-usind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USExampleIndividuals/">
+	<!ENTITY fibo-fbc-fct-usjrga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USRegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fi-fi "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/">
+	<!ENTITY fibo-fbc-fi-stl "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/Settlement/">
+	<!ENTITY fibo-fbc-pas-caa "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/ClientsAndAccounts/">
 	<!ENTITY fibo-fbc-pas-fpas "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/">
 	<!ENTITY fibo-fnd-aap-agt "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/">
+	<!ENTITY fibo-fnd-aap-ppl "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/">
+	<!ENTITY fibo-fnd-acc-4217 "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/ISO4217-CurrencyCodes/">
+	<!ENTITY fibo-fnd-acc-aeq "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/AccountingEquity/">
+	<!ENTITY fibo-fnd-acc-cur "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/">
+	<!ENTITY fibo-fnd-acc-val "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/Valuation/">
+	<!ENTITY fibo-fnd-accx-acc "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AccountsMain/">
+	<!ENTITY fibo-fnd-accx-assx "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AssetExtensions/">
+	<!ENTITY fibo-fnd-accx-bal "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/BalanceSheetBalances/">
+	<!ENTITY fibo-fnd-accx-tax "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/Taxation/">
+	<!ENTITY fibo-fnd-agr-agr "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Agreements/">
+	<!ENTITY fibo-fnd-agr-ctr "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/">
+	<!ENTITY fibo-fnd-agrx-con "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractualConstructs/">
+	<!ENTITY fibo-fnd-agrx-ctrx "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractsExtensions/">
+	<!ENTITY fibo-fnd-agrx-ele "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractElements/">
+	<!ENTITY fibo-fnd-arr-arr "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Arrangements/">
 	<!ENTITY fibo-fnd-arr-cd "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Codes/">
 	<!ENTITY fibo-fnd-arr-cls "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/ClassificationSchemes/">
+	<!ENTITY fibo-fnd-arr-doc "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/">
 	<!ENTITY fibo-fnd-arr-id "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/IdentifiersAndIndices/">
 	<!ENTITY fibo-fnd-arr-lif "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/">
+	<!ENTITY fibo-fnd-arrxx-ins "https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/ToolsAndInstruments/">
+	<!ENTITY fibo-fnd-arrxx-meth "https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/MethodsAndRules/">
+	<!ENTITY fibo-fnd-bus-agc "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/AgentsContexts/">
+	<!ENTITY fibo-fnd-bus-bg "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/BusinessGoals/">
+	<!ENTITY fibo-fnd-bus-pol "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/Policy/">
+	<!ENTITY fibo-fnd-com-com "https://spec.edmcouncil.org/fibo/ontology/FND/Communication/Communication/">
+	<!ENTITY fibo-fnd-dt-bd "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/BusinessDates/">
 	<!ENTITY fibo-fnd-dt-fd "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/">
+	<!ENTITY fibo-fnd-dt-oc "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/">
+	<!ENTITY fibo-fnd-gao-gl "https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Goals/">
+	<!ENTITY fibo-fnd-gao-obj "https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Objectives/">
+	<!ENTITY fibo-fnd-inf-doc "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Documentation/">
+	<!ENTITY fibo-fnd-inf-inf "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/InfoCore/">
+	<!ENTITY fibo-fnd-inf-msg "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Messaging/">
+	<!ENTITY fibo-fnd-inf-tem "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/TemporalInfo/">
+	<!ENTITY fibo-fnd-law-cor "https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCore/">
 	<!ENTITY fibo-fnd-law-jur "https://spec.edmcouncil.org/fibo/ontology/FND/Law/Jurisdiction/">
+	<!ENTITY fibo-fnd-law-lcap "https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCapacity/">
+	<!ENTITY fibo-fnd-lawx-rst "https://spec.edmcouncil.org/fibo/ontology/FND/LawExt/RegulatoryRestrictions/">
+	<!ENTITY fibo-fnd-math-amt "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Amounts/">
+	<!ENTITY fibo-fnd-math-math "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Math/">
+	<!ENTITY fibo-fnd-math-qty "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Quantities/">
+	<!ENTITY fibo-fnd-oac-ctl "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/">
+	<!ENTITY fibo-fnd-oac-oac "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/OwnershipAndControl/">
+	<!ENTITY fibo-fnd-oac-own "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/">
 	<!ENTITY fibo-fnd-org-fm "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/FormalOrganizations/">
+	<!ENTITY fibo-fnd-org-lg "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/LegitimateOrganizations/">
+	<!ENTITY fibo-fnd-org-org "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/">
+	<!ENTITY fibo-fnd-pas-pas "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/">
+	<!ENTITY fibo-fnd-pas-psch "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/PaymentsAndSchedules/">
 	<!ENTITY fibo-fnd-plc-adr "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/">
 	<!ENTITY fibo-fnd-plc-cty "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Countries/">
+	<!ENTITY fibo-fnd-plc-fac "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/">
+	<!ENTITY fibo-fnd-plc-loc "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/">
 	<!ENTITY fibo-fnd-plc-vrt "https://spec.edmcouncil.org/fibo/ontology/FND/Places/VirtualPlaces/">
+	<!ENTITY fibo-fnd-plcx-sit "https://spec.edmcouncil.org/fibo/ontology/FND/PlacesExt/AddressSites/">
+	<!ENTITY fibo-fnd-pty-pty "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/">
+	<!ENTITY fibo-fnd-pty-rl "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Roles/">
+	<!ENTITY fibo-fnd-ptyx-prc "https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyRoleContext/">
+	<!ENTITY fibo-fnd-ptyx-ptyx "https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyExtensions/">
+	<!ENTITY fibo-fnd-pub-pub "https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/Publications/">
+	<!ENTITY fibo-fnd-pub-stdi "https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/StandardsIndividuals/">
+	<!ENTITY fibo-fnd-qt-qtu "https://spec.edmcouncil.org/fibo/ontology/FND/Quantities/QuantitiesAndUnits/">
+	<!ENTITY fibo-fnd-quax-qua "https://spec.edmcouncil.org/fibo/ontology/FND/QuantitiesExt/QuantitiesExt/">
 	<!ENTITY fibo-fnd-rel-rel "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/">
+	<!ENTITY fibo-fnd-soc-asp "https://spec.edmcouncil.org/fibo/ontology/FND/SocialConstructsExt/ConstructAspects/">
+	<!ENTITY fibo-fnd-tim-tim "https://spec.edmcouncil.org/fibo/ontology/FND/TimeExt/Time/">
+	<!ENTITY fibo-fnd-txn-ecr "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/EconomicResources/">
+	<!ENTITY fibo-fnd-txn-ev "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/TransactionEvents/">
+	<!ENTITY fibo-fnd-txn-rea "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/REATransactions/">
+	<!ENTITY fibo-fnd-txn-sec "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SecuritiesTransactions/">
+	<!ENTITY fibo-fnd-txn-sup "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SupplyTransactions/">
+	<!ENTITY fibo-fnd-utl-alx "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Analytics/">
 	<!ENTITY fibo-fnd-utl-av "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/">
+	<!ENTITY fibo-fnd-utl-bt "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/BusinessFacingTypes/">
+	<!ENTITY fibo-fnd-utl-val "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Values/">
+	<!ENTITY fibo-ind-ei-caei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/CAEconomicIndicators/">
+	<!ENTITY fibo-ind-ei-ei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/">
+	<!ENTITY fibo-ind-ei-pub "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicatorPublishers/">
+	<!ENTITY fibo-ind-ei-usei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/USEconomicIndicators/">
+	<!ENTITY fibo-ind-fx-fx "https://spec.edmcouncil.org/fibo/ontology/IND/ForeignExchange/ForeignExchange/">
+	<!ENTITY fibo-ind-ind-ind "https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/">
+	<!ENTITY fibo-ind-ir-cm "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/CommonInterestRates/">
+	<!ENTITY fibo-ind-ir-ir "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRates/">
+	<!ENTITY fibo-ind-ir-pub "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRatePublishers/">
+	<!ENTITY fibo-ind-mkt-bas "https://spec.edmcouncil.org/fibo/ontology/IND/MarketIndices/BasketIndices/">
+	<!ENTITY fibo-ln-ln-hmda "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanHMDA/">
+	<!ENTITY fibo-ln-ln-lgn "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanGeneric/">
+	<!ENTITY fibo-ln-ln-ln "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanCore/">
+	<!ENTITY fibo-loan-loan-col "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansCollateral/">
+	<!ENTITY fibo-loan-loan-gen "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGeneral/">
+	<!ENTITY fibo-loan-loan-gty "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGuaranties/">
+	<!ENTITY fibo-loan-loan-loan "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoanBasicTerms/">
+	<!ENTITY fibo-loan-loan-pty "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansParties/">
+	<!ENTITY fibo-loan-loan-reg "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansRegulatory/">
+	<!ENTITY fibo-loan-tem-app "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanApplicationsTemporal/">
+	<!ENTITY fibo-loan-tem-apr "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansAppraisal/">
+	<!ENTITY fibo-loan-tem-bor "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanBorrowersTemporal/">
+	<!ENTITY fibo-loan-tem-cl "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/ConstructionLoansTemporal/">
+	<!ENTITY fibo-loan-tem-col "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanCollateralTemporal/">
+	<!ENTITY fibo-loan-tem-ev "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansEvents/">
+	<!ENTITY fibo-loan-tem-ltv "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansLTV/">
+	<!ENTITY fibo-loan-tem-ph "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanPhases/">
+	<!ENTITY fibo-loan-tem-sta "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansStatus/">
+	<!ENTITY fibo-loan-tem-tem "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansTemporal/">
+	<!ENTITY fibo-loan-typ-cl "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/ConstructionLoans/">
+	<!ENTITY fibo-loan-typ-com "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CommercialLoans/">
+	<!ENTITY fibo-loan-typ-cr "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CreditProducts/">
+	<!ENTITY fibo-loan-typ-gen "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/GeneralLoans/">
+	<!ENTITY fibo-loan-typ-mtg "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/MortgageLoans/">
+	<!ENTITY fibo-loan-typ-per "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/PersonalLoans/">
+	<!ENTITY fibo-loan-typ-prod "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/LoanProducts/">
+	<!ENTITY fibo-loan-typ-sec "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/SecuredLoans/">
+	<!ENTITY fibo-loan-typ-stu "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/StudentLoans/">
+	<!ENTITY fibo-loan-typ-uns "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/UnsecuredLoans/">
+	<!ENTITY fibo-md-civx-fun "https://spec.edmcouncil.org/fibo/ontology/MD/CIVTemporal/FundsTemporal/">
+	<!ENTITY fibo-md-dbtx-aly "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtAnalytics/">
+	<!ENTITY fibo-md-dbtx-int "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtInterestAmounts/">
+	<!ENTITY fibo-md-dbtx-py "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtPricingYields/">
+	<!ENTITY fibo-md-dbtx-red "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtRedemptionAmounts/">
+	<!ENTITY fibo-md-der-fut "https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/FuturesTemporal/">
+	<!ENTITY fibo-md-derx-eto "https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/ETOptionsTemporal/">
+	<!ENTITY fibo-md-eqx-pri "https://spec.edmcouncil.org/fibo/ontology/MD/EquityTemporal/EquityPricing/">
+	<!ENTITY fibo-md-temx-cre "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditEvents/">
+	<!ENTITY fibo-md-temx-crr "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditRatings/">
+	<!ENTITY fibo-md-temx-crs "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityCreditStatuses/">
+	<!ENTITY fibo-md-temx-cur "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/AnalysisCurves/">
+	<!ENTITY fibo-md-temx-ins "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/InstrumentTemporalTerms/">
+	<!ENTITY fibo-md-temx-tem "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/TemporalConcepts/">
+	<!ENTITY fibo-md-temx-trs "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityTradingStatuses/">
+	<!ENTITY fibo-sec-dbt-ab-abs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-cbo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CBOs/">
+	<!ENTITY fibo-sec-dbt-ab-cdo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CDOs/">
+	<!ENTITY fibo-sec-dbt-ab-clo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CLOs/">
+	<!ENTITY fibo-sec-dbt-ab-cmo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CMOs/">
+	<!ENTITY fibo-sec-dbt-ab-mbs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/MortgageBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-pbs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/PoolBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-spv "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSPVs/">
+	<!ENTITY fibo-sec-dbt-ab-syn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/SyntheticCDOs/">
+	<!ENTITY fibo-sec-dbt-bo-bo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCommon/">
+	<!ENTITY fibo-sec-dbt-bo-cft "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowTerms/">
+	<!ENTITY fibo-sec-dbt-bo-cfv "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowVariants/">
+	<!ENTITY fibo-sec-dbt-bo-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/">
+	<!ENTITY fibo-sec-dbt-bo-li "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsListings/">
+	<!ENTITY fibo-sec-dbt-bo-str "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/STRIPs/">
+	<!ENTITY fibo-sec-dbt-bo-tax "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsTaxTreatment/">
+	<!ENTITY fibo-sec-dbt-dbt-cft "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtCashflowTerms/">
+	<!ENTITY fibo-sec-dbt-dbt-fin "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtFinance/">
+	<!ENTITY fibo-sec-dbt-dbt-gty "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtInstrumentGuaranties/">
+	<!ENTITY fibo-sec-dbt-dbt-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtIssuanceTerms/">
+	<!ENTITY fibo-sec-dbt-dbt-pn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/ParticipationNotes/">
+	<!ENTITY fibo-sec-dbt-dbti "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtInstruments/">
+	<!ENTITY fibo-sec-dbt-mm-lpn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/LoanParticipationNotes/">
+	<!ENTITY fibo-sec-dbt-mm-repo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/REPOs/">
+	<!ENTITY fibo-sec-dbt-mm-td "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TermDeposits/">
+	<!ENTITY fibo-sec-dbt-mm-trd "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TradedShortTermDebt/">
+	<!ENTITY fibo-sec-eq-dr "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/DepositaryReceipts/">
+	<!ENTITY fibo-sec-eq-eq "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/">
+	<!ENTITY fibo-sec-eq-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityIssuanceTerms/">
+	<!ENTITY fibo-sec-eq-lpe "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/LimitedPartnershipEquities/">
+	<!ENTITY fibo-sec-eq-sha "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareTerms/">
+	<!ENTITY fibo-sec-eq-she "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderEquity/">
+	<!ENTITY fibo-sec-eq-shr "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderRights/">
+	<!ENTITY fibo-sec-sec-ast "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecurityAssets/">
+	<!ENTITY fibo-sec-sec-bsk "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Baskets/">
+	<!ENTITY fibo-sec-sec-cls "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesClassification/">
+	<!ENTITY fibo-sec-sec-id "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/">
+	<!ENTITY fibo-sec-sec-idind "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentificationIndividuals/">
+	<!ENTITY fibo-sec-sec-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIssuance/">
+	<!ENTITY fibo-sec-sec-lst "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesListings/">
+	<!ENTITY fibo-sec-sec-pls "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Pools/">
+	<!ENTITY fibo-sec-sec-rst "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesRestrictions/">
+	<!ENTITY fibo-sec-sec-sch "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/ParametricSchedules/">
+	<!ENTITY fibo-sec-secx-sec "https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesExt/">
+	<!ENTITY fibo-sec-secx-tax "https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesTaxTreatment/">
+	<!ENTITY gidm "http://www.globalids.com/mapping#">
 	<!ENTITY lcc-3166-1 "http://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/">
+	<!ENTITY lcc-3166-2 "http://www.omg.org/spec/LCC/Countries/ISO3166-2-SubdivisionCodes/">
+	<!ENTITY lcc-3166-2-ca "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CA/">
+	<!ENTITY lcc-3166-2-gb "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GB/">
+	<!ENTITY lcc-3166-2-us "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-US/">
+	<!ENTITY lcc-639-1 "http://www.omg.org/spec/LCC/Languages/ISO639-1-LanguageCodes/">
+	<!ENTITY lcc-639-2 "http://www.omg.org/spec/LCC/Languages/ISO639-2-LanguageCodes/">
 	<!ENTITY lcc-cr "http://www.omg.org/spec/LCC/Countries/CountryRepresentation/">
+	<!ENTITY lcc-lr "http://www.omg.org/spec/LCC/Languages/LanguageRepresentation/">
+	<!ENTITY naics-2007 "http://linkedmodel.org/vocab/industry-codes/naics-2007#">
 	<!ENTITY owl "http://www.w3.org/2002/07/owl#">
 	<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 	<!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
@@ -33,31 +306,304 @@
 	<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
 ]>
 <rdf:RDF xml:base="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/"
+	xmlns:afn="http://jena.apache.org/ARQ/function#"
 	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:dedm="http://www.edmcouncil.org/ddgraph#"
+	xmlns:edm="http://www.edmcouncil.org/temp#"
 	xmlns:fibo-be-corp-corp="https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/"
+	xmlns:fibo-be-fct-fct="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/FunctionalEntities/"
+	xmlns:fibo-be-fct-pub="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/Publishers/"
+	xmlns:fibo-be-fctx-fne="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/FundEntities/"
+	xmlns:fibo-be-fctx-spv="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/SPVs/"
+	xmlns:fibo-be-fctx-sta="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/StateEntities/"
+	xmlns:fibo-be-ge-caj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/CAGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-ge-euj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/EUGovernmentEntitiesAndJurisdictions/"
 	xmlns:fibo-be-ge-ge="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/"
+	xmlns:fibo-be-ge-ukj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/UKGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-ge-usj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/USGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-le-cb="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/"
 	xmlns:fibo-be-le-fbo="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/FormalBusinessOrganizations/"
 	xmlns:fibo-be-le-lei="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/"
 	xmlns:fibo-be-le-lp="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/"
+	xmlns:fibo-be-oac-cctl="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/"
+	xmlns:fibo-be-oac-cown="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/"
+	xmlns:fibo-be-oac-cpty="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/ControlParties/"
+	xmlns:fibo-be-oac-exec="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/Executives/"
+	xmlns:fibo-be-oac-opty="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/OwnershipParties/"
+	xmlns:fibo-be-plc-plc="https://spec.edmcouncil.org/fibo/ontology/BE/PrivateLimitedCompanies/PrivateLimitedCompanies/"
+	xmlns:fibo-be-ptr-ptr="https://spec.edmcouncil.org/fibo/ontology/BE/Partnerships/Partnerships/"
+	xmlns:fibo-be-sps-sps="https://spec.edmcouncil.org/fibo/ontology/BE/SoleProprietorships/SoleProprietorships/"
+	xmlns:fibo-be-tr-tr="https://spec.edmcouncil.org/fibo/ontology/BE/Trusts/Trusts/"
+	xmlns:fibo-bp-iss-ambs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/AgencyMBSIssuance/"
+	xmlns:fibo-bp-iss-dbti="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/DebtIssuance/"
+	xmlns:fibo-bp-iss-doc="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceDocuments/"
+	xmlns:fibo-bp-iss-ipo="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/EquitiesIPOIssuance/"
+	xmlns:fibo-bp-iss-mbs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MBSIssuance/"
+	xmlns:fibo-bp-iss-muni="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MuniIssuance/"
+	xmlns:fibo-bp-iss-pmbs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/PrivateLabelMBSIssuance/"
+	xmlns:fibo-bp-iss-prc="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcess/"
+	xmlns:fibo-bp-iss-trm="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcessTerms/"
+	xmlns:fibo-bp-prc-fcp="https://spec.edmcouncil.org/fibo/ontology/BP/Process/FinancialContextAndProcess/"
+	xmlns:fibo-bp-reg-req="https://spec.edmcouncil.org/fibo/ontology/BP/Regulatory/RegulatoryRequirements/"
+	xmlns:fibo-cae-ce-cae="https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActionsEvents/"
+	xmlns:fibo-civ-fnd-civ="https://spec.edmcouncil.org/fibo/ontology/CIV/Funds/CIV/"
+	xmlns:fibo-civ-fnd-clx="https://spec.edmcouncil.org/fibo/ontology/CIV/FundsExt/CIVClassification/"
+	xmlns:fibo-der-ass-ass="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetDerivatives/"
+	xmlns:fibo-der-ass-bas="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetBaskets/"
+	xmlns:fibo-der-ass-bo="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondOptions/"
+	xmlns:fibo-der-ass-brs="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondReturnSwaps/"
+	xmlns:fibo-der-ass-eqf="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityForwards/"
+	xmlns:fibo-der-ass-eqo="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityOptions/"
+	xmlns:fibo-der-ass-eqs="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquitySwaps/"
+	xmlns:fibo-der-com-com="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/Commodities/"
+	xmlns:fibo-der-com-ctr="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesContracts/"
+	xmlns:fibo-der-com-del="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesDelivery/"
+	xmlns:fibo-der-com-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityForwards/"
+	xmlns:fibo-der-com-opt="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityOptions/"
+	xmlns:fibo-der-com-sp="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySpots/"
+	xmlns:fibo-der-com-sw="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySwaps/"
+	xmlns:fibo-der-cr-cds="https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/"
+	xmlns:fibo-der-der-cof="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/OptionContractsOnFutures/"
+	xmlns:fibo-der-der-ex="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ExerciseConventions/"
+	xmlns:fibo-der-der-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Forwards/"
+	xmlns:fibo-der-der-opt="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Options/"
+	xmlns:fibo-der-der-rsw="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ReturnSwaps/"
+	xmlns:fibo-der-der-sp="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Spots/"
+	xmlns:fibo-der-der-spn="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaptions/"
+	xmlns:fibo-der-derx-dbx="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContractsExt/DerivativesBasicsExt/"
+	xmlns:fibo-der-drc-bsc="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/DerivativesBasics/"
+	xmlns:fibo-der-drc-swp="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/"
+	xmlns:fibo-der-drc-swpind="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/SwapsIndividuals/"
+	xmlns:fibo-der-etd-eto="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/ExchangeTradedOptions/"
+	xmlns:fibo-der-etd-fstd="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesStandardizedTerms/"
+	xmlns:fibo-der-etd-fut="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/Futures/"
+	xmlns:fibo-der-etd-fxc="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesExchanges/"
+	xmlns:fibo-der-etd-ostd="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsStandardizedTerms/"
+	xmlns:fibo-der-etd-oxc="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsExchanges/"
+	xmlns:fibo-der-etd-std="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/DerivativesStandardizedTerms/"
+	xmlns:fibo-der-fx-ctr="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxContracts/"
+	xmlns:fibo-der-fx-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxForwards/"
+	xmlns:fibo-der-fx-opt="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxOptions/"
+	xmlns:fibo-der-fx-sp="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSpots/"
+	xmlns:fibo-der-fx-sw="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSwaps/"
+	xmlns:fibo-der-misc-cfd="https://spec.edmcouncil.org/fibo/ontology/DER/OTCMiscContracts/ContractsForDifference/"
+	xmlns:fibo-der-rat-fra="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/ForwardRateAgreements/"
+	xmlns:fibo-der-rat-indo="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/OTCIndexOptions/"
+	xmlns:fibo-der-rat-iro="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IROptions/"
+	xmlns:fibo-der-rgt-raw="https://spec.edmcouncil.org/fibo/ontology/DER/RightsInstruments/RightsAndWarrants/"
+	xmlns:fibo-der-rtd-irswp="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IRSwaps/"
+	xmlns:fibo-der-rtd-isw="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/InflationSwaps/"
+	xmlns:fibo-der-rtd-rtd="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/RateDerivatives/"
+	xmlns:fibo-fbc-2.0-abr="https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-Abridged/"
+	xmlns:fibo-fbc-2.0-na-ex="https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-NorthAmericanExamples/"
+	xmlns:fibo-fbc-dae-crf="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/CreditFacilities/"
+	xmlns:fibo-fbc-dae-dbt="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/"
+	xmlns:fibo-fbc-dae-gty="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/"
 	xmlns:fibo-fbc-fct-breg="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/"
+	xmlns:fibo-fbc-fct-cafse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CAFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-cajrga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CARegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-eufse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EUFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-eufsind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EuropeanFinancialServicesEntitiesIndividuals/"
+	xmlns:fibo-fbc-fct-eurga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EURegulatoryAgencies/"
 	xmlns:fibo-fbc-fct-fse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/FinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-mkt="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/Markets/"
 	xmlns:fibo-fbc-fct-ra="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegistrationAuthorities/"
+	xmlns:fibo-fbc-fct-rga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-usfse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-usfsind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntitiesIndividuals/"
+	xmlns:fibo-fbc-fct-usind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USExampleIndividuals/"
+	xmlns:fibo-fbc-fct-usjrga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USRegulatoryAgencies/"
+	xmlns:fibo-fbc-fi-fi="https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/"
+	xmlns:fibo-fbc-fi-stl="https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/Settlement/"
+	xmlns:fibo-fbc-pas-caa="https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/ClientsAndAccounts/"
 	xmlns:fibo-fbc-pas-fpas="https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/"
 	xmlns:fibo-fnd-aap-agt="https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/"
+	xmlns:fibo-fnd-aap-ppl="https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/"
+	xmlns:fibo-fnd-acc-4217="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/ISO4217-CurrencyCodes/"
+	xmlns:fibo-fnd-acc-aeq="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/AccountingEquity/"
+	xmlns:fibo-fnd-acc-cur="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/"
+	xmlns:fibo-fnd-acc-val="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/Valuation/"
+	xmlns:fibo-fnd-accx-acc="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AccountsMain/"
+	xmlns:fibo-fnd-accx-assx="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AssetExtensions/"
+	xmlns:fibo-fnd-accx-bal="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/BalanceSheetBalances/"
+	xmlns:fibo-fnd-accx-tax="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/Taxation/"
+	xmlns:fibo-fnd-agr-agr="https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Agreements/"
+	xmlns:fibo-fnd-agr-ctr="https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/"
+	xmlns:fibo-fnd-agrx-con="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractualConstructs/"
+	xmlns:fibo-fnd-agrx-ctrx="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractsExtensions/"
+	xmlns:fibo-fnd-agrx-ele="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractElements/"
+	xmlns:fibo-fnd-arr-arr="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Arrangements/"
 	xmlns:fibo-fnd-arr-cd="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Codes/"
 	xmlns:fibo-fnd-arr-cls="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/ClassificationSchemes/"
+	xmlns:fibo-fnd-arr-doc="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/"
 	xmlns:fibo-fnd-arr-id="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/IdentifiersAndIndices/"
 	xmlns:fibo-fnd-arr-lif="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/"
+	xmlns:fibo-fnd-arrxx-ins="https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/ToolsAndInstruments/"
+	xmlns:fibo-fnd-arrxx-meth="https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/MethodsAndRules/"
+	xmlns:fibo-fnd-bus-agc="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/AgentsContexts/"
+	xmlns:fibo-fnd-bus-bg="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/BusinessGoals/"
+	xmlns:fibo-fnd-bus-pol="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/Policy/"
+	xmlns:fibo-fnd-com-com="https://spec.edmcouncil.org/fibo/ontology/FND/Communication/Communication/"
+	xmlns:fibo-fnd-dt-bd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/BusinessDates/"
 	xmlns:fibo-fnd-dt-fd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/"
+	xmlns:fibo-fnd-dt-oc="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/"
+	xmlns:fibo-fnd-gao-gl="https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Goals/"
+	xmlns:fibo-fnd-gao-obj="https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Objectives/"
+	xmlns:fibo-fnd-inf-doc="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Documentation/"
+	xmlns:fibo-fnd-inf-inf="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/InfoCore/"
+	xmlns:fibo-fnd-inf-msg="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Messaging/"
+	xmlns:fibo-fnd-inf-tem="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/TemporalInfo/"
+	xmlns:fibo-fnd-law-cor="https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCore/"
 	xmlns:fibo-fnd-law-jur="https://spec.edmcouncil.org/fibo/ontology/FND/Law/Jurisdiction/"
+	xmlns:fibo-fnd-law-lcap="https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCapacity/"
+	xmlns:fibo-fnd-lawx-rst="https://spec.edmcouncil.org/fibo/ontology/FND/LawExt/RegulatoryRestrictions/"
+	xmlns:fibo-fnd-math-amt="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Amounts/"
+	xmlns:fibo-fnd-math-math="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Math/"
+	xmlns:fibo-fnd-math-qty="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Quantities/"
+	xmlns:fibo-fnd-oac-ctl="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/"
+	xmlns:fibo-fnd-oac-oac="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/OwnershipAndControl/"
+	xmlns:fibo-fnd-oac-own="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/"
 	xmlns:fibo-fnd-org-fm="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/FormalOrganizations/"
+	xmlns:fibo-fnd-org-lg="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/LegitimateOrganizations/"
+	xmlns:fibo-fnd-org-org="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/"
+	xmlns:fibo-fnd-pas-pas="https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/"
+	xmlns:fibo-fnd-pas-psch="https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/PaymentsAndSchedules/"
 	xmlns:fibo-fnd-plc-adr="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/"
 	xmlns:fibo-fnd-plc-cty="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Countries/"
+	xmlns:fibo-fnd-plc-fac="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/"
+	xmlns:fibo-fnd-plc-loc="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/"
 	xmlns:fibo-fnd-plc-vrt="https://spec.edmcouncil.org/fibo/ontology/FND/Places/VirtualPlaces/"
+	xmlns:fibo-fnd-plcx-sit="https://spec.edmcouncil.org/fibo/ontology/FND/PlacesExt/AddressSites/"
+	xmlns:fibo-fnd-pty-pty="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/"
+	xmlns:fibo-fnd-pty-rl="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Roles/"
+	xmlns:fibo-fnd-ptyx-prc="https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyRoleContext/"
+	xmlns:fibo-fnd-ptyx-ptyx="https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyExtensions/"
+	xmlns:fibo-fnd-pub-pub="https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/Publications/"
+	xmlns:fibo-fnd-pub-stdi="https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/StandardsIndividuals/"
+	xmlns:fibo-fnd-qt-qtu="https://spec.edmcouncil.org/fibo/ontology/FND/Quantities/QuantitiesAndUnits/"
+	xmlns:fibo-fnd-quax-qua="https://spec.edmcouncil.org/fibo/ontology/FND/QuantitiesExt/QuantitiesExt/"
 	xmlns:fibo-fnd-rel-rel="https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/"
+	xmlns:fibo-fnd-soc-asp="https://spec.edmcouncil.org/fibo/ontology/FND/SocialConstructsExt/ConstructAspects/"
+	xmlns:fibo-fnd-tim-tim="https://spec.edmcouncil.org/fibo/ontology/FND/TimeExt/Time/"
+	xmlns:fibo-fnd-txn-ecr="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/EconomicResources/"
+	xmlns:fibo-fnd-txn-ev="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/TransactionEvents/"
+	xmlns:fibo-fnd-txn-rea="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/REATransactions/"
+	xmlns:fibo-fnd-txn-sec="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SecuritiesTransactions/"
+	xmlns:fibo-fnd-txn-sup="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SupplyTransactions/"
+	xmlns:fibo-fnd-utl-alx="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Analytics/"
 	xmlns:fibo-fnd-utl-av="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/"
+	xmlns:fibo-fnd-utl-bt="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/BusinessFacingTypes/"
+	xmlns:fibo-fnd-utl-val="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Values/"
+	xmlns:fibo-ind-ei-caei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/CAEconomicIndicators/"
+	xmlns:fibo-ind-ei-ei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/"
+	xmlns:fibo-ind-ei-pub="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicatorPublishers/"
+	xmlns:fibo-ind-ei-usei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/USEconomicIndicators/"
+	xmlns:fibo-ind-fx-fx="https://spec.edmcouncil.org/fibo/ontology/IND/ForeignExchange/ForeignExchange/"
+	xmlns:fibo-ind-ind-ind="https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/"
+	xmlns:fibo-ind-ir-cm="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/CommonInterestRates/"
+	xmlns:fibo-ind-ir-ir="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRates/"
+	xmlns:fibo-ind-ir-pub="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRatePublishers/"
+	xmlns:fibo-ind-mkt-bas="https://spec.edmcouncil.org/fibo/ontology/IND/MarketIndices/BasketIndices/"
+	xmlns:fibo-ln-ln-hmda="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanHMDA/"
+	xmlns:fibo-ln-ln-lgn="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanGeneric/"
+	xmlns:fibo-ln-ln-ln="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanCore/"
+	xmlns:fibo-loan-loan-col="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansCollateral/"
+	xmlns:fibo-loan-loan-gen="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGeneral/"
+	xmlns:fibo-loan-loan-gty="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGuaranties/"
+	xmlns:fibo-loan-loan-loan="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoanBasicTerms/"
+	xmlns:fibo-loan-loan-pty="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansParties/"
+	xmlns:fibo-loan-loan-reg="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansRegulatory/"
+	xmlns:fibo-loan-tem-app="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanApplicationsTemporal/"
+	xmlns:fibo-loan-tem-apr="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansAppraisal/"
+	xmlns:fibo-loan-tem-bor="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanBorrowersTemporal/"
+	xmlns:fibo-loan-tem-cl="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/ConstructionLoansTemporal/"
+	xmlns:fibo-loan-tem-col="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanCollateralTemporal/"
+	xmlns:fibo-loan-tem-ev="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansEvents/"
+	xmlns:fibo-loan-tem-ltv="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansLTV/"
+	xmlns:fibo-loan-tem-ph="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanPhases/"
+	xmlns:fibo-loan-tem-sta="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansStatus/"
+	xmlns:fibo-loan-tem-tem="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansTemporal/"
+	xmlns:fibo-loan-typ-cl="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/ConstructionLoans/"
+	xmlns:fibo-loan-typ-com="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CommercialLoans/"
+	xmlns:fibo-loan-typ-cr="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CreditProducts/"
+	xmlns:fibo-loan-typ-gen="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/GeneralLoans/"
+	xmlns:fibo-loan-typ-mtg="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/MortgageLoans/"
+	xmlns:fibo-loan-typ-per="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/PersonalLoans/"
+	xmlns:fibo-loan-typ-prod="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/LoanProducts/"
+	xmlns:fibo-loan-typ-sec="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/SecuredLoans/"
+	xmlns:fibo-loan-typ-stu="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/StudentLoans/"
+	xmlns:fibo-loan-typ-uns="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/UnsecuredLoans/"
+	xmlns:fibo-md-civx-fun="https://spec.edmcouncil.org/fibo/ontology/MD/CIVTemporal/FundsTemporal/"
+	xmlns:fibo-md-dbtx-aly="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtAnalytics/"
+	xmlns:fibo-md-dbtx-int="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtInterestAmounts/"
+	xmlns:fibo-md-dbtx-py="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtPricingYields/"
+	xmlns:fibo-md-dbtx-red="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtRedemptionAmounts/"
+	xmlns:fibo-md-der-fut="https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/FuturesTemporal/"
+	xmlns:fibo-md-derx-eto="https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/ETOptionsTemporal/"
+	xmlns:fibo-md-eqx-pri="https://spec.edmcouncil.org/fibo/ontology/MD/EquityTemporal/EquityPricing/"
+	xmlns:fibo-md-temx-cre="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditEvents/"
+	xmlns:fibo-md-temx-crr="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditRatings/"
+	xmlns:fibo-md-temx-crs="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityCreditStatuses/"
+	xmlns:fibo-md-temx-cur="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/AnalysisCurves/"
+	xmlns:fibo-md-temx-ins="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/InstrumentTemporalTerms/"
+	xmlns:fibo-md-temx-tem="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/TemporalConcepts/"
+	xmlns:fibo-md-temx-trs="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityTradingStatuses/"
+	xmlns:fibo-sec-dbt-ab-abs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-cbo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CBOs/"
+	xmlns:fibo-sec-dbt-ab-cdo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CDOs/"
+	xmlns:fibo-sec-dbt-ab-clo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CLOs/"
+	xmlns:fibo-sec-dbt-ab-cmo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CMOs/"
+	xmlns:fibo-sec-dbt-ab-mbs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/MortgageBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-pbs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/PoolBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-spv="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSPVs/"
+	xmlns:fibo-sec-dbt-ab-syn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/SyntheticCDOs/"
+	xmlns:fibo-sec-dbt-bo-bo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCommon/"
+	xmlns:fibo-sec-dbt-bo-cft="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowTerms/"
+	xmlns:fibo-sec-dbt-bo-cfv="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowVariants/"
+	xmlns:fibo-sec-dbt-bo-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/"
+	xmlns:fibo-sec-dbt-bo-li="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsListings/"
+	xmlns:fibo-sec-dbt-bo-str="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/STRIPs/"
+	xmlns:fibo-sec-dbt-bo-tax="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsTaxTreatment/"
+	xmlns:fibo-sec-dbt-dbt-cft="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtCashflowTerms/"
+	xmlns:fibo-sec-dbt-dbt-fin="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtFinance/"
+	xmlns:fibo-sec-dbt-dbt-gty="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtInstrumentGuaranties/"
+	xmlns:fibo-sec-dbt-dbt-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtIssuanceTerms/"
+	xmlns:fibo-sec-dbt-dbt-pn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/ParticipationNotes/"
+	xmlns:fibo-sec-dbt-dbti="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtInstruments/"
+	xmlns:fibo-sec-dbt-mm-lpn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/LoanParticipationNotes/"
+	xmlns:fibo-sec-dbt-mm-repo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/REPOs/"
+	xmlns:fibo-sec-dbt-mm-td="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TermDeposits/"
+	xmlns:fibo-sec-dbt-mm-trd="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TradedShortTermDebt/"
+	xmlns:fibo-sec-eq-dr="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/DepositaryReceipts/"
+	xmlns:fibo-sec-eq-eq="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/"
+	xmlns:fibo-sec-eq-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityIssuanceTerms/"
+	xmlns:fibo-sec-eq-lpe="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/LimitedPartnershipEquities/"
+	xmlns:fibo-sec-eq-sha="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareTerms/"
+	xmlns:fibo-sec-eq-she="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderEquity/"
+	xmlns:fibo-sec-eq-shr="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderRights/"
+	xmlns:fibo-sec-sec-ast="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecurityAssets/"
+	xmlns:fibo-sec-sec-bsk="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Baskets/"
+	xmlns:fibo-sec-sec-cls="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesClassification/"
+	xmlns:fibo-sec-sec-id="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/"
+	xmlns:fibo-sec-sec-idind="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentificationIndividuals/"
+	xmlns:fibo-sec-sec-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIssuance/"
+	xmlns:fibo-sec-sec-lst="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesListings/"
+	xmlns:fibo-sec-sec-pls="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Pools/"
+	xmlns:fibo-sec-sec-rst="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesRestrictions/"
+	xmlns:fibo-sec-sec-sch="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/ParametricSchedules/"
+	xmlns:fibo-sec-secx-sec="https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesExt/"
+	xmlns:fibo-sec-secx-tax="https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesTaxTreatment/"
+	xmlns:gidm="http://www.globalids.com/mapping#"
 	xmlns:lcc-3166-1="http://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/"
+	xmlns:lcc-3166-2="http://www.omg.org/spec/LCC/Countries/ISO3166-2-SubdivisionCodes/"
+	xmlns:lcc-3166-2-ca="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CA/"
+	xmlns:lcc-3166-2-gb="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GB/"
+	xmlns:lcc-3166-2-us="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-US/"
+	xmlns:lcc-639-1="http://www.omg.org/spec/LCC/Languages/ISO639-1-LanguageCodes/"
+	xmlns:lcc-639-2="http://www.omg.org/spec/LCC/Languages/ISO639-2-LanguageCodes/"
 	xmlns:lcc-cr="http://www.omg.org/spec/LCC/Countries/CountryRepresentation/"
+	xmlns:lcc-lr="http://www.omg.org/spec/LCC/Languages/LanguageRepresentation/"
+	xmlns:naics-2007="http://linkedmodel.org/vocab/industry-codes/naics-2007#"
 	xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
@@ -66,8 +612,8 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 	
 	<owl:Ontology rdf:about="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/">
-		<rdfs:label>Business Registries Ontology</rdfs:label>
-		<dct:abstract>This ontology extends the Registration Authorities ontology to define specific kinds of registries, such as business entity registries, registries for identifiers and codes of various sorts, and registries for financial institutions and intermediaries based on jurisdiction, who regulates them, and the services they provide.</dct:abstract>
+		<rdfs:label xml:lang="en">Business Registries Ontology</rdfs:label>
+		<dct:abstract xml:lang="en">This ontology extends the Registration Authorities ontology to define specific kinds of registries, such as business entity registries, registries for identifiers and codes of various sorts, and registries for financial institutions and intermediaries based on jurisdiction, who regulates them, and the services they provide.</dct:abstract>
 		<dct:license rdf:datatype="&xsd;anyURI">http://opensource.org/licenses/MIT</dct:license>
 		<sm:contentLanguage rdf:datatype="&xsd;anyURI">http://www.w3.org/standards/techs/owl#w3c_all</sm:contentLanguage>
 		<sm:copyright>Copyright (c) 2015-2018 EDM Council, Inc.</sm:copyright>
@@ -101,8 +647,8 @@
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/"/>
 		<owl:versionIRI rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FBC/20181001/FunctionalEntities/BusinessRegistries/"/>
-		<skos:changeNote>The https://spec.edmcouncil.org/fibo/ontology/FBC/20150801/FunctionalEntities/BusinessRegistries.rdf version of this ontology was modified per the issue resolutions identified in the FIBO FBC 1.1 RTF report.</skos:changeNote>
-		<skos:changeNote>The https://spec.edmcouncil.org/fibo/ontology/FBC/20160801/FunctionalEntities/BusinessRegistries.rdf version of this ontology was modified per FIBO 2.0 RFC primarily to loosen the constraints on address properties and better support standards including ISO 9362 (BIC codes), ISO 13616 (IBAN and BBAN codes), and ISO 17442 (the GLIEF LEI standard).</skos:changeNote>
+		<skos:changeNote xml:lang="en">The https://spec.edmcouncil.org/fibo/ontology/FBC/20150801/FunctionalEntities/BusinessRegistries.rdf version of this ontology was modified per the issue resolutions identified in the FIBO FBC 1.1 RTF report.</skos:changeNote>
+		<skos:changeNote xml:lang="en">The https://spec.edmcouncil.org/fibo/ontology/FBC/20160801/FunctionalEntities/BusinessRegistries.rdf version of this ontology was modified per FIBO 2.0 RFC primarily to loosen the constraints on address properties and better support standards including ISO 9362 (BIC codes), ISO 13616 (IBAN and BBAN codes), and ISO 17442 (the GLIEF LEI standard).</skos:changeNote>
 		<fibo-fnd-utl-av:hasMaturityLevel rdf:resource="&fibo-fnd-utl-av;Release"/>
 	</owl:Ontology>
 	
@@ -115,37 +661,37 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;isClassifiedBy"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;NorthAmericanIndustryClassificationSystemCode"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">0</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fbc-fct-breg;hasHeadquartersAddress"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;RegistrationAddress"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">0</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;isClassifiedBy"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;StandardIndustrialClassificationCode"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">0</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 	</owl:Class>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;ActiveStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;EntityStatus"/>
-		<rdfs:label>active status</rdfs:label>
-		<skos:definition>as of the last report or update, the entity was legally registered and operating</skos:definition>
+		<rdfs:label xml:lang="en">active status</rdfs:label>
+		<skos:definition xml:lang="en">as of the last report or update, the entity was legally registered and operating</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>ACTIVE</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;AnnulledStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>annulled status</rdfs:label>
-		<skos:definition>status indicating that the registration was determined to be erroneous or invalid after issuance</skos:definition>
+		<rdfs:label xml:lang="en">annulled status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration was determined to be erroneous or invalid after issuance</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>ANNULLED</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
@@ -170,18 +716,18 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-fse;BusinessIdentifierCode"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>business identifier code data record</rdfs:label>
-		<skos:definition>an entry in a registry that conforms to ISO 9362:2014 for the mananagement of BIC codes and related registration information</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>BIC data record</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">business identifier code data record</rdfs:label>
+		<skos:definition xml:lang="en">an entry in a registry that conforms to ISO 9362:2014 for the mananagement of BIC codes and related registration information</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">BIC data record</fibo-fnd-utl-av:abbreviation>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.swift.com/standards/data-standards/bic</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;BusinessIdentifierCodeRegistry">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;BusinessRegistry"/>
-		<rdfs:label>business identifier code registry</rdfs:label>
-		<skos:definition>a registry for registering and maintaining information about bank and other business identifier codes that conform to ISO 9362:2014</skos:definition>
+		<rdfs:label xml:lang="en">business identifier code registry</rdfs:label>
+		<skos:definition xml:lang="en">a registry for registering and maintaining information about bank and other business identifier codes that conform to ISO 9362:2014</skos:definition>
 		<fibo-fnd-rel-rel:isManagedBy rdf:resource="&fibo-fbc-fct-breg;ISO9362RegistrationAuthority"/>
-		<fibo-fnd-utl-av:abbreviation>BIC registry</fibo-fnd-utl-av:abbreviation>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">BIC registry</fibo-fnd-utl-av:abbreviation>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.swift.com/standards/data-standards/bic</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
@@ -191,7 +737,7 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-aap-agt;identifies"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;BusinessRegistry"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -200,8 +746,8 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;BusinessRegistrationAuthority"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>business register identifier</rdfs:label>
-		<skos:definition>an identifier that uniquely identifies a business register, such as a register identified by the Global Legal Entity Identifier Foundation (GLEIF) registration authorities list</skos:definition>
+		<rdfs:label xml:lang="en">business register identifier</rdfs:label>
+		<skos:definition xml:lang="en">an identifier that uniquely identifies a business register, such as a register identified by the Global Legal Entity Identifier Foundation (GLEIF) registration authorities list</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/gleif-registration-authorities-list</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
@@ -219,10 +765,10 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;BusinessRegistry"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>business registration authority</rdfs:label>
-		<skos:definition>a registration authority that is responsible for maintaining a registry of business entities</skos:definition>
+		<rdfs:label xml:lang="en">business registration authority</rdfs:label>
+		<skos:definition xml:lang="en">a registration authority that is responsible for maintaining a registry of business entities</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/gleif-registration-authorities-list</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:explanatoryNote>A business registry may include any government-managed registry for registering a business, such as a state department of corporations in the US, as well as other registries such as a local operating unit (LOU) for registration of legal entity identifiers (LEIs).  Any sanctioned registration authority as defined by the Registration Authorities List, published by GLEIF, is a business registration authority in this sense.</fibo-fnd-utl-av:explanatoryNote>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">A business registry may include any government-managed registry for registering a business, such as a state department of corporations in the US, as well as other registries such as a local operating unit (LOU) for registration of legal entity identifiers (LEIs).  Any sanctioned registration authority as defined by the Registration Authorities List, published by GLEIF, is a business registration authority in this sense.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;BusinessRegistry">
@@ -230,7 +776,7 @@
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fbc-fct-breg;hasRegistryName"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">0</owl:minQualifiedCardinality>
 				<owl:onDataRange rdf:resource="&xsd;string"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
@@ -238,7 +784,7 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;isManagedBy"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;BusinessRegistrationAuthority"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -247,8 +793,8 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;BusinessRegistryEntry"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>business registry</rdfs:label>
-		<skos:definition>a registry for registering and maintaining information about business entities</skos:definition>
+		<rdfs:label xml:lang="en">business registry</rdfs:label>
+		<skos:definition xml:lang="en">a registry for registering and maintaining information about business entities</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/gleif-registration-authorities-list</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
@@ -258,7 +804,7 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fbc-fct-breg;hasRegistrationStatus"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -284,28 +830,28 @@
 				<owl:someValuesFrom rdf:resource="&fibo-be-corp-corp;RegistrationIdentifier"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>business registry entry</rdfs:label>
-		<skos:definition>an entry in a business registry</skos:definition>
+		<rdfs:label xml:lang="en">business registry entry</rdfs:label>
+		<skos:definition xml:lang="en">an entry in a business registry</skos:definition>
 	</owl:Class>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;CancelledStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>cancelled status</rdfs:label>
-		<skos:definition>status indicating that the registration was abandoned prior to issuance</skos:definition>
+		<rdfs:label xml:lang="en">cancelled status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration was abandoned prior to issuance</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>CANCELLED</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;DuplicateStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>duplicate status</rdfs:label>
-		<skos:definition>status indicating that the registration was determined to be a duplicate registration of the same entity as another registration; duplicate status is assigned to the non-surviving registration (i.e. the identifier that should no longer be used)</skos:definition>
+		<rdfs:label xml:lang="en">duplicate status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration was determined to be a duplicate registration of the same entity as another registration; duplicate status is assigned to the non-surviving registration (i.e. the identifier that should no longer be used)</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>DUPLICATE</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<rdfs:Datatype rdf:about="&fibo-fbc-fct-breg;EntityExpirationReasonEnumeration">
-		<rdfs:label>entity expiration reason enumeration</rdfs:label>
+		<rdfs:label xml:lang="en">entity expiration reason enumeration</rdfs:label>
 		<owl:equivalentClass>
 			<rdfs:Datatype>
 				<owl:oneOf>
@@ -326,7 +872,7 @@
 				</owl:oneOf>
 			</rdfs:Datatype>
 		</owl:equivalentClass>
-		<skos:definition>an enumerated datatype specifying the reason that a legal entity ceased to exist and/or operate as specified in the LEI registry for that entity</skos:definition>
+		<skos:definition xml:lang="en">an enumerated datatype specifying the reason that a legal entity ceased to exist and/or operate as specified in the LEI registry for that entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</rdfs:Datatype>
 	
@@ -338,9 +884,9 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;EntityLegalFormRegistryEntry"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>entity legal form registry</rdfs:label>
-		<skos:definition>a registry for registering and maintaining information about the legal forms that are valid for business entities for a particular jurisdiction following the ISO 20275 standard</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>ELF registry</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">entity legal form registry</rdfs:label>
+		<skos:definition xml:lang="en">a registry for registering and maintaining information about the legal forms that are valid for business entities for a particular jurisdiction following the ISO 20275 standard</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">ELF registry</fibo-fnd-utl-av:abbreviation>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/code-lists/iso-20275-entity-legal-forms-code-list</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
@@ -352,22 +898,22 @@
 				<owl:someValuesFrom rdf:resource="&fibo-be-le-lei;EntityLegalFormIdentifier"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>entity legal form registry entry</rdfs:label>
-		<skos:definition>an entry in an entity legal form registry that conforms to ISO 20275 and the Global Legal Entity Identifier Foundation (GLEIF) Entity Legal Form (ELF) code structure</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>ELF registry entry</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">entity legal form registry entry</rdfs:label>
+		<skos:definition xml:lang="en">an entry in an entity legal form registry that conforms to ISO 20275 and the Global Legal Entity Identifier Foundation (GLEIF) Entity Legal Form (ELF) code structure</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">ELF registry entry</fibo-fnd-utl-av:abbreviation>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/code-lists/iso-20275-entity-legal-forms-code-list</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;EntityStatus">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-arr-lif;LifecycleStage"/>
-		<rdfs:label>entity status</rdfs:label>
-		<skos:definition>a lifecycle stage indicating the operational and/or legal status of an entity as specified in a given business registry for that entity</skos:definition>
+		<rdfs:label xml:lang="en">entity status</rdfs:label>
+		<skos:definition xml:lang="en">a lifecycle stage indicating the operational and/or legal status of an entity as specified in a given business registry for that entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:explanatoryNote>In some jurisdictions, there may be other possible values for entity status, such as suspended in the State of California, thus the individuals provided herein are not intended to be exhaustive.</fibo-fnd-utl-av:explanatoryNote>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">In some jurisdictions, there may be other possible values for entity status, such as suspended in the State of California, thus the individuals provided herein are not intended to be exhaustive.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<rdfs:Datatype rdf:about="&fibo-fbc-fct-breg;EntityValidationLevelEnumeration">
-		<rdfs:label>entity validation level enumeration</rdfs:label>
+		<rdfs:label xml:lang="en">entity validation level enumeration</rdfs:label>
 		<owl:equivalentClass>
 			<rdfs:Datatype>
 				<owl:oneOf>
@@ -388,41 +934,41 @@
 				</owl:oneOf>
 			</rdfs:Datatype>
 		</owl:equivalentClass>
-		<skos:definition>an enumerated datatype specifying the level of validation performed by the GLEIF or LOU with respect to the reference data provided by the registrant</skos:definition>
+		<skos:definition xml:lang="en">an enumerated datatype specifying the level of validation performed by the GLEIF or LOU with respect to the reference data provided by the registrant</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</rdfs:Datatype>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;ISO9362RegistrationAuthority">
 		<rdf:type rdf:resource="&fibo-fbc-fct-ra;RegistrationAuthority"/>
 		<rdf:type rdf:resource="&fibo-fbc-pas-fpas;FinancialServiceProvider"/>
-		<rdfs:label>ISO 9362 Registration Authority (RA)</rdfs:label>
-		<skos:definition>the ISO 9362:2014, Business Identifier Code (BIC) Registration Authority</skos:definition>
+		<rdfs:label xml:lang="en">ISO 9362 Registration Authority (RA)</rdfs:label>
+		<skos:definition xml:lang="en">the ISO 9362:2014, Business Identifier Code (BIC) Registration Authority</skos:definition>
 		<fibo-fnd-rel-rel:hasIdentity rdf:resource="&fibo-fbc-fct-breg;SocietyForWorldwideInterbankFinancialTelecommunication"/>
 		<fibo-fnd-rel-rel:manages rdf:resource="&fibo-fbc-fct-breg;BusinessIdentifierCodeRegistry"/>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.swift.com/standards/data-standards/bic</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:synonym>BIC code registrar</fibo-fnd-utl-av:synonym>
+		<fibo-fnd-utl-av:synonym xml:lang="en">BIC code registrar</fibo-fnd-utl-av:synonym>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;InactiveStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;EntityStatus"/>
-		<rdfs:label>inactive status</rdfs:label>
-		<skos:definition>the entity that was assigned the identifier (business, LEI, or other) is no longer legally registered and/or operating, whether as a result of business closure, acquisition by or merger with another (or new) entity, or determination of illegitimacy</skos:definition>
+		<rdfs:label xml:lang="en">inactive status</rdfs:label>
+		<skos:definition xml:lang="en">the entity that was assigned the identifier (business, LEI, or other) is no longer legally registered and/or operating, whether as a result of business closure, acquisition by or merger with another (or new) entity, or determination of illegitimacy</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>INACTIVE</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;IssuedStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>issued status</rdfs:label>
-		<skos:definition>status indicating that the registration has been validated and issued, and which identifies an entity that was operating legally as of the last update</skos:definition>
+		<rdfs:label xml:lang="en">issued status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration has been validated and issued, and which identifies an entity that was operating legally as of the last update</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>ISSUED</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;LapsedStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>lapsed status</rdfs:label>
-		<skos:definition>status indicating that the registration that has not been renewed by the specified renewal date and is not known by public sources to have ceased operation as of the last update</skos:definition>
+		<rdfs:label xml:lang="en">lapsed status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration that has not been renewed by the specified renewal date and is not known by public sources to have ceased operation as of the last update</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>LAPSED</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
@@ -433,7 +979,7 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;isManagedBy"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;LocalOperatingUnit"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -442,9 +988,9 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;LegalEntityIdentifierRegistryEntry"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>legal entity identifier registry</rdfs:label>
-		<skos:definition>a registry for registering and maintaining information about business entities for a particular jurisdiction</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>LEI registry</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">legal entity identifier registry</rdfs:label>
+		<skos:definition xml:lang="en">a registry for registering and maintaining information about business entities for a particular jurisdiction</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">LEI registry</fibo-fnd-utl-av:abbreviation>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
@@ -454,7 +1000,7 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fbc-fct-breg;hasValidationAuthority"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;BusinessRegistrationAuthority"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">0</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -475,9 +1021,9 @@
 				<owl:someValuesFrom rdf:resource="&fibo-be-le-lei;LegalEntityIdentifier"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>legal entity identifier registry entry</rdfs:label>
-		<skos:definition>an entry in a legal entity identifier registry that conforms to ISO 17442 and the Global Legal Entity Identifier Foundation (GLEIF) Common Data Format (CDF)</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>LEI registry entry</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">legal entity identifier registry entry</rdfs:label>
+		<skos:definition xml:lang="en">an entry in a legal entity identifier registry that conforms to ISO 17442 and the Global Legal Entity Identifier Foundation (GLEIF) Common Data Format (CDF)</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">LEI registry entry</fibo-fnd-utl-av:abbreviation>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
@@ -501,11 +1047,11 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;LegalEntityIdentifierRegistry"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>local operating unit</rdfs:label>
-		<skos:definition>a registration authority that issues legal entity identifiers and is authorized by the Global LEI Foundation to do so</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>LOU</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">local operating unit</rdfs:label>
+		<skos:definition xml:lang="en">a registration authority that issues legal entity identifiers and is authorized by the Global LEI Foundation to do so</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">LOU</fibo-fnd-utl-av:abbreviation>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:explanatoryNote>LOUs supply registration, renewal and other services, and act as the primary interface for legal entities wishing to obtain an LEI.</fibo-fnd-utl-av:explanatoryNote>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">LOUs supply registration, renewal and other services, and act as the primary interface for legal entities wishing to obtain an LEI.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;LocalOperatingUnitIdentifier">
@@ -515,18 +1061,18 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-aap-agt;identifies"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;LocalOperatingUnit"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>local operating unit identifier</rdfs:label>
-		<skos:definition>an identifier that uniquely identifies a local operating unit (LOU), issued by the Global Legal Entity Identifier Foundation (GLEIF)</skos:definition>
+		<rdfs:label xml:lang="en">local operating unit identifier</rdfs:label>
+		<skos:definition xml:lang="en">an identifier that uniquely identifies a local operating unit (LOU), issued by the Global Legal Entity Identifier Foundation (GLEIF)</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/gleif-registration-authorities-list</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;MergedStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>merged status</rdfs:label>
-		<skos:definition>status indicating that the registration is for an entity that has been merged into another legal entity, such that this legal entity no longer exists as an independently operating entity</skos:definition>
+		<rdfs:label xml:lang="en">merged status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration is for an entity that has been merged into another legal entity, such that this legal entity no longer exists as an independently operating entity</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>MERGED</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
@@ -538,14 +1084,14 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;hasDefinition"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;NorthAmericanIndustryClassificationSystemScheme"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;hasTag"/>
 				<owl:onDataRange rdf:resource="&xsd;string"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -563,9 +1109,9 @@
 				</owl:someValuesFrom>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>North American Industry Classification System code</rdfs:label>
-		<skos:definition>the North American Industry Classification System (NAICS) code representing an industry</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>NAICS code</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">North American Industry Classification System code</rdfs:label>
+		<skos:definition xml:lang="en">the North American Industry Classification System (NAICS) code representing an industry</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">NAICS code</fibo-fnd-utl-av:abbreviation>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;NorthAmericanIndustryClassificationSystemScheme">
@@ -577,42 +1123,42 @@
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;NorthAmericanIndustryClassificationSystemCode"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>North American Industry Classification System scheme</rdfs:label>
+		<rdfs:label xml:lang="en">North American Industry Classification System scheme</rdfs:label>
 		<rdfs:seeAlso rdf:resource="https://www.census.gov/eos/www/naics/"/>
-		<skos:definition>the scheme defining the North American Industry Classification System (NAICS) Codes</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote>The North American Industry Classification System (NAICS) is the standard used by Federal statistical agencies in classifying business establishments for the purpose of collecting, analyzing, and publishing statistical data related to the U.S. business economy.
+		<skos:definition xml:lang="en">the scheme defining the North American Industry Classification System (NAICS) Codes</skos:definition>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">The North American Industry Classification System (NAICS) is the standard used by Federal statistical agencies in classifying business establishments for the purpose of collecting, analyzing, and publishing statistical data related to the U.S. business economy.
 
 NAICS was developed under the auspices of the Office of Management and Budget (OMB), and adopted in 1997 to replace the Standard Industrial Classification (SIC) system. It was developed jointly by the U.S. Economic Classification Policy Committee (ECPC), Statistics Canada and Mexico&apos;s Instituto Nacional Estadistica y Geografia, to allow for a high level of comparability in business statistics among the North American countries.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;PendingArchivalStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>pending archival status</rdfs:label>
-		<skos:definition>status indicating that the registration is about to be transferred to a different registration authority, after which its registration status will revert to a non-pending status</skos:definition>
+		<rdfs:label xml:lang="en">pending archival status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration is about to be transferred to a different registration authority, after which its registration status will revert to a non-pending status</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>PENDING_ARCHIVAL</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;PendingTransferStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>pending transfer status</rdfs:label>
-		<skos:definition>status indicating that the registration has requested transfer to a different registration authority, and for which transfer is in progress</skos:definition>
+		<rdfs:label xml:lang="en">pending transfer status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration has requested transfer to a different registration authority, and for which transfer is in progress</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>PENDING_TRANSFER</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;PendingValidationStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>pending validation status</rdfs:label>
-		<skos:definition>status indicating that an application for registration has been submitted and is in process, pending validation</skos:definition>
+		<rdfs:label xml:lang="en">pending validation status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that an application for registration has been submitted and is in process, pending validation</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>PENDING_VALIDATION</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;RegistrationAddress">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-plc-adr;PhysicalAddress"/>
-		<rdfs:label>registration address</rdfs:label>
-		<skos:definition>an address for an organization used to register that organization in any registry, such as its legal address, headquarters address, a local address used to obtain a license or pay taxes in some jurisdiction, etc.</skos:definition>
+		<rdfs:label xml:lang="en">registration address</rdfs:label>
+		<skos:definition xml:lang="en">an address for an organization used to register that organization in any registry, such as its legal address, headquarters address, a local address used to obtain a license or pay taxes in some jurisdiction, etc.</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
@@ -623,34 +1169,34 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-aap-agt;identifies"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;BusinessRegistry"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>registration authority code</rdfs:label>
-		<skos:definition>an identifier that uniquely identifies a business registry, and is associated with a registration authority and jurisdiction, issued by the Global Legal Entity Identifier Foundation (GLEIF)</skos:definition>
+		<rdfs:label xml:lang="en">registration authority code</rdfs:label>
+		<skos:definition xml:lang="en">an identifier that uniquely identifies a business registry, and is associated with a registration authority and jurisdiction, issued by the Global Legal Entity Identifier Foundation (GLEIF)</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/gleif-registration-authorities-list</fibo-fnd-utl-av:adaptedFrom>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;RegistrationStatus">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-arr-lif;LifecycleStage"/>
-		<rdfs:label>registration status</rdfs:label>
-		<skos:definition>a lifecycle stage indicating the status of a given registration of something, such as a business or legal entity, as specified by the registration authority</skos:definition>
+		<rdfs:label xml:lang="en">registration status</rdfs:label>
+		<skos:definition xml:lang="en">a lifecycle stage indicating the status of a given registration of something, such as a business or legal entity, as specified by the registration authority</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:explanatoryNote>There may be other possible values for registration status, depending on the registry, thus the individuals provided herein are not intended to be exhaustive.</fibo-fnd-utl-av:explanatoryNote>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">There may be other possible values for registration status, depending on the registry, thus the individuals provided herein are not intended to be exhaustive.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;RetiredStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>retired status</rdfs:label>
-		<skos:definition>status indicating that the registration is for an entity that has ceased operation, without having been merged into another entity</skos:definition>
+		<rdfs:label xml:lang="en">retired status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration is for an entity that has ceased operation, without having been merged into another entity</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>RETIRED</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;SWIFTHeadquartersAddress">
 		<rdf:type rdf:resource="&fibo-be-le-fbo;RegisteredAddress"/>
-		<rdfs:label>SWIFT headquarters address</rdfs:label>
-		<skos:definition>individual representing the headquarters address for the Society for Worldwide Interbank Financial Telecommunication (SWIFT)</skos:definition>
+		<rdfs:label xml:lang="en">SWIFT headquarters address</rdfs:label>
+		<skos:definition xml:lang="en">individual representing the headquarters address for the Society for Worldwide Interbank Financial Telecommunication (SWIFT)</skos:definition>
 		<fibo-fbc-fct-breg:hasAddressLine1>Avenue Adèle 1</fibo-fbc-fct-breg:hasAddressLine1>
 		<fibo-fbc-fct-breg:hasCity>La Hulpe</fibo-fbc-fct-breg:hasCity>
 		<fibo-fbc-fct-breg:hasCountry rdf:resource="&lcc-3166-1;Belgium"/>
@@ -659,12 +1205,12 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;SocietyForWorldwideInterbankFinancialTelecommunication">
 		<rdf:type rdf:resource="&fibo-be-le-fbo;NotForProfitOrganization"/>
-		<rdfs:label>Society for Worldwide Interbank Financial Telecommunication (SWIFT)</rdfs:label>
-		<skos:definition>individual representing the Society for Worldwide Interbank Financial Telecommunication (SWIFT) legal entity, which is a global member-owned cooperative and the world&apos;s leading provider of secure financial messaging services</skos:definition>
+		<rdfs:label xml:lang="en">Society for Worldwide Interbank Financial Telecommunication (SWIFT)</rdfs:label>
+		<skos:definition xml:lang="en">individual representing the Society for Worldwide Interbank Financial Telecommunication (SWIFT) legal entity, which is a global member-owned cooperative and the world&apos;s leading provider of secure financial messaging services</skos:definition>
 		<fibo-fbc-fct-breg:hasHeadquartersAddress rdf:resource="&fibo-fbc-fct-breg;SWIFTHeadquartersAddress"/>
 		<fibo-fbc-fct-breg:hasWebsite rdf:datatype="&xsd;anyURI">https://www.swift.com/</fibo-fbc-fct-breg:hasWebsite>
 		<fibo-fnd-rel-rel:hasLegalName>Society for Worldwide Interbank Financial Telecommunication SCRL/CVBA</fibo-fnd-rel-rel:hasLegalName>
-		<fibo-fnd-utl-av:abbreviation>SWIFT</fibo-fnd-utl-av:abbreviation>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">SWIFT</fibo-fnd-utl-av:abbreviation>
 	</owl:NamedIndividual>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;StandardIndustrialClassificationCode">
@@ -674,14 +1220,14 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;hasDefinition"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;StandardIndustrialClassificationScheme"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;hasTag"/>
 				<owl:onDataRange rdf:resource="&xsd;string"/>
-				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;integer">1</owl:qualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -699,9 +1245,9 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 				</owl:someValuesFrom>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>standard industrial classification code</rdfs:label>
-		<skos:definition>the SIC code representing an industry</skos:definition>
-		<fibo-fnd-utl-av:abbreviation>SIC code</fibo-fnd-utl-av:abbreviation>
+		<rdfs:label xml:lang="en">standard industrial classification code</rdfs:label>
+		<skos:definition xml:lang="en">the SIC code representing an industry</skos:definition>
+		<fibo-fnd-utl-av:abbreviation xml:lang="en">SIC code</fibo-fnd-utl-av:abbreviation>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-fbc-fct-breg;StandardIndustrialClassificationScheme">
@@ -713,88 +1259,88 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 				<owl:someValuesFrom rdf:resource="&fibo-fbc-fct-breg;StandardIndustrialClassificationCode"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label>standard industrial classification scheme</rdfs:label>
+		<rdfs:label xml:lang="en">standard industrial classification scheme</rdfs:label>
 		<rdfs:seeAlso rdf:resource="https://www.osha.gov/pls/imis/sic_manual.html/"/>
-		<skos:definition>the scheme defining the Standard Industrial Classification (SIC) Code List</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote>Standard Industrial Classifications are four-digit codes that categorize companies by the type of business activities they engage in. These codes were created by the U.S. government in 1937 to facilitate analysis of economic activity across government agencies and within industries. They were mostly replaced in 1997 by a new system of six-digit codes called the North American Industry Classification System (NAICS). The new codes were adopted in part to standardize industry data collection and analysis in between Canada, the United States and Mexico which had entered into the North American Free Trade Agreement.  Note that certain organizations, such as the Securities and Exchange Commission (SEC) still use SIC codes for some purposes.</fibo-fnd-utl-av:explanatoryNote>
+		<skos:definition xml:lang="en">the scheme defining the Standard Industrial Classification (SIC) Code List</skos:definition>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">Standard Industrial Classifications are four-digit codes that categorize companies by the type of business activities they engage in. These codes were created by the U.S. government in 1937 to facilitate analysis of economic activity across government agencies and within industries. They were mostly replaced in 1997 by a new system of six-digit codes called the North American Industry Classification System (NAICS). The new codes were adopted in part to standardize industry data collection and analysis in between Canada, the United States and Mexico which had entered into the North American Free Trade Agreement.  Note that certain organizations, such as the Securities and Exchange Commission (SEC) still use SIC codes for some purposes.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:NamedIndividual rdf:about="&fibo-fbc-fct-breg;TransferredStatus">
 		<rdf:type rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<rdfs:label>transferred status</rdfs:label>
-		<skos:definition>status indicating that the registration that has been transferred to a different registration authority</skos:definition>
+		<rdfs:label xml:lang="en">transferred status</rdfs:label>
+		<skos:definition xml:lang="en">status indicating that the registration that has been transferred to a different registration authority</skos:definition>
 		<fibo-fnd-rel-rel:hasTag>TRANSFERRED</fibo-fnd-rel-rel:hasTag>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:NamedIndividual>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasAddressLine1">
-		<rdfs:label>has address line 1</rdfs:label>
+		<rdfs:label xml:lang="en">has address line 1</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-fnd-plc-adr;PhysicalAddress"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>the first line of the street address</skos:definition>
+		<skos:definition xml:lang="en">the first line of the street address</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasAddressLine2">
-		<rdfs:label>has address line 2</rdfs:label>
+		<rdfs:label xml:lang="en">has address line 2</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-fnd-plc-adr;PhysicalAddress"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>the second line of the street address</skos:definition>
+		<skos:definition xml:lang="en">the second line of the street address</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasAddressLine3">
-		<rdfs:label>has address line 3</rdfs:label>
+		<rdfs:label xml:lang="en">has address line 3</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-fnd-plc-adr;PhysicalAddress"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>the third line of the street address</skos:definition>
+		<skos:definition xml:lang="en">the third line of the street address</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:explanatoryNote>This element SHALL be omitted if address line 2 is omitted.</fibo-fnd-utl-av:explanatoryNote>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This element SHALL be omitted if address line 2 is omitted.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasAddressLine4">
-		<rdfs:label>has address line 4</rdfs:label>
+		<rdfs:label xml:lang="en">has address line 4</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-fnd-plc-adr;PhysicalAddress"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>the fourth line of the street address</skos:definition>
+		<skos:definition xml:lang="en">the fourth line of the street address</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:explanatoryNote>This element SHALL be omitted if address line 3 is omitted.</fibo-fnd-utl-av:explanatoryNote>
+		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This element SHALL be omitted if address line 3 is omitted.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasAlternativeLanguageLegalName">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;hasLegalName"/>
-		<rdfs:label>has alternative language legal name</rdfs:label>
+		<rdfs:label xml:lang="en">has alternative language legal name</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>a registered legal name for the entity in an alternative language used in the legal jurisdiction in which the entity is registered</skos:definition>
+		<skos:definition xml:lang="en">a registered legal name for the entity in an alternative language used in the legal jurisdiction in which the entity is registered</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasAutomaticallyTransliteratedLegalName">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fbc-fct-breg;hasTransliteratedLegalName"/>
-		<rdfs:label>has automatically transliterated legal name</rdfs:label>
+		<rdfs:label xml:lang="en">has automatically transliterated legal name</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>an auto-generated ASCII-transliterated representation of the legal name for the entity</skos:definition>
+		<skos:definition xml:lang="en">an auto-generated ASCII-transliterated representation of the legal name for the entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasCity">
-		<rdfs:label>has city</rdfs:label>
+		<rdfs:label xml:lang="en">has city</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>the name of the city</skos:definition>
+		<skos:definition xml:lang="en">the name of the city</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:usageNote>This property should be used in cases where a formal individual for the business center or municipality is not available.  Note that Geonames could be used as a source in addition to FIBO, however, in cases where an individual is desired.</fibo-fnd-utl-av:usageNote>
+		<fibo-fnd-utl-av:usageNote xml:lang="en">This property should be used in cases where a formal individual for the business center or municipality is not available.  Note that Geonames could be used as a source in addition to FIBO, however, in cases where an individual is desired.</fibo-fnd-utl-av:usageNote>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasCountry">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;has"/>
-		<rdfs:label>has country</rdfs:label>
+		<rdfs:label xml:lang="en">has country</rdfs:label>
 		<rdfs:range rdf:resource="&lcc-cr;Country"/>
-		<skos:definition>identifies the country according to ISO 3166-1</skos:definition>
+		<skos:definition xml:lang="en">identifies the country according to ISO 3166-1</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasEntityExpirationDate">
-		<rdfs:label>has entity expiration date</rdfs:label>
+		<rdfs:label xml:lang="en">has entity expiration date</rdfs:label>
 		<rdfs:range>
 			<rdfs:Datatype>
 				<owl:unionOf rdf:parseType="Collection">
@@ -807,36 +1353,36 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 				</owl:unionOf>
 			</rdfs:Datatype>
 		</rdfs:range>
-		<skos:definition>the date on which an entity ceased to exist</skos:definition>
+		<skos:definition xml:lang="en">the date on which an entity ceased to exist</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasEntityExpirationReason">
-		<rdfs:label>has entity expiration reason</rdfs:label>
+		<rdfs:label xml:lang="en">has entity expiration reason</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>indicates the reason that an entity ceased to exist (i.e., disolved, merged with another entity, etc.)</skos:definition>
+		<skos:definition xml:lang="en">indicates the reason that an entity ceased to exist (i.e., disolved, merged with another entity, etc.)</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasEntityStatus">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;has"/>
-		<rdfs:label>has entity status</rdfs:label>
+		<rdfs:label xml:lang="en">has entity status</rdfs:label>
 		<rdfs:range rdf:resource="&fibo-fbc-fct-breg;EntityStatus"/>
-		<skos:definition>indicates the status of the entity (i.e., active, inactive)</skos:definition>
+		<skos:definition xml:lang="en">indicates the status of the entity (i.e., active, inactive)</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasHeadquartersAddress">
 		<rdfs:subPropertyOf rdf:resource="&fibo-be-le-fbo;hasPrimaryAddress"/>
-		<rdfs:label>has headquarters address</rdfs:label>
+		<rdfs:label xml:lang="en">has headquarters address</rdfs:label>
 		<rdfs:range rdf:resource="&fibo-fbc-fct-breg;RegistrationAddress"/>
-		<skos:definition>identifies the headquarters address for the registered entity</skos:definition>
+		<skos:definition xml:lang="en">identifies the headquarters address for the registered entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasInitialRegistrationDate">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fbc-fct-ra;hasRegistrationDate"/>
-		<rdfs:label>has initial registration date</rdfs:label>
+		<rdfs:label xml:lang="en">has initial registration date</rdfs:label>
 		<rdfs:range>
 			<rdfs:Datatype>
 				<owl:unionOf rdf:parseType="Collection">
@@ -849,51 +1395,51 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 				</owl:unionOf>
 			</rdfs:Datatype>
 		</rdfs:range>
-		<skos:definition>the date on which an identifier or other registered item was first registered</skos:definition>
+		<skos:definition xml:lang="en">the date on which an identifier or other registered item was first registered</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasMunicipality">
-		<rdfs:label>has municipality</rdfs:label>
+		<rdfs:label xml:lang="en">has municipality</rdfs:label>
 		<rdfs:range rdf:resource="&fibo-fnd-plc-cty;Municipality"/>
-		<skos:definition>identifies a business center, city, or municipality</skos:definition>
+		<skos:definition xml:lang="en">identifies a business center, city, or municipality</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasPostalCode">
-		<rdfs:label>has postal code</rdfs:label>
+		<rdfs:label xml:lang="en">has postal code</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-fnd-plc-adr;PhysicalAddress"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>the postal code of this address as specified by the local postal service</skos:definition>
+		<skos:definition xml:lang="en">the postal code of this address as specified by the local postal service</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasPreferredTransliteratedLegalName">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fbc-fct-breg;hasTransliteratedLegalName"/>
-		<rdfs:label>has preferred transliterated legal name</rdfs:label>
+		<rdfs:label xml:lang="en">has preferred transliterated legal name</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>a preferred ASCII-transliterated representation of the legal name for the entity</skos:definition>
+		<skos:definition xml:lang="en">a preferred ASCII-transliterated representation of the legal name for the entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasPriorLegalName">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;hasLegalName"/>
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;wasFormerlyKnownAs"/>
-		<rdfs:label>has prior legal name</rdfs:label>
+		<rdfs:label xml:lang="en">has prior legal name</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>a primary legal name that was used previously for the entity</skos:definition>
+		<skos:definition xml:lang="en">a primary legal name that was used previously for the entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasRegistrationStatus">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-arr-lif;hasStage"/>
-		<rdfs:label>has registration status</rdfs:label>
+		<rdfs:label xml:lang="en">has registration status</rdfs:label>
 		<rdfs:range rdf:resource="&fibo-fbc-fct-breg;RegistrationStatus"/>
-		<skos:definition>indicates the status of a specific registration, such as for an identifier or license</skos:definition>
+		<skos:definition xml:lang="en">indicates the status of a specific registration, such as for an identifier or license</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasRegistrationStatusRevisionDate">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fbc-fct-ra;hasRegistrationDate"/>
-		<rdfs:label>has registration status revision date</rdfs:label>
+		<rdfs:label xml:lang="en">has registration status revision date</rdfs:label>
 		<rdfs:range>
 			<rdfs:Datatype>
 				<owl:unionOf rdf:parseType="Collection">
@@ -906,22 +1452,22 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 				</owl:unionOf>
 			</rdfs:Datatype>
 		</rdfs:range>
-		<skos:definition>the date that the status of a specific registration in the registry was revised</skos:definition>
+		<skos:definition xml:lang="en">the date that the status of a specific registration in the registry was revised</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasRegistryName">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-aap-agt;hasName"/>
-		<rdfs:label>has registry name</rdfs:label>
+		<rdfs:label xml:lang="en">has registry name</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-fbc-fct-ra;Registry"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>a name for the registry, for example, for a business registry in which a business registration identifier for the legal entity is registered</skos:definition>
+		<skos:definition xml:lang="en">a name for the registry, for example, for a business registry in which a business registration identifier for the legal entity is registered</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasRenewalDate">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fbc-fct-ra;hasRegistrationDate"/>
-		<rdfs:label>has renewal date</rdfs:label>
+		<rdfs:label xml:lang="en">has renewal date</rdfs:label>
 		<rdfs:range>
 			<rdfs:Datatype>
 				<owl:unionOf rdf:parseType="Collection">
@@ -934,56 +1480,56 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 				</owl:unionOf>
 			</rdfs:Datatype>
 		</rdfs:range>
-		<skos:definition>the date by which a specific registration in the registry must be renewed or updated</skos:definition>
+		<skos:definition xml:lang="en">the date by which a specific registration in the registry must be renewed or updated</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.swift.com/standards/data-standards/bic?tl=en#BICPolicyandDatarecord</fibo-fnd-utl-av:adaptedFrom>
-		<fibo-fnd-utl-av:usageNote>This property is equivalent to the date of expiry in some registries, such as the BIC registry.</fibo-fnd-utl-av:usageNote>
+		<fibo-fnd-utl-av:usageNote xml:lang="en">This property is equivalent to the date of expiry in some registries, such as the BIC registry.</fibo-fnd-utl-av:usageNote>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasSubdivision">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;has"/>
-		<rdfs:label>has subdivision</rdfs:label>
+		<rdfs:label xml:lang="en">has subdivision</rdfs:label>
 		<rdfs:range rdf:resource="&lcc-cr;CountrySubdivision"/>
-		<skos:definition>identifies the country subdivision (state, province, region, etc.) according to ISO 3166-2</skos:definition>
+		<skos:definition xml:lang="en">identifies the country subdivision (state, province, region, etc.) according to ISO 3166-2</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasTradingOrOperationalName">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-aap-agt;hasName"/>
-		<rdfs:label>has trading or operational name</rdfs:label>
+		<rdfs:label xml:lang="en">has trading or operational name</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>a &apos;trading as&apos;, &apos;brand name&apos;, &apos;doing business as&apos;, or &apos;operating under&apos; name currently used by the entity in addition to, but not replacing, the (primary) legal, official registered name</skos:definition>
+		<skos:definition xml:lang="en">a &apos;trading as&apos;, &apos;brand name&apos;, &apos;doing business as&apos;, or &apos;operating under&apos; name currently used by the entity in addition to, but not replacing, the (primary) legal, official registered name</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasTransliteratedAddress">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-plc-adr;hasAddress"/>
-		<rdfs:label>has transliterated address</rdfs:label>
+		<rdfs:label xml:lang="en">has transliterated address</rdfs:label>
 		<rdfs:range rdf:resource="&fibo-fnd-plc-adr;Address"/>
-		<skos:definition>identifies a transliterated (i.e., in Latin or Romanized ASCII) address for the registered entity</skos:definition>
+		<skos:definition xml:lang="en">identifies a transliterated (i.e., in Latin or Romanized ASCII) address for the registered entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasTransliteratedLegalName">
 		<rdfs:subPropertyOf rdf:resource="&fibo-be-le-lei;hasTransliteratedName"/>
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;hasLegalName"/>
-		<rdfs:label>has transliterated legal name</rdfs:label>
+		<rdfs:label xml:lang="en">has transliterated legal name</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>an optional ASCII-transliterated (i.e. Latin- or Romanized) representation of the legal name for the entity</skos:definition>
+		<skos:definition xml:lang="en">an optional ASCII-transliterated (i.e. Latin- or Romanized) representation of the legal name for the entity</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-fbc-fct-breg;hasValidationAuthority">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-rel-rel;has"/>
-		<rdfs:label>has validation authority</rdfs:label>
+		<rdfs:label xml:lang="en">has validation authority</rdfs:label>
 		<rdfs:range rdf:resource="&fibo-fbc-fct-breg;BusinessRegistrationAuthority"/>
-		<skos:definition>identifies the business registration authority for the legal entity, used by the Local Operating Unit (LOU) as the basis for validation, as defined in the GLEIF Registration Authorities List</skos:definition>
+		<skos:definition xml:lang="en">identifies the business registration authority for the legal entity, used by the Local Operating Unit (LOU) as the basis for validation, as defined in the GLEIF Registration Authorities List</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/common-data-file-format/lei-cdf-format/lei-cdf-format-version-2-1</fibo-fnd-utl-av:adaptedFrom>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasValidationDate">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fbc-fct-ra;hasRegistrationDate"/>
-		<rdfs:label>has validation date</rdfs:label>
+		<rdfs:label xml:lang="en">has validation date</rdfs:label>
 		<rdfs:range>
 			<rdfs:Datatype>
 				<owl:unionOf rdf:parseType="Collection">
@@ -996,28 +1542,28 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 				</owl:unionOf>
 			</rdfs:Datatype>
 		</rdfs:range>
-		<skos:definition>the date that a specific registration in the registry was most recently reviewed and validated</skos:definition>
+		<skos:definition xml:lang="en">the date that a specific registration in the registry was most recently reviewed and validated</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.swift.com/standards/data-standards/bic?tl=en#BICPolicyandDatarecord</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasValidationLevel">
-		<rdfs:label>has validation level</rdfs:label>
+		<rdfs:label xml:lang="en">has validation level</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>an indicator of the level of validation performed by the registrar with respect to the legal entity</skos:definition>
+		<skos:definition xml:lang="en">an indicator of the level of validation performed by the registrar with respect to the legal entity</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;hasWebsite">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-plc-vrt;hasURL"/>
-		<rdfs:label>has website</rdfs:label>
+		<rdfs:label xml:lang="en">has website</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;anyURI"/>
-		<skos:definition>a website associated with something, including but not limited to an organization</skos:definition>
+		<skos:definition xml:lang="en">a website associated with something, including but not limited to an organization</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.gleif.org/en/about-lei/gleif-registration-authorities-list</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-fbc-fct-breg;isSelfMaintained">
-		<rdfs:label>is self-maintained</rdfs:label>
+		<rdfs:label xml:lang="en">is self-maintained</rdfs:label>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition>indicates whether the information about the entity is self-maintained or maintained by a third-party</skos:definition>
+		<skos:definition xml:lang="en">indicates whether the information about the entity is self-maintained or maintained by a third-party</skos:definition>
 		<fibo-fnd-utl-av:adaptedFrom rdf:datatype="&xsd;anyURI">https://www.swift.com/standards/data-standards/bic?tl=en#BICPolicyandDatarecord</fibo-fnd-utl-av:adaptedFrom>
 	</owl:DatatypeProperty>
 	
@@ -1026,14 +1572,14 @@ NAICS was developed under the auspices of the Office of Management and Budget (O
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;isClassifiedBy"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;NorthAmericanIndustryClassificationSystemCode"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">0</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;isClassifiedBy"/>
 				<owl:onClass rdf:resource="&fibo-fbc-fct-breg;StandardIndustrialClassificationCode"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">0</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 	</owl:Class>

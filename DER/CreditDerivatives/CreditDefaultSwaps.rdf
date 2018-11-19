@@ -1,63 +1,618 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rdf:RDF [
+	<!ENTITY afn "http://jena.apache.org/ARQ/function#">
 	<!ENTITY dct "http://purl.org/dc/terms/">
+	<!ENTITY dedm "http://www.edmcouncil.org/ddgraph#">
+	<!ENTITY edm "http://www.edmcouncil.org/temp#">
+	<!ENTITY fibo-be-corp-corp "https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/">
+	<!ENTITY fibo-be-fct-fct "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/FunctionalEntities/">
+	<!ENTITY fibo-be-fct-pub "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/Publishers/">
+	<!ENTITY fibo-be-fctx-fne "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/FundEntities/">
+	<!ENTITY fibo-be-fctx-spv "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/SPVs/">
+	<!ENTITY fibo-be-fctx-sta "https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/StateEntities/">
+	<!ENTITY fibo-be-ge-caj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/CAGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-ge-euj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/EUGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-ge-ge "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/">
+	<!ENTITY fibo-be-ge-ukj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/UKGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-ge-usj "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/USGovernmentEntitiesAndJurisdictions/">
+	<!ENTITY fibo-be-le-cb "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/">
+	<!ENTITY fibo-be-le-fbo "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/FormalBusinessOrganizations/">
+	<!ENTITY fibo-be-le-lei "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/">
+	<!ENTITY fibo-be-le-lp "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/">
+	<!ENTITY fibo-be-oac-cctl "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/">
+	<!ENTITY fibo-be-oac-cown "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/">
+	<!ENTITY fibo-be-oac-cpty "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/ControlParties/">
+	<!ENTITY fibo-be-oac-exec "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/Executives/">
+	<!ENTITY fibo-be-oac-opty "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/OwnershipParties/">
+	<!ENTITY fibo-be-plc-plc "https://spec.edmcouncil.org/fibo/ontology/BE/PrivateLimitedCompanies/PrivateLimitedCompanies/">
+	<!ENTITY fibo-be-ptr-ptr "https://spec.edmcouncil.org/fibo/ontology/BE/Partnerships/Partnerships/">
+	<!ENTITY fibo-be-sps-sps "https://spec.edmcouncil.org/fibo/ontology/BE/SoleProprietorships/SoleProprietorships/">
+	<!ENTITY fibo-be-tr-tr "https://spec.edmcouncil.org/fibo/ontology/BE/Trusts/Trusts/">
+	<!ENTITY fibo-bp-iss-ambs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/AgencyMBSIssuance/">
+	<!ENTITY fibo-bp-iss-dbti "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/DebtIssuance/">
+	<!ENTITY fibo-bp-iss-doc "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceDocuments/">
+	<!ENTITY fibo-bp-iss-ipo "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/EquitiesIPOIssuance/">
+	<!ENTITY fibo-bp-iss-mbs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MBSIssuance/">
+	<!ENTITY fibo-bp-iss-muni "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MuniIssuance/">
+	<!ENTITY fibo-bp-iss-pmbs "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/PrivateLabelMBSIssuance/">
+	<!ENTITY fibo-bp-iss-prc "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcess/">
+	<!ENTITY fibo-bp-iss-trm "https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcessTerms/">
+	<!ENTITY fibo-bp-prc-fcp "https://spec.edmcouncil.org/fibo/ontology/BP/Process/FinancialContextAndProcess/">
+	<!ENTITY fibo-bp-reg-req "https://spec.edmcouncil.org/fibo/ontology/BP/Regulatory/RegulatoryRequirements/">
+	<!ENTITY fibo-cae-ce-cae "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActionsEvents/">
+	<!ENTITY fibo-civ-fnd-civ "https://spec.edmcouncil.org/fibo/ontology/CIV/Funds/CIV/">
+	<!ENTITY fibo-civ-fnd-clx "https://spec.edmcouncil.org/fibo/ontology/CIV/FundsExt/CIVClassification/">
+	<!ENTITY fibo-der-ass-ass "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetDerivatives/">
+	<!ENTITY fibo-der-ass-bas "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetBaskets/">
+	<!ENTITY fibo-der-ass-bo "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondOptions/">
+	<!ENTITY fibo-der-ass-brs "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondReturnSwaps/">
+	<!ENTITY fibo-der-ass-eqf "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityForwards/">
+	<!ENTITY fibo-der-ass-eqo "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityOptions/">
+	<!ENTITY fibo-der-ass-eqs "https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquitySwaps/">
+	<!ENTITY fibo-der-com-com "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/Commodities/">
+	<!ENTITY fibo-der-com-ctr "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesContracts/">
+	<!ENTITY fibo-der-com-del "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesDelivery/">
+	<!ENTITY fibo-der-com-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityForwards/">
+	<!ENTITY fibo-der-com-opt "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityOptions/">
+	<!ENTITY fibo-der-com-sp "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySpots/">
+	<!ENTITY fibo-der-com-sw "https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySwaps/">
 	<!ENTITY fibo-der-cr-cds "https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/">
+	<!ENTITY fibo-der-der-cof "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/OptionContractsOnFutures/">
+	<!ENTITY fibo-der-der-ex "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ExerciseConventions/">
+	<!ENTITY fibo-der-der-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Forwards/">
+	<!ENTITY fibo-der-der-opt "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Options/">
+	<!ENTITY fibo-der-der-rsw "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ReturnSwaps/">
+	<!ENTITY fibo-der-der-sp "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Spots/">
+	<!ENTITY fibo-der-der-spn "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaptions/">
+	<!ENTITY fibo-der-derx-dbx "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContractsExt/DerivativesBasicsExt/">
 	<!ENTITY fibo-der-drc-bsc "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/DerivativesBasics/">
 	<!ENTITY fibo-der-drc-swp "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/">
+	<!ENTITY fibo-der-drc-swpind "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/SwapsIndividuals/">
+	<!ENTITY fibo-der-etd-eto "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/ExchangeTradedOptions/">
+	<!ENTITY fibo-der-etd-fstd "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesStandardizedTerms/">
+	<!ENTITY fibo-der-etd-fut "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/Futures/">
+	<!ENTITY fibo-der-etd-fxc "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesExchanges/">
+	<!ENTITY fibo-der-etd-ostd "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsStandardizedTerms/">
+	<!ENTITY fibo-der-etd-oxc "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsExchanges/">
+	<!ENTITY fibo-der-etd-std "https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/DerivativesStandardizedTerms/">
+	<!ENTITY fibo-der-fx-ctr "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxContracts/">
+	<!ENTITY fibo-der-fx-fwd "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxForwards/">
+	<!ENTITY fibo-der-fx-opt "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxOptions/">
+	<!ENTITY fibo-der-fx-sp "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSpots/">
+	<!ENTITY fibo-der-fx-sw "https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSwaps/">
+	<!ENTITY fibo-der-misc-cfd "https://spec.edmcouncil.org/fibo/ontology/DER/OTCMiscContracts/ContractsForDifference/">
+	<!ENTITY fibo-der-rat-fra "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/ForwardRateAgreements/">
+	<!ENTITY fibo-der-rat-indo "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/OTCIndexOptions/">
+	<!ENTITY fibo-der-rat-iro "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IROptions/">
+	<!ENTITY fibo-der-rgt-raw "https://spec.edmcouncil.org/fibo/ontology/DER/RightsInstruments/RightsAndWarrants/">
+	<!ENTITY fibo-der-rtd-irswp "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IRSwaps/">
+	<!ENTITY fibo-der-rtd-isw "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/InflationSwaps/">
+	<!ENTITY fibo-der-rtd-rtd "https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/RateDerivatives/">
+	<!ENTITY fibo-fbc-2.0-abr "https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-Abridged/">
+	<!ENTITY fibo-fbc-2.0-na-ex "https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-NorthAmericanExamples/">
+	<!ENTITY fibo-fbc-dae-crf "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/CreditFacilities/">
+	<!ENTITY fibo-fbc-dae-dbt "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/">
+	<!ENTITY fibo-fbc-dae-gty "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/">
+	<!ENTITY fibo-fbc-fct-breg "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/">
+	<!ENTITY fibo-fbc-fct-cafse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CAFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-cajrga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CARegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-eufse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EUFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-eufsind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EuropeanFinancialServicesEntitiesIndividuals/">
+	<!ENTITY fibo-fbc-fct-eurga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EURegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-fse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/FinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-mkt "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/Markets/">
+	<!ENTITY fibo-fbc-fct-ra "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegistrationAuthorities/">
+	<!ENTITY fibo-fbc-fct-rga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegulatoryAgencies/">
+	<!ENTITY fibo-fbc-fct-usfse "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntities/">
+	<!ENTITY fibo-fbc-fct-usfsind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntitiesIndividuals/">
+	<!ENTITY fibo-fbc-fct-usind "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USExampleIndividuals/">
+	<!ENTITY fibo-fbc-fct-usjrga "https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USRegulatoryAgencies/">
 	<!ENTITY fibo-fbc-fi-fi "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/">
+	<!ENTITY fibo-fbc-fi-stl "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/Settlement/">
+	<!ENTITY fibo-fbc-pas-caa "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/ClientsAndAccounts/">
 	<!ENTITY fibo-fbc-pas-fpas "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/">
+	<!ENTITY fibo-fnd-aap-agt "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/">
+	<!ENTITY fibo-fnd-aap-ppl "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/">
+	<!ENTITY fibo-fnd-acc-4217 "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/ISO4217-CurrencyCodes/">
+	<!ENTITY fibo-fnd-acc-aeq "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/AccountingEquity/">
 	<!ENTITY fibo-fnd-acc-cur "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/">
+	<!ENTITY fibo-fnd-acc-val "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/Valuation/">
+	<!ENTITY fibo-fnd-accx-acc "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AccountsMain/">
+	<!ENTITY fibo-fnd-accx-assx "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AssetExtensions/">
+	<!ENTITY fibo-fnd-accx-bal "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/BalanceSheetBalances/">
+	<!ENTITY fibo-fnd-accx-tax "https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/Taxation/">
+	<!ENTITY fibo-fnd-agr-agr "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Agreements/">
 	<!ENTITY fibo-fnd-agr-ctr "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/">
+	<!ENTITY fibo-fnd-agrx-con "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractualConstructs/">
+	<!ENTITY fibo-fnd-agrx-ctrx "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractsExtensions/">
+	<!ENTITY fibo-fnd-agrx-ele "https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractElements/">
+	<!ENTITY fibo-fnd-arr-arr "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Arrangements/">
+	<!ENTITY fibo-fnd-arr-cd "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Codes/">
+	<!ENTITY fibo-fnd-arr-cls "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/ClassificationSchemes/">
+	<!ENTITY fibo-fnd-arr-doc "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/">
+	<!ENTITY fibo-fnd-arr-id "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/IdentifiersAndIndices/">
+	<!ENTITY fibo-fnd-arr-lif "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/">
+	<!ENTITY fibo-fnd-arrxx-ins "https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/ToolsAndInstruments/">
 	<!ENTITY fibo-fnd-arrxx-meth "https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/MethodsAndRules/">
+	<!ENTITY fibo-fnd-bus-agc "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/AgentsContexts/">
+	<!ENTITY fibo-fnd-bus-bg "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/BusinessGoals/">
+	<!ENTITY fibo-fnd-bus-pol "https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/Policy/">
+	<!ENTITY fibo-fnd-com-com "https://spec.edmcouncil.org/fibo/ontology/FND/Communication/Communication/">
+	<!ENTITY fibo-fnd-dt-bd "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/BusinessDates/">
 	<!ENTITY fibo-fnd-dt-fd "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/">
+	<!ENTITY fibo-fnd-dt-oc "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/">
+	<!ENTITY fibo-fnd-gao-gl "https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Goals/">
+	<!ENTITY fibo-fnd-gao-obj "https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Objectives/">
 	<!ENTITY fibo-fnd-inf-doc "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Documentation/">
 	<!ENTITY fibo-fnd-inf-inf "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/InfoCore/">
+	<!ENTITY fibo-fnd-inf-msg "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Messaging/">
+	<!ENTITY fibo-fnd-inf-tem "https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/TemporalInfo/">
+	<!ENTITY fibo-fnd-law-cor "https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCore/">
+	<!ENTITY fibo-fnd-law-jur "https://spec.edmcouncil.org/fibo/ontology/FND/Law/Jurisdiction/">
+	<!ENTITY fibo-fnd-law-lcap "https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCapacity/">
+	<!ENTITY fibo-fnd-lawx-rst "https://spec.edmcouncil.org/fibo/ontology/FND/LawExt/RegulatoryRestrictions/">
+	<!ENTITY fibo-fnd-math-amt "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Amounts/">
+	<!ENTITY fibo-fnd-math-math "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Math/">
+	<!ENTITY fibo-fnd-math-qty "https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Quantities/">
+	<!ENTITY fibo-fnd-oac-ctl "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/">
+	<!ENTITY fibo-fnd-oac-oac "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/OwnershipAndControl/">
+	<!ENTITY fibo-fnd-oac-own "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/">
+	<!ENTITY fibo-fnd-org-fm "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/FormalOrganizations/">
+	<!ENTITY fibo-fnd-org-lg "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/LegitimateOrganizations/">
+	<!ENTITY fibo-fnd-org-org "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/">
+	<!ENTITY fibo-fnd-pas-pas "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/">
+	<!ENTITY fibo-fnd-pas-psch "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/PaymentsAndSchedules/">
+	<!ENTITY fibo-fnd-plc-adr "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/">
+	<!ENTITY fibo-fnd-plc-cty "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Countries/">
+	<!ENTITY fibo-fnd-plc-fac "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/">
+	<!ENTITY fibo-fnd-plc-loc "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/">
+	<!ENTITY fibo-fnd-plc-vrt "https://spec.edmcouncil.org/fibo/ontology/FND/Places/VirtualPlaces/">
+	<!ENTITY fibo-fnd-plcx-sit "https://spec.edmcouncil.org/fibo/ontology/FND/PlacesExt/AddressSites/">
 	<!ENTITY fibo-fnd-pty-pty "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/">
+	<!ENTITY fibo-fnd-pty-rl "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Roles/">
+	<!ENTITY fibo-fnd-ptyx-prc "https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyRoleContext/">
 	<!ENTITY fibo-fnd-ptyx-ptyx "https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyExtensions/">
+	<!ENTITY fibo-fnd-pub-pub "https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/Publications/">
+	<!ENTITY fibo-fnd-pub-stdi "https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/StandardsIndividuals/">
+	<!ENTITY fibo-fnd-qt-qtu "https://spec.edmcouncil.org/fibo/ontology/FND/Quantities/QuantitiesAndUnits/">
+	<!ENTITY fibo-fnd-quax-qua "https://spec.edmcouncil.org/fibo/ontology/FND/QuantitiesExt/QuantitiesExt/">
 	<!ENTITY fibo-fnd-rel-rel "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/">
+	<!ENTITY fibo-fnd-soc-asp "https://spec.edmcouncil.org/fibo/ontology/FND/SocialConstructsExt/ConstructAspects/">
+	<!ENTITY fibo-fnd-tim-tim "https://spec.edmcouncil.org/fibo/ontology/FND/TimeExt/Time/">
 	<!ENTITY fibo-fnd-txn-ecr "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/EconomicResources/">
+	<!ENTITY fibo-fnd-txn-ev "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/TransactionEvents/">
 	<!ENTITY fibo-fnd-txn-rea "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/REATransactions/">
 	<!ENTITY fibo-fnd-txn-sec "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SecuritiesTransactions/">
+	<!ENTITY fibo-fnd-txn-sup "https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SupplyTransactions/">
+	<!ENTITY fibo-fnd-utl-alx "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Analytics/">
 	<!ENTITY fibo-fnd-utl-av "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/">
+	<!ENTITY fibo-fnd-utl-bt "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/BusinessFacingTypes/">
 	<!ENTITY fibo-fnd-utl-val "https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Values/">
+	<!ENTITY fibo-ind-ei-caei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/CAEconomicIndicators/">
+	<!ENTITY fibo-ind-ei-ei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/">
+	<!ENTITY fibo-ind-ei-pub "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicatorPublishers/">
+	<!ENTITY fibo-ind-ei-usei "https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/USEconomicIndicators/">
+	<!ENTITY fibo-ind-fx-fx "https://spec.edmcouncil.org/fibo/ontology/IND/ForeignExchange/ForeignExchange/">
+	<!ENTITY fibo-ind-ind-ind "https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/">
+	<!ENTITY fibo-ind-ir-cm "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/CommonInterestRates/">
+	<!ENTITY fibo-ind-ir-ir "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRates/">
+	<!ENTITY fibo-ind-ir-pub "https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRatePublishers/">
+	<!ENTITY fibo-ind-mkt-bas "https://spec.edmcouncil.org/fibo/ontology/IND/MarketIndices/BasketIndices/">
+	<!ENTITY fibo-ln-ln-hmda "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanHMDA/">
+	<!ENTITY fibo-ln-ln-lgn "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanGeneric/">
+	<!ENTITY fibo-ln-ln-ln "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanCore/">
+	<!ENTITY fibo-loan-loan-col "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansCollateral/">
+	<!ENTITY fibo-loan-loan-gen "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGeneral/">
+	<!ENTITY fibo-loan-loan-gty "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGuaranties/">
+	<!ENTITY fibo-loan-loan-loan "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoanBasicTerms/">
+	<!ENTITY fibo-loan-loan-pty "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansParties/">
+	<!ENTITY fibo-loan-loan-reg "https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansRegulatory/">
+	<!ENTITY fibo-loan-tem-app "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanApplicationsTemporal/">
+	<!ENTITY fibo-loan-tem-apr "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansAppraisal/">
+	<!ENTITY fibo-loan-tem-bor "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanBorrowersTemporal/">
+	<!ENTITY fibo-loan-tem-cl "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/ConstructionLoansTemporal/">
+	<!ENTITY fibo-loan-tem-col "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanCollateralTemporal/">
+	<!ENTITY fibo-loan-tem-ev "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansEvents/">
+	<!ENTITY fibo-loan-tem-ltv "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansLTV/">
+	<!ENTITY fibo-loan-tem-ph "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanPhases/">
+	<!ENTITY fibo-loan-tem-sta "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansStatus/">
+	<!ENTITY fibo-loan-tem-tem "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansTemporal/">
+	<!ENTITY fibo-loan-typ-cl "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/ConstructionLoans/">
+	<!ENTITY fibo-loan-typ-com "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CommercialLoans/">
+	<!ENTITY fibo-loan-typ-cr "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CreditProducts/">
+	<!ENTITY fibo-loan-typ-gen "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/GeneralLoans/">
+	<!ENTITY fibo-loan-typ-mtg "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/MortgageLoans/">
+	<!ENTITY fibo-loan-typ-per "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/PersonalLoans/">
+	<!ENTITY fibo-loan-typ-prod "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/LoanProducts/">
+	<!ENTITY fibo-loan-typ-sec "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/SecuredLoans/">
+	<!ENTITY fibo-loan-typ-stu "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/StudentLoans/">
+	<!ENTITY fibo-loan-typ-uns "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/UnsecuredLoans/">
+	<!ENTITY fibo-md-civx-fun "https://spec.edmcouncil.org/fibo/ontology/MD/CIVTemporal/FundsTemporal/">
+	<!ENTITY fibo-md-dbtx-aly "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtAnalytics/">
+	<!ENTITY fibo-md-dbtx-int "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtInterestAmounts/">
+	<!ENTITY fibo-md-dbtx-py "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtPricingYields/">
+	<!ENTITY fibo-md-dbtx-red "https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtRedemptionAmounts/">
+	<!ENTITY fibo-md-der-fut "https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/FuturesTemporal/">
+	<!ENTITY fibo-md-derx-eto "https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/ETOptionsTemporal/">
+	<!ENTITY fibo-md-eqx-pri "https://spec.edmcouncil.org/fibo/ontology/MD/EquityTemporal/EquityPricing/">
 	<!ENTITY fibo-md-temx-cre "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditEvents/">
+	<!ENTITY fibo-md-temx-crr "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditRatings/">
+	<!ENTITY fibo-md-temx-crs "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityCreditStatuses/">
+	<!ENTITY fibo-md-temx-cur "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/AnalysisCurves/">
+	<!ENTITY fibo-md-temx-ins "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/InstrumentTemporalTerms/">
+	<!ENTITY fibo-md-temx-tem "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/TemporalConcepts/">
+	<!ENTITY fibo-md-temx-trs "https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityTradingStatuses/">
+	<!ENTITY fibo-sec-dbt-ab-abs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-cbo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CBOs/">
+	<!ENTITY fibo-sec-dbt-ab-cdo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CDOs/">
+	<!ENTITY fibo-sec-dbt-ab-clo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CLOs/">
+	<!ENTITY fibo-sec-dbt-ab-cmo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CMOs/">
+	<!ENTITY fibo-sec-dbt-ab-mbs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/MortgageBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-pbs "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/PoolBackedSecurities/">
+	<!ENTITY fibo-sec-dbt-ab-spv "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSPVs/">
+	<!ENTITY fibo-sec-dbt-ab-syn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/SyntheticCDOs/">
+	<!ENTITY fibo-sec-dbt-bo-bo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCommon/">
+	<!ENTITY fibo-sec-dbt-bo-cft "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowTerms/">
+	<!ENTITY fibo-sec-dbt-bo-cfv "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowVariants/">
+	<!ENTITY fibo-sec-dbt-bo-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/">
+	<!ENTITY fibo-sec-dbt-bo-li "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsListings/">
+	<!ENTITY fibo-sec-dbt-bo-str "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/STRIPs/">
+	<!ENTITY fibo-sec-dbt-bo-tax "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsTaxTreatment/">
+	<!ENTITY fibo-sec-dbt-dbt-cft "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtCashflowTerms/">
+	<!ENTITY fibo-sec-dbt-dbt-fin "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtFinance/">
+	<!ENTITY fibo-sec-dbt-dbt-gty "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtInstrumentGuaranties/">
+	<!ENTITY fibo-sec-dbt-dbt-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtIssuanceTerms/">
+	<!ENTITY fibo-sec-dbt-dbt-pn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/ParticipationNotes/">
+	<!ENTITY fibo-sec-dbt-dbti "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtInstruments/">
+	<!ENTITY fibo-sec-dbt-mm-lpn "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/LoanParticipationNotes/">
+	<!ENTITY fibo-sec-dbt-mm-repo "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/REPOs/">
+	<!ENTITY fibo-sec-dbt-mm-td "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TermDeposits/">
+	<!ENTITY fibo-sec-dbt-mm-trd "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TradedShortTermDebt/">
+	<!ENTITY fibo-sec-eq-dr "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/DepositaryReceipts/">
+	<!ENTITY fibo-sec-eq-eq "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/">
+	<!ENTITY fibo-sec-eq-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityIssuanceTerms/">
+	<!ENTITY fibo-sec-eq-lpe "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/LimitedPartnershipEquities/">
+	<!ENTITY fibo-sec-eq-sha "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareTerms/">
+	<!ENTITY fibo-sec-eq-she "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderEquity/">
+	<!ENTITY fibo-sec-eq-shr "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderRights/">
+	<!ENTITY fibo-sec-sec-ast "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecurityAssets/">
+	<!ENTITY fibo-sec-sec-bsk "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Baskets/">
+	<!ENTITY fibo-sec-sec-cls "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesClassification/">
+	<!ENTITY fibo-sec-sec-id "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/">
+	<!ENTITY fibo-sec-sec-idind "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentificationIndividuals/">
+	<!ENTITY fibo-sec-sec-iss "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIssuance/">
+	<!ENTITY fibo-sec-sec-lst "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesListings/">
+	<!ENTITY fibo-sec-sec-pls "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Pools/">
+	<!ENTITY fibo-sec-sec-rst "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesRestrictions/">
+	<!ENTITY fibo-sec-sec-sch "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/ParametricSchedules/">
+	<!ENTITY fibo-sec-secx-sec "https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesExt/">
+	<!ENTITY fibo-sec-secx-tax "https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesTaxTreatment/">
+	<!ENTITY gidm "http://www.globalids.com/mapping#">
+	<!ENTITY lcc-3166-1 "http://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/">
+	<!ENTITY lcc-3166-2 "http://www.omg.org/spec/LCC/Countries/ISO3166-2-SubdivisionCodes/">
+	<!ENTITY lcc-3166-2-ca "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CA/">
+	<!ENTITY lcc-3166-2-gb "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GB/">
+	<!ENTITY lcc-3166-2-us "http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-US/">
+	<!ENTITY lcc-639-1 "http://www.omg.org/spec/LCC/Languages/ISO639-1-LanguageCodes/">
+	<!ENTITY lcc-639-2 "http://www.omg.org/spec/LCC/Languages/ISO639-2-LanguageCodes/">
+	<!ENTITY lcc-cr "http://www.omg.org/spec/LCC/Countries/CountryRepresentation/">
+	<!ENTITY lcc-lr "http://www.omg.org/spec/LCC/Languages/LanguageRepresentation/">
+	<!ENTITY naics-2007 "http://linkedmodel.org/vocab/industry-codes/naics-2007#">
 	<!ENTITY owl "http://www.w3.org/2002/07/owl#">
 	<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 	<!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
 	<!ENTITY skos "http://www.w3.org/2004/02/skos/core#">
+	<!ENTITY sm "http://www.omg.org/techprocess/ab/SpecificationMetadata/">
 	<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
 ]>
 <rdf:RDF xml:base="https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/"
+	xmlns:afn="http://jena.apache.org/ARQ/function#"
 	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:dedm="http://www.edmcouncil.org/ddgraph#"
+	xmlns:edm="http://www.edmcouncil.org/temp#"
+	xmlns:fibo-be-corp-corp="https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/"
+	xmlns:fibo-be-fct-fct="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/FunctionalEntities/"
+	xmlns:fibo-be-fct-pub="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntities/Publishers/"
+	xmlns:fibo-be-fctx-fne="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/FundEntities/"
+	xmlns:fibo-be-fctx-spv="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/SPVs/"
+	xmlns:fibo-be-fctx-sta="https://spec.edmcouncil.org/fibo/ontology/BE/FunctionalEntitiesExt/StateEntities/"
+	xmlns:fibo-be-ge-caj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/CAGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-ge-euj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/EUGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-ge-ge="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/"
+	xmlns:fibo-be-ge-ukj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/EuropeanJurisdiction/UKGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-ge-usj="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/NorthAmericanJurisdiction/USGovernmentEntitiesAndJurisdictions/"
+	xmlns:fibo-be-le-cb="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/"
+	xmlns:fibo-be-le-fbo="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/FormalBusinessOrganizations/"
+	xmlns:fibo-be-le-lei="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/"
+	xmlns:fibo-be-le-lp="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/"
+	xmlns:fibo-be-oac-cctl="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/"
+	xmlns:fibo-be-oac-cown="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/"
+	xmlns:fibo-be-oac-cpty="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/ControlParties/"
+	xmlns:fibo-be-oac-exec="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/Executives/"
+	xmlns:fibo-be-oac-opty="https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/OwnershipParties/"
+	xmlns:fibo-be-plc-plc="https://spec.edmcouncil.org/fibo/ontology/BE/PrivateLimitedCompanies/PrivateLimitedCompanies/"
+	xmlns:fibo-be-ptr-ptr="https://spec.edmcouncil.org/fibo/ontology/BE/Partnerships/Partnerships/"
+	xmlns:fibo-be-sps-sps="https://spec.edmcouncil.org/fibo/ontology/BE/SoleProprietorships/SoleProprietorships/"
+	xmlns:fibo-be-tr-tr="https://spec.edmcouncil.org/fibo/ontology/BE/Trusts/Trusts/"
+	xmlns:fibo-bp-iss-ambs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/AgencyMBSIssuance/"
+	xmlns:fibo-bp-iss-dbti="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/DebtIssuance/"
+	xmlns:fibo-bp-iss-doc="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceDocuments/"
+	xmlns:fibo-bp-iss-ipo="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/EquitiesIPOIssuance/"
+	xmlns:fibo-bp-iss-mbs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MBSIssuance/"
+	xmlns:fibo-bp-iss-muni="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/MuniIssuance/"
+	xmlns:fibo-bp-iss-pmbs="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/PrivateLabelMBSIssuance/"
+	xmlns:fibo-bp-iss-prc="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcess/"
+	xmlns:fibo-bp-iss-trm="https://spec.edmcouncil.org/fibo/ontology/BP/SecuritiesIssuance/IssuanceProcessTerms/"
+	xmlns:fibo-bp-prc-fcp="https://spec.edmcouncil.org/fibo/ontology/BP/Process/FinancialContextAndProcess/"
+	xmlns:fibo-bp-reg-req="https://spec.edmcouncil.org/fibo/ontology/BP/Regulatory/RegulatoryRequirements/"
+	xmlns:fibo-cae-ce-cae="https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActionsEvents/"
+	xmlns:fibo-civ-fnd-civ="https://spec.edmcouncil.org/fibo/ontology/CIV/Funds/CIV/"
+	xmlns:fibo-civ-fnd-clx="https://spec.edmcouncil.org/fibo/ontology/CIV/FundsExt/CIVClassification/"
+	xmlns:fibo-der-ass-ass="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetDerivatives/"
+	xmlns:fibo-der-ass-bas="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/AssetBaskets/"
+	xmlns:fibo-der-ass-bo="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondOptions/"
+	xmlns:fibo-der-ass-brs="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/BondReturnSwaps/"
+	xmlns:fibo-der-ass-eqf="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityForwards/"
+	xmlns:fibo-der-ass-eqo="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquityOptions/"
+	xmlns:fibo-der-ass-eqs="https://spec.edmcouncil.org/fibo/ontology/DER/AssetDerivatives/EquitySwaps/"
+	xmlns:fibo-der-com-com="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/Commodities/"
+	xmlns:fibo-der-com-ctr="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesContracts/"
+	xmlns:fibo-der-com-del="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditiesDelivery/"
+	xmlns:fibo-der-com-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityForwards/"
+	xmlns:fibo-der-com-opt="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommodityOptions/"
+	xmlns:fibo-der-com-sp="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySpots/"
+	xmlns:fibo-der-com-sw="https://spec.edmcouncil.org/fibo/ontology/DER/CommoditiesDerivatives/CommoditySwaps/"
 	xmlns:fibo-der-cr-cds="https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/"
+	xmlns:fibo-der-der-cof="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/OptionContractsOnFutures/"
+	xmlns:fibo-der-der-ex="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ExerciseConventions/"
+	xmlns:fibo-der-der-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Forwards/"
+	xmlns:fibo-der-der-opt="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Options/"
+	xmlns:fibo-der-der-rsw="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/ReturnSwaps/"
+	xmlns:fibo-der-der-sp="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Spots/"
+	xmlns:fibo-der-der-spn="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaptions/"
+	xmlns:fibo-der-derx-dbx="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContractsExt/DerivativesBasicsExt/"
 	xmlns:fibo-der-drc-bsc="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/DerivativesBasics/"
 	xmlns:fibo-der-drc-swp="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/"
+	xmlns:fibo-der-drc-swpind="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/SwapsIndividuals/"
+	xmlns:fibo-der-etd-eto="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/ExchangeTradedOptions/"
+	xmlns:fibo-der-etd-fstd="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesStandardizedTerms/"
+	xmlns:fibo-der-etd-fut="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/Futures/"
+	xmlns:fibo-der-etd-fxc="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/FuturesExchanges/"
+	xmlns:fibo-der-etd-ostd="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsStandardizedTerms/"
+	xmlns:fibo-der-etd-oxc="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/OptionsExchanges/"
+	xmlns:fibo-der-etd-std="https://spec.edmcouncil.org/fibo/ontology/DER/ExchangeTradedDerivatives/DerivativesStandardizedTerms/"
+	xmlns:fibo-der-fx-ctr="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxContracts/"
+	xmlns:fibo-der-fx-fwd="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxForwards/"
+	xmlns:fibo-der-fx-opt="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxOptions/"
+	xmlns:fibo-der-fx-sp="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSpots/"
+	xmlns:fibo-der-fx-sw="https://spec.edmcouncil.org/fibo/ontology/DER/FxDerivatives/FxSwaps/"
+	xmlns:fibo-der-misc-cfd="https://spec.edmcouncil.org/fibo/ontology/DER/OTCMiscContracts/ContractsForDifference/"
+	xmlns:fibo-der-rat-fra="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/ForwardRateAgreements/"
+	xmlns:fibo-der-rat-indo="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/OTCIndexOptions/"
+	xmlns:fibo-der-rat-iro="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IROptions/"
+	xmlns:fibo-der-rgt-raw="https://spec.edmcouncil.org/fibo/ontology/DER/RightsInstruments/RightsAndWarrants/"
+	xmlns:fibo-der-rtd-irswp="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/IRSwaps/"
+	xmlns:fibo-der-rtd-isw="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/InflationSwaps/"
+	xmlns:fibo-der-rtd-rtd="https://spec.edmcouncil.org/fibo/ontology/DER/RateDerivatives/RateDerivatives/"
+	xmlns:fibo-fbc-2.0-abr="https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-Abridged/"
+	xmlns:fibo-fbc-2.0-na-ex="https://spec.edmcouncil.org/fibo/ontology/FBC/AboutFBC-2.0-NorthAmericanExamples/"
+	xmlns:fibo-fbc-dae-crf="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/CreditFacilities/"
+	xmlns:fibo-fbc-dae-dbt="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/"
+	xmlns:fibo-fbc-dae-gty="https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/"
+	xmlns:fibo-fbc-fct-breg="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/BusinessRegistries/"
+	xmlns:fibo-fbc-fct-cafse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CAFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-cajrga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/CARegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-eufse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EUFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-eufsind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EuropeanFinancialServicesEntitiesIndividuals/"
+	xmlns:fibo-fbc-fct-eurga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/EuropeanEntities/EURegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-fse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/FinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-mkt="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/Markets/"
+	xmlns:fibo-fbc-fct-ra="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegistrationAuthorities/"
+	xmlns:fibo-fbc-fct-rga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/RegulatoryAgencies/"
+	xmlns:fibo-fbc-fct-usfse="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntities/"
+	xmlns:fibo-fbc-fct-usfsind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USFinancialServicesEntitiesIndividuals/"
+	xmlns:fibo-fbc-fct-usind="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USExampleIndividuals/"
+	xmlns:fibo-fbc-fct-usjrga="https://spec.edmcouncil.org/fibo/ontology/FBC/FunctionalEntities/NorthAmericanEntities/USRegulatoryAgencies/"
 	xmlns:fibo-fbc-fi-fi="https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/"
+	xmlns:fibo-fbc-fi-stl="https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/Settlement/"
+	xmlns:fibo-fbc-pas-caa="https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/ClientsAndAccounts/"
 	xmlns:fibo-fbc-pas-fpas="https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/"
+	xmlns:fibo-fnd-aap-agt="https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/"
+	xmlns:fibo-fnd-aap-ppl="https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/"
+	xmlns:fibo-fnd-acc-4217="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/ISO4217-CurrencyCodes/"
+	xmlns:fibo-fnd-acc-aeq="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/AccountingEquity/"
 	xmlns:fibo-fnd-acc-cur="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/"
+	xmlns:fibo-fnd-acc-val="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/Valuation/"
+	xmlns:fibo-fnd-accx-acc="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AccountsMain/"
+	xmlns:fibo-fnd-accx-assx="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/AssetExtensions/"
+	xmlns:fibo-fnd-accx-bal="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/BalanceSheetBalances/"
+	xmlns:fibo-fnd-accx-tax="https://spec.edmcouncil.org/fibo/ontology/FND/AccountingExt/Taxation/"
+	xmlns:fibo-fnd-agr-agr="https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Agreements/"
 	xmlns:fibo-fnd-agr-ctr="https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/"
+	xmlns:fibo-fnd-agrx-con="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractualConstructs/"
+	xmlns:fibo-fnd-agrx-ctrx="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractsExtensions/"
+	xmlns:fibo-fnd-agrx-ele="https://spec.edmcouncil.org/fibo/ontology/FND/AgreementsExt/ContractElements/"
+	xmlns:fibo-fnd-arr-arr="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Arrangements/"
+	xmlns:fibo-fnd-arr-cd="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Codes/"
+	xmlns:fibo-fnd-arr-cls="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/ClassificationSchemes/"
+	xmlns:fibo-fnd-arr-doc="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/"
+	xmlns:fibo-fnd-arr-id="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/IdentifiersAndIndices/"
+	xmlns:fibo-fnd-arr-lif="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/"
+	xmlns:fibo-fnd-arrxx-ins="https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/ToolsAndInstruments/"
 	xmlns:fibo-fnd-arrxx-meth="https://spec.edmcouncil.org/fibo/ontology/FND/ArrangementsExt/MethodsAndRules/"
+	xmlns:fibo-fnd-bus-agc="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/AgentsContexts/"
+	xmlns:fibo-fnd-bus-bg="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/BusinessGoals/"
+	xmlns:fibo-fnd-bus-pol="https://spec.edmcouncil.org/fibo/ontology/FND/BusinessExt/Policy/"
+	xmlns:fibo-fnd-com-com="https://spec.edmcouncil.org/fibo/ontology/FND/Communication/Communication/"
+	xmlns:fibo-fnd-dt-bd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/BusinessDates/"
 	xmlns:fibo-fnd-dt-fd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/"
+	xmlns:fibo-fnd-dt-oc="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/"
+	xmlns:fibo-fnd-gao-gl="https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Goals/"
+	xmlns:fibo-fnd-gao-obj="https://spec.edmcouncil.org/fibo/ontology/FND/GoalsAndObjectives/Objectives/"
 	xmlns:fibo-fnd-inf-doc="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Documentation/"
 	xmlns:fibo-fnd-inf-inf="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/InfoCore/"
+	xmlns:fibo-fnd-inf-msg="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/Messaging/"
+	xmlns:fibo-fnd-inf-tem="https://spec.edmcouncil.org/fibo/ontology/FND/InformationExt/TemporalInfo/"
+	xmlns:fibo-fnd-law-cor="https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCore/"
+	xmlns:fibo-fnd-law-jur="https://spec.edmcouncil.org/fibo/ontology/FND/Law/Jurisdiction/"
+	xmlns:fibo-fnd-law-lcap="https://spec.edmcouncil.org/fibo/ontology/FND/Law/LegalCapacity/"
+	xmlns:fibo-fnd-lawx-rst="https://spec.edmcouncil.org/fibo/ontology/FND/LawExt/RegulatoryRestrictions/"
+	xmlns:fibo-fnd-math-amt="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Amounts/"
+	xmlns:fibo-fnd-math-math="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Math/"
+	xmlns:fibo-fnd-math-qty="https://spec.edmcouncil.org/fibo/ontology/FND/MathExt/Quantities/"
+	xmlns:fibo-fnd-oac-ctl="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/"
+	xmlns:fibo-fnd-oac-oac="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/OwnershipAndControl/"
+	xmlns:fibo-fnd-oac-own="https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/"
+	xmlns:fibo-fnd-org-fm="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/FormalOrganizations/"
+	xmlns:fibo-fnd-org-lg="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/LegitimateOrganizations/"
+	xmlns:fibo-fnd-org-org="https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/"
+	xmlns:fibo-fnd-pas-pas="https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/"
+	xmlns:fibo-fnd-pas-psch="https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/PaymentsAndSchedules/"
+	xmlns:fibo-fnd-plc-adr="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/"
+	xmlns:fibo-fnd-plc-cty="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Countries/"
+	xmlns:fibo-fnd-plc-fac="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/"
+	xmlns:fibo-fnd-plc-loc="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/"
+	xmlns:fibo-fnd-plc-vrt="https://spec.edmcouncil.org/fibo/ontology/FND/Places/VirtualPlaces/"
+	xmlns:fibo-fnd-plcx-sit="https://spec.edmcouncil.org/fibo/ontology/FND/PlacesExt/AddressSites/"
 	xmlns:fibo-fnd-pty-pty="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/"
+	xmlns:fibo-fnd-pty-rl="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Roles/"
+	xmlns:fibo-fnd-ptyx-prc="https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyRoleContext/"
 	xmlns:fibo-fnd-ptyx-ptyx="https://spec.edmcouncil.org/fibo/ontology/FND/PartiesExt/PartyExtensions/"
+	xmlns:fibo-fnd-pub-pub="https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/Publications/"
+	xmlns:fibo-fnd-pub-stdi="https://spec.edmcouncil.org/fibo/ontology/FND/PublicationsExt/StandardsIndividuals/"
+	xmlns:fibo-fnd-qt-qtu="https://spec.edmcouncil.org/fibo/ontology/FND/Quantities/QuantitiesAndUnits/"
+	xmlns:fibo-fnd-quax-qua="https://spec.edmcouncil.org/fibo/ontology/FND/QuantitiesExt/QuantitiesExt/"
 	xmlns:fibo-fnd-rel-rel="https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/"
+	xmlns:fibo-fnd-soc-asp="https://spec.edmcouncil.org/fibo/ontology/FND/SocialConstructsExt/ConstructAspects/"
+	xmlns:fibo-fnd-tim-tim="https://spec.edmcouncil.org/fibo/ontology/FND/TimeExt/Time/"
 	xmlns:fibo-fnd-txn-ecr="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/EconomicResources/"
+	xmlns:fibo-fnd-txn-ev="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/TransactionEvents/"
 	xmlns:fibo-fnd-txn-rea="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/REATransactions/"
 	xmlns:fibo-fnd-txn-sec="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SecuritiesTransactions/"
+	xmlns:fibo-fnd-txn-sup="https://spec.edmcouncil.org/fibo/ontology/FND/TransactionsExt/SupplyTransactions/"
+	xmlns:fibo-fnd-utl-alx="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Analytics/"
 	xmlns:fibo-fnd-utl-av="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/"
+	xmlns:fibo-fnd-utl-bt="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/BusinessFacingTypes/"
 	xmlns:fibo-fnd-utl-val="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/Values/"
+	xmlns:fibo-ind-ei-caei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/CAEconomicIndicators/"
+	xmlns:fibo-ind-ei-ei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/"
+	xmlns:fibo-ind-ei-pub="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicatorPublishers/"
+	xmlns:fibo-ind-ei-usei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/NorthAmericanIndicators/USEconomicIndicators/"
+	xmlns:fibo-ind-fx-fx="https://spec.edmcouncil.org/fibo/ontology/IND/ForeignExchange/ForeignExchange/"
+	xmlns:fibo-ind-ind-ind="https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/"
+	xmlns:fibo-ind-ir-cm="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/CommonInterestRates/"
+	xmlns:fibo-ind-ir-ir="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRates/"
+	xmlns:fibo-ind-ir-pub="https://spec.edmcouncil.org/fibo/ontology/IND/InterestRates/InterestRatePublishers/"
+	xmlns:fibo-ind-mkt-bas="https://spec.edmcouncil.org/fibo/ontology/IND/MarketIndices/BasketIndices/"
+	xmlns:fibo-ln-ln-hmda="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanHMDA/"
+	xmlns:fibo-ln-ln-lgn="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanGeneric/"
+	xmlns:fibo-ln-ln-ln="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanContracts/LoanCore/"
+	xmlns:fibo-loan-loan-col="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansCollateral/"
+	xmlns:fibo-loan-loan-gen="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGeneral/"
+	xmlns:fibo-loan-loan-gty="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansGuaranties/"
+	xmlns:fibo-loan-loan-loan="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoanBasicTerms/"
+	xmlns:fibo-loan-loan-pty="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansParties/"
+	xmlns:fibo-loan-loan-reg="https://spec.edmcouncil.org/fibo/ontology/LOAN/Loans/LoansRegulatory/"
+	xmlns:fibo-loan-tem-app="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanApplicationsTemporal/"
+	xmlns:fibo-loan-tem-apr="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansAppraisal/"
+	xmlns:fibo-loan-tem-bor="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanBorrowersTemporal/"
+	xmlns:fibo-loan-tem-cl="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/ConstructionLoansTemporal/"
+	xmlns:fibo-loan-tem-col="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanCollateralTemporal/"
+	xmlns:fibo-loan-tem-ev="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansEvents/"
+	xmlns:fibo-loan-tem-ltv="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansLTV/"
+	xmlns:fibo-loan-tem-ph="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoanPhases/"
+	xmlns:fibo-loan-tem-sta="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansStatus/"
+	xmlns:fibo-loan-tem-tem="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansTemporal/LoansTemporal/"
+	xmlns:fibo-loan-typ-cl="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/ConstructionLoans/"
+	xmlns:fibo-loan-typ-com="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CommercialLoans/"
+	xmlns:fibo-loan-typ-cr="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/CreditProducts/"
+	xmlns:fibo-loan-typ-gen="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/GeneralLoans/"
+	xmlns:fibo-loan-typ-mtg="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/MortgageLoans/"
+	xmlns:fibo-loan-typ-per="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/PersonalLoans/"
+	xmlns:fibo-loan-typ-prod="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/LoanProducts/"
+	xmlns:fibo-loan-typ-sec="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/SecuredLoans/"
+	xmlns:fibo-loan-typ-stu="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/StudentLoans/"
+	xmlns:fibo-loan-typ-uns="https://spec.edmcouncil.org/fibo/ontology/LOAN/LoanTypes/UnsecuredLoans/"
+	xmlns:fibo-md-civx-fun="https://spec.edmcouncil.org/fibo/ontology/MD/CIVTemporal/FundsTemporal/"
+	xmlns:fibo-md-dbtx-aly="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtAnalytics/"
+	xmlns:fibo-md-dbtx-int="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtInterestAmounts/"
+	xmlns:fibo-md-dbtx-py="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtPricingYields/"
+	xmlns:fibo-md-dbtx-red="https://spec.edmcouncil.org/fibo/ontology/MD/DebtTemporal/DebtRedemptionAmounts/"
+	xmlns:fibo-md-der-fut="https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/FuturesTemporal/"
+	xmlns:fibo-md-derx-eto="https://spec.edmcouncil.org/fibo/ontology/MD/DerivativesTemporal/ETOptionsTemporal/"
+	xmlns:fibo-md-eqx-pri="https://spec.edmcouncil.org/fibo/ontology/MD/EquityTemporal/EquityPricing/"
 	xmlns:fibo-md-temx-cre="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditEvents/"
+	xmlns:fibo-md-temx-crr="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/CreditRatings/"
+	xmlns:fibo-md-temx-crs="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityCreditStatuses/"
+	xmlns:fibo-md-temx-cur="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/AnalysisCurves/"
+	xmlns:fibo-md-temx-ins="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/InstrumentTemporalTerms/"
+	xmlns:fibo-md-temx-tem="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/TemporalConcepts/"
+	xmlns:fibo-md-temx-trs="https://spec.edmcouncil.org/fibo/ontology/MD/TemporalCore/SecurityTradingStatuses/"
+	xmlns:fibo-sec-dbt-ab-abs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-cbo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CBOs/"
+	xmlns:fibo-sec-dbt-ab-cdo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CDOs/"
+	xmlns:fibo-sec-dbt-ab-clo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CLOs/"
+	xmlns:fibo-sec-dbt-ab-cmo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/CMOs/"
+	xmlns:fibo-sec-dbt-ab-mbs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/MortgageBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-pbs="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/PoolBackedSecurities/"
+	xmlns:fibo-sec-dbt-ab-spv="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/AssetBackedSPVs/"
+	xmlns:fibo-sec-dbt-ab-syn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/AssetBacked/SyntheticCDOs/"
+	xmlns:fibo-sec-dbt-bo-bo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCommon/"
+	xmlns:fibo-sec-dbt-bo-cft="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowTerms/"
+	xmlns:fibo-sec-dbt-bo-cfv="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsCashflowVariants/"
+	xmlns:fibo-sec-dbt-bo-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsIssuerVariants/"
+	xmlns:fibo-sec-dbt-bo-li="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsListings/"
+	xmlns:fibo-sec-dbt-bo-str="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/STRIPs/"
+	xmlns:fibo-sec-dbt-bo-tax="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/BondsTaxTreatment/"
+	xmlns:fibo-sec-dbt-dbt-cft="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtCashflowTerms/"
+	xmlns:fibo-sec-dbt-dbt-fin="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtFinance/"
+	xmlns:fibo-sec-dbt-dbt-gty="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtInstrumentGuaranties/"
+	xmlns:fibo-sec-dbt-dbt-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/DebtIssuanceTerms/"
+	xmlns:fibo-sec-dbt-dbt-pn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtFoundations/ParticipationNotes/"
+	xmlns:fibo-sec-dbt-dbti="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtInstruments/"
+	xmlns:fibo-sec-dbt-mm-lpn="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/LoanParticipationNotes/"
+	xmlns:fibo-sec-dbt-mm-repo="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/REPOs/"
+	xmlns:fibo-sec-dbt-mm-td="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TermDeposits/"
+	xmlns:fibo-sec-dbt-mm-trd="https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/MoneyMarkets/TradedShortTermDebt/"
+	xmlns:fibo-sec-eq-dr="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/DepositaryReceipts/"
+	xmlns:fibo-sec-eq-eq="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/"
+	xmlns:fibo-sec-eq-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityIssuanceTerms/"
+	xmlns:fibo-sec-eq-lpe="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/LimitedPartnershipEquities/"
+	xmlns:fibo-sec-eq-sha="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareTerms/"
+	xmlns:fibo-sec-eq-she="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderEquity/"
+	xmlns:fibo-sec-eq-shr="https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/ShareholderRights/"
+	xmlns:fibo-sec-sec-ast="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecurityAssets/"
+	xmlns:fibo-sec-sec-bsk="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Baskets/"
+	xmlns:fibo-sec-sec-cls="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesClassification/"
+	xmlns:fibo-sec-sec-id="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/"
+	xmlns:fibo-sec-sec-idind="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentificationIndividuals/"
+	xmlns:fibo-sec-sec-iss="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIssuance/"
+	xmlns:fibo-sec-sec-lst="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesListings/"
+	xmlns:fibo-sec-sec-pls="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/Pools/"
+	xmlns:fibo-sec-sec-rst="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesRestrictions/"
+	xmlns:fibo-sec-sec-sch="https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/ParametricSchedules/"
+	xmlns:fibo-sec-secx-sec="https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesExt/"
+	xmlns:fibo-sec-secx-tax="https://spec.edmcouncil.org/fibo/ontology/SEC/SecuritiesExt/SecuritiesTaxTreatment/"
+	xmlns:gidm="http://www.globalids.com/mapping#"
+	xmlns:lcc-3166-1="http://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/"
+	xmlns:lcc-3166-2="http://www.omg.org/spec/LCC/Countries/ISO3166-2-SubdivisionCodes/"
+	xmlns:lcc-3166-2-ca="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CA/"
+	xmlns:lcc-3166-2-gb="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GB/"
+	xmlns:lcc-3166-2-us="http://www.omg.org/spec/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-US/"
+	xmlns:lcc-639-1="http://www.omg.org/spec/LCC/Languages/ISO639-1-LanguageCodes/"
+	xmlns:lcc-639-2="http://www.omg.org/spec/LCC/Languages/ISO639-2-LanguageCodes/"
+	xmlns:lcc-cr="http://www.omg.org/spec/LCC/Countries/CountryRepresentation/"
+	xmlns:lcc-lr="http://www.omg.org/spec/LCC/Languages/LanguageRepresentation/"
+	xmlns:naics-2007="http://linkedmodel.org/vocab/industry-codes/naics-2007#"
 	xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:sm="http://www.omg.org/techprocess/ab/SpecificationMetadata/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 	
 	<owl:Ontology rdf:about="https://spec.edmcouncil.org/fibo/ontology/DER/CreditDerivatives/CreditDefaultSwaps/">
-		<rdfs:label xml:lang="en">CreditDefaultSwaps</rdfs:label>
-		<dct:abstract>A transaction and contract in which one leg is the conditional commitment to pay out on some debt in the event that a pre-defined credit event takes place. The contract may make reference to a specific debt instrument or loan, or take effect in the event of one of a range of events that happen to the business entity that is the debtor in that debt. Includes terms for different kinds of settlement arrangement. Note that these are a swap in name only, since under normal conditions there is only one stream of payment, the fee payment leg.</dct:abstract>
+		<dct:abstract xml:lang="en">A transaction and contract in which one leg is the conditional commitment to pay out on some debt in the event that a pre-defined credit event takes place. The contract may make reference to a specific debt instrument or loan, or take effect in the event of one of a range of events that happen to the business entity that is the debtor in that debt. Includes terms for different kinds of settlement arrangement. Note that these are a swap in name only, since under normal conditions there is only one stream of payment, the fee payment leg.</dct:abstract>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/DerivativesBasics/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/"/>
@@ -92,31 +647,22 @@
 				<owl:allValuesFrom rdf:resource="&fibo-der-cr-cds;CDSCashSettlementDealer"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap cash settlement</rdfs:label>
 		<owl:disjointWith rdf:resource="&fibo-der-cr-cds;CDSPhysicalSettlement"/>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSCashSettlementDealer">
-		<rdfs:label xml:lang="en">credit default swap cash settlement dealer</rdfs:label>
-		<skos:definition xml:lang="en">A party from whom quotations are obtained by the calculation agent on the reference obligation for purposes of cash settlement of a CDS.</skos:definition>
-		<skos:editorialNote xml:lang="en">ACTION not sure if this is a distinct party or specification of an existing party in a wider process. Assume the latter - so define where and what.</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSCashSettlementQuotationMethod">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-arrxx-meth;Method"/>
-		<rdfs:label xml:lang="en">credit default swap cash settlement quotation method</rdfs:label>
-		<skos:definition xml:lang="en">The specification of the type of quotation rate to be obtained from each cash settlement reference bank. Further notes: For example, Bid, Offer or Mid-market. FpML Definition: The specification of the type of quotation rate to be obtained from each cash settlement reference bank.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSCashSettlementValuationMethod">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-arrxx-meth;Method"/>
-		<rdfs:label xml:lang="en">credit default swap cash settlement valuation method</rdfs:label>
-		<skos:definition xml:lang="en">The defined methodology for determining the final price of the reference obligation for purposes of cash settlement. FpML: The ISDA defined methodology for determining the final price of the reference obligation for purposes of cash settlement.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSContingentDeliveryCommitment">
 		<rdfs:subClassOf rdf:resource="&fibo-der-cr-cds;ContingentTransactionCommitment"/>
-		<rdfs:label xml:lang="en">credit default swap contingent delivery commitment</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSContingentDeliverySide">
@@ -126,16 +672,10 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CDSContingentDeliveryTerms"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap contingent delivery side</rdfs:label>
-		<skos:definition xml:lang="en">The settlement of a CDS deal in the event that the events specified in the Contingent Leg of the deal take place.</skos:definition>
-		<skos:editorialNote xml:lang="en">Need to establish whether this is the delivery side or the settlement side of the Contingent transaction. The label Settlement seems to be misapplied. Deifnition Origin:SMER</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSContingentDeliveryTerms">
 		<rdfs:subClassOf rdf:resource="&fibo-der-drc-bsc;DeliveryTerms"/>
-		<rdfs:label xml:lang="en">credit default swap contingent delivery terms</rdfs:label>
-		<skos:definition xml:lang="en">The settlement of a CDS deal in the event that the events specified in the Contingent Leg of the deal take place.</skos:definition>
-		<skos:editorialNote xml:lang="en">Need to establish whether this is the delivery side or the settlement side of the Contingent transaction. The label Settlement seems to be misapplied. Deifnition Origin:SMER</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSContingentTransaction">
@@ -176,14 +716,10 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap contingent transaction</rdfs:label>
-		<skos:definition xml:lang="en">The transaction which takes place in the event that the specified Credit Event in a Credit default Swap takes place. Deifnition Origin:SMER</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSContingentTransactionSettlement">
 		<rdfs:subClassOf rdf:resource="&fibo-fbc-pas-fpas;SettlementTerms"/>
-		<rdfs:label xml:lang="en">credit default swap contingent transaction settlement</rdfs:label>
-		<skos:definition xml:lang="en">Settlement for the transaction agreed in the CDS, which takes place if the Credit Event takes place. This is the payment as agreed by the Protection Seller, who becomes the buyer of the Deliverable Obligation. Deifnition Origin:SMER</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSCreditEvent">
@@ -200,11 +736,9 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CDSCreditEventReference"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap credit event</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSCreditEventReference">
-		<rdfs:label xml:lang="en">credit default swap credit event reference</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSFeeLegStream">
@@ -218,40 +752,37 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;definesPeriodicPayments"/>
 				<owl:onClass rdf:resource="&fibo-der-cr-cds;CDSPeriodicPaymentSchedule"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;initialPayment"/>
 				<owl:onClass rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;protectionSellerPayment"/>
 				<owl:onClass rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;initialPoints"/>
 				<owl:onClass rdf:resource="&fibo-fnd-utl-val;PercentageValue"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;marketFixedRate"/>
 				<owl:onClass rdf:resource="&fibo-fnd-utl-val;PercentageValue"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap fee leg stream</rdfs:label>
-		<skos:definition xml:lang="en">Terms defining the fee leg in a CDS contract</skos:definition>
-		<skos:editorialNote xml:lang="en">Review session notes: See &quot;Fee Payment Leg&quot; for notes on this structure. Now separated the Leg (as a side of the transaction) and the formal terms for payment of the CDS fee, as a set of Contract Terms.</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSFeePaymentCommitment">
@@ -261,16 +792,11 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap fee payment commitment</rdfs:label>
-		<skos:definition xml:lang="en">The commitment in a Credit Default Swap, to pay the fee or fees for the credit protection.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This is embodied in a Fee Leg.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSFeePaymentScheduleSpecification">
 		<rdfs:subClassOf rdf:resource="&fibo-der-cr-cds;CDSPeriodicPaymentSchedule"/>
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-dt-fd;RegularSchedule"/>
-		<rdfs:label xml:lang="en">credit default swap fee payment schedule specification</rdfs:label>
-		<skos:definition xml:lang="en">A schedule expressing payment events and dates.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSParty">
@@ -281,16 +807,10 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;ContingentTransactionParty"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap party</rdfs:label>
-		<skos:definition xml:lang="en">Either party to a Credit Default Swap contract.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This term identifies either party to the CDS contract (the protection seller and the protection buyer). Party roles such as &quot;Notification Party&quot; may be defined as one or the other or both CDS party.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSPeriodicPaymentSchedule">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-dt-fd;Schedule"/>
-		<rdfs:label xml:lang="en">credit default swap periodic payment schedule</rdfs:label>
-		<skos:definition xml:lang="en">The schedule of fixed amounts to be paid on specified payment dates.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">The amount can be specified in terms of a known currency amount or as an amount calculated on a formula basis by reference to a per annum fixed rate. The applicable business day convention and business day for adjusting any fixed rate payer payment date if it would otherwise fall on a day that is not a business day are to be specified. Review notes: Note that both of the above possibilities refer to the amount, not the determination of dates. It is assumed that this is always a specification of how to determine the dates (a schedule specification) and not an explicit list of dates and amounts on each date. If the latter is applicable, a term for this needs to be added as a type of &quot;Explicit Schedule&quot;.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CDSPhysicalSettlement">
@@ -299,7 +819,7 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;mayRequire"/>
 				<owl:onClass rdf:resource="&fibo-der-cr-cds;EscrowAgent"/>
-				<owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+				<owl:maxQualifiedCardinality rdf:datatype="&xsd;integer">1</owl:maxQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -308,30 +828,21 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;DeliverableObligation"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap physical settlement</rdfs:label>
-		<skos:definition xml:lang="en">Physical settlement is where you deliver the reference obligation (e.g.a bond) itself. Deifnition Origin:SMER</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ContingentLeg">
 		<rdfs:subClassOf rdf:resource="&fibo-der-drc-swp;SwapLeg"/>
-		<rdfs:label xml:lang="en">contingent leg</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ContingentTransactionCommitment">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-txn-rea;ContractualEconomicCommitment"/>
-		<rdfs:label xml:lang="en">contingent transaction commitment</rdfs:label>
-		<skos:definition xml:lang="en">A commitment which is agreed in advance but which only comes into force on the occurrence of some pre-agreed event.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ContingentTransactionParty">
-		<rdfs:label xml:lang="en">contingent transaction party</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditBasketReferenceConstituent">
 		<rdfs:subClassOf rdf:resource="&fibo-fbc-pas-fpas;BasketConstituent"/>
-		<rdfs:label xml:lang="en">credit basket reference constituent</rdfs:label>
-		<skos:definition xml:lang="en">A constituent of the credit basket.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This amounts to a legal entity which is the reference entity and a security issued by that entity, as a means of measuring the credit performance of that legal entity.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditDefaultSwapContract">
@@ -341,14 +852,14 @@
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;hasBuyer"/>
 				<owl:onClass rdf:resource="&fibo-der-cr-cds;ProtectionBuyer"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">2</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">2</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-der-cr-cds;hasSeller"/>
 				<owl:onClass rdf:resource="&fibo-der-cr-cds;ProtectionSeller"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">2</owl:minQualifiedCardinality>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;integer">2</owl:minQualifiedCardinality>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -387,9 +898,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CreditProtectionCommitment"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap contract</rdfs:label>
-		<skos:definition xml:lang="en">In a credit default swap one party (the protection seller) agrees to compensate another party (the protection buyer) if a specified company or Sovereign (the reference entity) experiences a credit event, indicating it is or may be unable to service its debts. The protection seller is typically paid a fee and/or premium, expressed as an annualized percent of the notional in basis points, regularly over the life of the transaction or otherwise as agreed by the parties.</skos:definition>
-		<skos:editorialNote xml:lang="en">Earlier draft definition: A swap instrument in which one party underwrites the risk of credit default of the other party or of an identified third party.</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditDefaultSwapTransaction">
@@ -399,9 +907,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;FeePaymentLeg"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit default swap transaction</rdfs:label>
-		<skos:definition xml:lang="en">The transaction in which one party pay a fee or fees for credit protection and another commits to enter into the contingent transaction if the credit event takes place.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This is embodied in a Fee Leg.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditDerivativeContract">
@@ -412,7 +917,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CreditEventUnderlying"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit derivative contract</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditEventNotice">
@@ -429,9 +933,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;NotifyingParty"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit event notice</rdfs:label>
-		<skos:definition xml:lang="en">An irrevocable written or verbal notice that describes a credit event that has occurred.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">A specified condition to settlement. The notice is sent from the notifying party (either the buyer or the seller) to the counterparty. It provides information relevant to determining that a credit event has occurred. This is typically accompanied by Publicly Available Information. ISDA 2003 Term: Credit Event Notice. FpML full definition: &apos;A specified condition to settlement. An irrevocable written or verbal notice that describes a credit event that has occurred. The notice is sent from the notifying party (either the buyer or the seller) to the counterparty. It provides information relevant to determining that a credit event has occurred. This is typically accompanied by Publicly Available Information. ISDA 2003 Term: Credit Event Notice.&apos;</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditEventUnderlying">
@@ -442,7 +943,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CDSCreditEvent"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit event underlying</rdfs:label>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditProtectionCommitment">
@@ -452,9 +952,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CreditProtectionContingentLegTerms"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit protection commitment</rdfs:label>
-		<skos:definition xml:lang="en">The commitment in a Credit Defualt Swap, to protect against specified credit events.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">Terms are defined as &quot;Contingent Leg&quot;; in FpML these are defined as &quot;Protection Terms&quot;. They are terms of the CDS contract.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;CreditProtectionContingentLegTerms">
@@ -476,9 +973,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;ReferenceObligation"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">credit protection contingent leg terms</rdfs:label>
-		<skos:definition xml:lang="en">The leg of the swap which represents the credit protection.</skos:definition>
-		<skos:editorialNote xml:lang="en">Review notes 31 March: For a protection leg the commitment is a conditional commitment to pay out in the event of the credit event. Typically this would be a default. Contingent Leg is another name for this, because it is contingent on the credit event. Contents: 1. The payment to be made in the event of the credit event occurring 2. the Credit Event itself. This is called the calculation amount as it is the notional amount minus the recovery, to get a final calculation amount. There is a formula behind this. The Calculation Amount is how the calculation is driven not what the actual payment amount is. Do we model the formula? Depends whether there is physical or cash settlement. Modeler notes: FpML terms for &quot;CDS Protection Terms&quot; are equivalent to this structure. Formal Definition for CDS Protection Terms: The legal terms relevant to defining the applicable floating rate payer calculation amount, credit events and associated conditions to settlement, and reference obligations. FpML: &apos;This element contains all the terms relevant to defining the applicable floating rate payer calculation amount, credit events and associated conditions to settlement, and reference obligations.&apos; Deifnition Origin:SMER</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;DeliverableObligation">
@@ -489,19 +983,12 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;ReferenceObligation"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">deliverable obligation</rdfs:label>
-		<skos:definition xml:lang="en">An asset which is to be delivered as settlement of a CDS deal.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">If the RO is a bond, the DO may be a different bond. Detailed Review Notes: Would see this more often in less deep markets. If it is a Loan, the DO may be assigment of a loan. FpML Full Definition: &apos;This element contains all the ISDA terms relevant to defining the deliverable obligations.&apos; Deifnition Origin:SMER</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;DeliverableObligationBuyer">
-		<rdfs:label xml:lang="en">deliverable obligation buyer</rdfs:label>
-		<skos:definition xml:lang="en">The party which is obligated to purchase the Deliverable Obligation in the event that the CDS Contingent Transaction takes place. Deifnition Origin:SMER</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;DeliverableObligationSeller">
-		<rdfs:label xml:lang="en">deliverable obligation seller</rdfs:label>
-		<skos:definition xml:lang="en">The party which is obligated to sell the Deliverable Obligation in the event that the CDS Contingent Transaction takes place. Deifnition Origin:SMER</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;EscrowAgent">
@@ -511,9 +998,6 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;DeliverableObligation"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">escrow agent</rdfs:label>
-		<skos:definition xml:lang="en">An agent which acts in escrow for the delivery of some Deliverable Obligation in the context of some CDS contract.</skos:definition>
-		<skos:editorialNote xml:lang="en">Identified at SME Review as being one possible mechanism which may be used in some cases, and specified as such in the CDS contract, for delivery of the Deliverable Obligation. Deifnition Origin:SMER</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;FeePaymentLeg">
@@ -523,16 +1007,10 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;CDSFeePaymentCommitment"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">fee payment leg</rdfs:label>
-		<skos:definition xml:lang="en">The fee leg in a CDS contract</skos:definition>
-		<skos:editorialNote xml:lang="en">Review session notes: Q: whether this is any different to a regular Payment Leg. Answers: This is the &quot;other&quot; side of the swap from credit protection, i.e. the payment side. You are going to pay a set of fixed payments in return for a payment that occurs in the event of the credit event. So this is not incorrect but not a useful name for it. Swap is swap of a set of payments that equates the credit margin in return for the payments that apply in the case of the credit event. Conclusions: A good name for it might be the Credit Margin, at least from the point of view of the protection buyer, as this is the margin they are paying for the credit protection.</skos:editorialNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;LocallyDefinedCreditBasket">
 		<rdfs:subClassOf rdf:resource="&fibo-fbc-pas-fpas;Basket"/>
-		<rdfs:label xml:lang="en">locally defined credit basket</rdfs:label>
-		<skos:definition xml:lang="en">A basket of securities and/or reference entities monitored for credit purposes.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This would be the underlying of a non single-name Credit Default Swap. Review session notes: Basket is not just a basket of securities but a basket of securities and/or reference entities. The basket has terms about the nth entity to default and so on. So it works like a locally defined credit index, which (we assume) works in a similar way. Modeling note: Credit Index now modeled using information from OTPP, where each constituent is one Reference Entity and one corresponding instrument. Assume this arrangement works the same way. Modeled accordingly. See Indices and Indicators section for equivalent terms for published Credit Index.</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;NotifyingParty">
@@ -552,23 +1030,14 @@
 				</owl:someValuesFrom>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">notifying party</rdfs:label>
-		<skos:definition xml:lang="en">The party which is able to issue formal notices indicating that a Credit Event has taken place, by means of a credit event notice.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">If more than one party is referenced as being the notifying party (in the CDS contract) then either party may notify the other of a credit event occurring. That is, this party may be either party to the CDS Contract. ISDA 2003 Term: Notifying Party. FpML Full Definition: &apos;Pointer style references to a party identifier defined elsewhere in the document. The notifying party is the party that notifies the other party when a credit event has occurred by means of a credit event notice. If more than one party is referenced as being the notifying party then either party may notify the other of a credit event occurring. ISDA 2003 Term: Notifying Party.&apos;</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ObligationAcceleration">
 		<rdfs:subClassOf rdf:resource="&fibo-der-cr-cds;CDSCreditEvent"/>
-		<rdfs:label xml:lang="en">obligation acceleration</rdfs:label>
-		<skos:definition xml:lang="en">One or more of the obligations have been declared due and payable before they would otherwise have been due and payable as a result of, or on the basis of, the occurrence of a default, event of default or other similar condition or event other than failure to pay</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">Preferred by the market over Obligation Default, because more definitive and encompasses the definition of Obligation Default - this is more favorable to the Seller. Subject to the default requirement amount. This is a Credit Event. ISDA 2003 Term: Obligation Acceleration. FpML full definition: &apos;A credit event. One or more of the obligations have been declared due and payable before they would otherwise have been due and payable as a result of, or on the basis of, the occurrence of a default, event of default or other similar condition or event other than failure to pay (preferred by the market over Obligation Default, because more definitive and encompasses the definition of Obligation Default - this is more favorable to the Seller). Subject to the default requirement amount. ISDA 2003 Term: Obligation Acceleration.&apos;</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ObligationDefault">
 		<rdfs:subClassOf rdf:resource="&fibo-der-cr-cds;CDSCreditEvent"/>
-		<rdfs:label xml:lang="en">obligation default</rdfs:label>
-		<skos:definition xml:lang="en">One or more of the obligations have become capable of being declared due and payable before they would otherwise have been due and payable as a result of, or on the basis of, the occurrence of a default, event of default or other similar condition or event other than failure to pay.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">This is a Credit Event. ISDA 2003 Term: Obligation Default. FpML full definition: &apos;A credit event. One or more of the obligations have become capable of being declared due and payable before they would otherwise have been due and payable as a result of, or on the basis of, the occurrence of a default, event of default or other similar condition or event other than failure to pay. ISDA 2003 Term: Obligation Default.&apos;</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ProtectionBuyer">
@@ -579,9 +1048,7 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;DeliverableObligationSeller"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">protection buyer</rdfs:label>
 		<owl:disjointWith rdf:resource="&fibo-der-cr-cds;ProtectionSeller"/>
-		<skos:definition xml:lang="en">The party which buys protection against a default on the Reference Obligation, from the Protection Seller.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ProtectionSeller">
@@ -592,378 +1059,288 @@
 				<owl:someValuesFrom rdf:resource="&fibo-der-cr-cds;DeliverableObligationBuyer"/>
 			</owl:Restriction>
 		</rdfs:subClassOf>
-		<rdfs:label xml:lang="en">protection seller</rdfs:label>
-		<skos:definition xml:lang="en">The party which sells protection against a default on the Reference Obligation, to the Protection Buyer. This party commits to purchase the Refernce Obligation or some agreed alternative (the Deliverable Obligation), or settle for an equivalent amount in cash, in the event that the Credit Event defined in the contract takes place.</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ReferenceEntity">
 		<rdfs:subClassOf rdf:resource="&fibo-der-cr-cds;CDSCreditEventReference"/>
-		<rdfs:label xml:lang="en">credit default swap reference entity</rdfs:label>
-		<skos:definition xml:lang="en">The legal entity on which the protection buyer is buying or selling protection and any successor that assumes all or substantially all of its contractual and other obligations. This is the legal entity to which a Credit Event refers, if the event is defined in relation to some legal entity.</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">FpML additional notes: It is vital to use the correct legal name of the entity and to be careful not to choose a subsidiary if you really want to trade protection on a parent company. Please note, Reference Entities cannot be senior or subordinated. It is the obligations of the Reference Entities that can be senior or subordinated. ISDA 2003 Term: Reference Entity&apos; Although the CDS is made out with reference to some security (issued by some party) or some loan to some party, the underlying purpose of the CDS is to protect that instrument in the event of some Credit Event that is to do with the issuing (debtor) party itself. Credit Events are therefore defined in relation to the Legal Entity and not in relation to the Security itself. FpML Definition: &apos;The corporate or sovereign entity on which you are buying or selling protection and any successor that assumes all or substantially all of its contractual and other obligations. It is vital to use the correct legal name of the entity and to be careful not to choose a subsidiary if you really want to trade protection on a parent company. Please note, Reference Entities cannot be senior or subordinated. It is the obligations of the Reference Entities that can be senior or subordinated. ISDA 2003 Term: Reference Entity&apos; Deifnition Origin:FpML adapted</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-der-cr-cds;ReferenceObligation">
 		<rdfs:subClassOf rdf:resource="&fibo-der-cr-cds;CDSCreditEventReference"/>
 		<rdfs:subClassOf rdf:resource="&fibo-der-drc-bsc;Underlier"/>
-		<rdfs:label xml:lang="en">credit default swap reference obligation</rdfs:label>
-		<skos:definition xml:lang="en">The underlying obligation against which the CDS provides credit protection. The Reference Obligation is a financial instrument that is either issued or guaranteed by the reference entity. It serves to clarify the precise reference entity protection is being offered upon, and its legal position with regard to other related firms (parents/subsidiaries).</skos:definition>
-		<fibo-fnd-utl-av:explanatoryNote xml:lang="en">FpML adds &quot;Furthermore the Reference Obligation is ALWAYS deliverable and establishes the Pari Passu ranking (as the deliverable bonds must rank equal to the reference&quot; however this is not borne out in all cases (sometimes the Deliverable Obligation is NOT the Reference Obligation. This term is what we are referrring to when we refer to the credit event. This is what you are referencing to determine whether or not a default has occurred. Note: Loans as Reference Obligation: If the Ref Ob is a loan you can&apos;t establish that a default event has occurred but would have to specify some other event that can be obvserved to objectively determine that there has been a default. For example, you might have a loan for a company but monitor a bond issued by that company. If the bond defaults, the deliverable obligation may be the loan or some cash settlement based on the value of that loan (more typically). Detailed Review Notes: Q: Where does it go from here: thing or event? A: Commonly refers to an instrument, i.e. &quot;This is the instrument we are looking at; if this instrument defaults then we are going to pay out on the protection leg. FpML Full Definition: &apos;The underlying obligations of the reference entity on which you are buying or selling protection. The credit events Failure to Pay, Obligation Acceleration, Obligation Default, Restructuring, Repudiation/Moratorium are defined with respect to these obligations. ISDA 2003 Term:&apos; Also FpML referenceObligtion choice entry: &apos;The Reference Obligation is a financial instrument that is either issued or guaranteed by the reference entity. It serves to clarify the precise reference entity protection is being offered upon, and its legal position with regard to other related firms (parents/subsidiaries). Furthermore the Reference Obligation is ALWAYS deliverable and establishes the Pari Passu ranking (as the deliverable bonds must rank equal to the reference obligation). ISDA 2003 Term: Reference Obligation&apos; Deifnition Origin:FpML adapted</fibo-fnd-utl-av:explanatoryNote>
 	</owl:Class>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;accruedInterestApplicable">
-		<rdfs:label xml:lang="en">accrued interest applicable</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSPhysicalSettlement"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Whether accrued interest is included.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;additionalTerm">
-		<rdfs:label xml:lang="en">additional term</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition xml:lang="en">Information conveying additional contractual terms for the contract.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;calculationAmount">
-		<rdfs:label xml:lang="en">calculation amount</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditProtectionContingentLegTerms"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">The notional amount of protection coverage.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;cashSettlementBusinessDays">
-		<rdfs:label xml:lang="en">cash settlement business days</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&xsd;integer"/>
-		<skos:definition xml:lang="en">The number of business days used in the determination of the cash settlement payment date.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;defaultRequirement">
-		<rdfs:label xml:lang="en">default requirement</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;ObligationAcceleration"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">The threshold for Obligation Acceleration</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;defaultRequirement.1">
-		<rdfs:label xml:lang="en">default requirement</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;ObligationDefault"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">The threshold for Obligation Default</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;definedAs">
-		<rdfs:label xml:lang="en">defined as</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSContingentDeliverySide"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSContingentDeliveryTerms"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;definedAs.1">
-		<rdfs:label xml:lang="en">defined as</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeePaymentCommitment"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;definedAs.2">
-		<rdfs:label xml:lang="en">defined as</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditProtectionCommitment"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CreditProtectionContingentLegTerms"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;definesPeriodicPayments">
-		<rdfs:label xml:lang="en">defines periodic payments</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSPeriodicPaymentSchedule"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;dependentOn">
-		<rdfs:label xml:lang="en">dependent on</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;ContingentTransactionCommitment"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;describes">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-inf-inf;isAbout"/>
-		<rdfs:label xml:lang="en">describes</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditEventNotice"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSCreditEvent"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;effectiveDate">
-		<rdfs:label xml:lang="en">effective date</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;Date"/>
-		<skos:definition xml:lang="en">The effective starting date of the credit protection defined in the contract.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;escrowApplicable">
-		<rdfs:label xml:lang="en">escrow applicable</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSPhysicalSettlement"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Whether physical settlement must take place through the use of an escrow agent.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;establishes">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-txn-rea;establishesContractualEconomicCommitment"/>
-		<rdfs:label xml:lang="en">establishes</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;ContingentTransactionCommitment"/>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;floatingAmountEvent">
-		<rdfs:label xml:lang="en">floating amount event</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditProtectionContingentLegTerms"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition xml:lang="en">Events which... [definition needed, the FpML text doesn&apos;t define it]</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;hasBuyer">
-		<rdfs:label xml:lang="en">has buyer</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSContingentTransaction"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;DeliverableObligationBuyer"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;hasDeliverySide">
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-txn-rea;hasPerspective"/>
-		<rdfs:label xml:lang="en">has delivery side</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSContingentTransaction"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSContingentDeliverySide"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;hasFeeLeg">
 		<rdfs:subPropertyOf rdf:resource="&fibo-der-drc-swp;hasLeg"/>
-		<rdfs:label xml:lang="en">has fee leg</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapTransaction"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;FeePaymentLeg"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;hasReferenceObligation">
 		<rdfs:subPropertyOf rdf:resource="&fibo-der-drc-bsc;hasUnderlier"/>
-		<rdfs:label xml:lang="en">has reference obligation</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;ReferenceObligation"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;hasSeller">
-		<rdfs:label xml:lang="en">has seller</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSContingentTransaction"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;DeliverableObligationSeller"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;hasSettlementSide">
-		<rdfs:label xml:lang="en">has settlement side</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSContingentTransaction"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSContingentTransactionSettlement"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;hasSubject">
-		<rdfs:label xml:lang="en">has subject</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSContingentTransaction"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;DeliverableObligation"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;initialPayment">
-		<rdfs:label xml:lang="en">initial payment</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">A single fixed payment that is payable by the payer to the receiver on the initial payment date.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;initialPoints">
-		<rdfs:label xml:lang="en">initial points</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&fibo-fnd-utl-val;PercentageValue"/>
-		<skos:definition xml:lang="en">The up-front points expressed as a percentage of the notional.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;marketFixedRate">
-		<rdfs:label xml:lang="en">market fixed rate</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&fibo-fnd-utl-val;PercentageValue"/>
-		<skos:definition xml:lang="en">The credit spread (&quot;fair value&quot;) at which the trade was executed.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;mayBe">
-		<rdfs:label xml:lang="en">may be</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;DeliverableObligation"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;ReferenceObligation"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;mayRequire">
-		<rdfs:label xml:lang="en">may require</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSPhysicalSettlement"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;EscrowAgent"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;minimumQuotationAmount">
-		<rdfs:label xml:lang="en">minimum quotation amount</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">The minimum intended threshold amount of outstanding principal balance of the reference obligation for which the quote should be obtained.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;modifiedEquityDelivery">
-		<rdfs:label xml:lang="en">modified equity delivery</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">no-one knows what this means. Equity? It is not considered a default if the coupon on a Preferred Share is not paid. There are provisions in preference shares, since a company may be legally restrited from paying dividends other than from its reserves (e.g. in Aus law) so therefore this can&apos;t be a default. FpML: &apos;Value of this element set to \&apos;true\&apos; indicates that modified equity delivery is applicable.&apos;</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;notifiedBy">
-		<rdfs:label xml:lang="en">notified by</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCreditEvent"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;NotifyingParty"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;notionalAmount">
-		<rdfs:label xml:lang="en">notional amount</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">The notional amount is the price at which the protection seller agrees to buy the bond in the event of a default.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;paymentDelay">
-		<rdfs:label xml:lang="en">payment delay</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Whether payment delays are applicable to the fixed Amount.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;pertainsTo">
 		<rdfs:subPropertyOf rdf:resource="&fibo-md-temx-cre;pertainsTo"/>
-		<rdfs:label xml:lang="en">pertains to by reference</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCreditEvent"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSCreditEventReference"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;physicalSettlementPeriod">
-		<rdfs:label xml:lang="en">physical settlement period</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSPhysicalSettlement"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;ExplicitDuration"/>
-		<skos:definition xml:lang="en">The number of business days used in the determination of the physical settlement date. Further Notes The physical settlement date is this number of business days after all applicable conditions to settlement are satisfied. If a number of business days is not specified fallback provisions apply for determining the number of business days. If Section 8.5/8.6 of the 1999/2003 ISDA Definitions are to apply then it should be flagged that &quot;Business Days Not Specified&quot;. If a specified number of business days are to apply these should be specified. If Section 8.5/8.6 of the 1999/2003 ISDA Definitions are to apply but capped at a maximum number of business days then the maximum number should be specified. ISDA 2003 Term: Physical Settlement Period Note that although this is described as a period, it is not a period of time from one date/time to another, but a duration i.e. a length of time (in business days). FpML: &apos;The number of business days used in the determination of the physical settlement date. The physical settlement date is this number of business days after all applicable conditions to settlement are satisfied. If a number of business days is not specified fallback provisions apply for determining the number of business days. If Section 8.5/8.6 of the 1999/2003 ISDA Definitions are to apply the businessDaysNotSpecified element should be included. If a specified number of business days are to apply these should be specified in the businessDays element. If Section 8.5/8.6 of the 1999/2003 ISDA Definitions are to apply but capped at a maximum number of business days then the maximum number should be specified in the maximumBusinessDays element. ISDA 2003 Term: Physical Settlement Period&apos;</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;protectionSellerPayment">
-		<rdfs:label xml:lang="en">protection seller payment</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">A payment on a CDS trade where there is a payment from Seller to Buyer.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;quotationAmount">
-		<rdfs:label xml:lang="en">quotation amount</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">An amount quoted, which is either an upper limit to the outstanding principal balance of the reference obligation for which the quote should be obtained, or the floating rate payer calculation amount.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;quotationMethod">
-		<rdfs:label xml:lang="en">quotation method</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSCashSettlementQuotationMethod"/>
-		<skos:definition xml:lang="en">The type of price quotations to be requested from dealers when determining the market value of the reference obligation for purposes of cash settlement.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;quotationStyle">
-		<rdfs:label xml:lang="en">quotation style</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&xsd;string"/>
-		<skos:definition xml:lang="en">The type of quotation that was used between the trading desks in setting up the deal.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;scheduledTerminationDate">
-		<rdfs:label xml:lang="en">scheduled termination date</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;Date"/>
-		<skos:definition xml:lang="en">The date at which the contract for credit protection is due to expire as agreed by both parties.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;servedBy">
-		<rdfs:label xml:lang="en">served by</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditEventNotice"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;NotifyingParty"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;settlementCurrency">
-		<rdfs:label xml:lang="en">settlement currency</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;Currency"/>
-		<skos:definition xml:lang="en">The currency in which the deal is to be settled.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;singlePayment">
-		<rdfs:label xml:lang="en">single payment</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSFeeLegStream"/>
 		<rdfs:range rdf:resource="&fibo-fnd-acc-cur;MonetaryAmount"/>
-		<skos:definition xml:lang="en">A single fixed amount that is payable by the buyer to the seller on the fixed rate payer payment date. The fixed amount to be paid is specified in terms of a known currency amount.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;sixtyBusinessDaySettlementCap">
-		<rdfs:label xml:lang="en">sixty business day settlement cap</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSPhysicalSettlement"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Whether the legal terms set forth in the following language are deemed part of the confirmation (the section references are to the 2003 ISDA Credit Derivatives Definitions): &apos;Notwithstanding Section 1.7 or any provisions of Sections 9.9 or 9.10 to the contrary, but without prejudice to Section 9.3 and (where applicable) Sections 9.4, 9.5 and 9.6, if the Termination Date has not occurred on or prior to the date that is 60 Business Days following the Physical Settlement Date, such 60th Business Day shall be deemed to be the Termination Date with respect to this Transaction except in relation to any portion of the Transaction (an &quot;Affected Portion&quot;) in respect of which: (1) a valid notice of Buy-in Price has been delivered that is effective fewer than three Business Days prior to such 60th Business Day, in which case the Termination Date for that Affected Portion shall be the third Business Day following the date on which such notice is effective; or (2) Buyer has purchased but not Delivered Deliverable Obligations validly specified by Seller pursuant to Section 9.10(b), in which case the Termination Date for that Affected Portion shall be the tenth Business Day following the date on which Seller validly specified such Deliverable Obligations to Buyer.&apos;</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;specifies">
-		<rdfs:label xml:lang="en">specifies</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSPhysicalSettlement"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;DeliverableObligation"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;specifies.1">
-		<rdfs:label xml:lang="en">specifies</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditProtectionContingentLegTerms"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSContingentTransaction"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;specifies.2">
-		<rdfs:label xml:lang="en">specifies</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditProtectionContingentLegTerms"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSCreditEvent"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;specifiesDealer">
-		<rdfs:label xml:lang="en">specifies dealer</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSCashSettlementDealer"/>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;specifiesObligation">
-		<rdfs:label xml:lang="en">specifies obligation</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditProtectionContingentLegTerms"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;ReferenceObligation"/>
 	</owl:ObjectProperty>
 	
 	<owl:DatatypeProperty rdf:about="&fibo-der-cr-cds;substitution">
-		<rdfs:label xml:lang="en">substitution</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CreditDefaultSwapContract"/>
 		<rdfs:range rdf:resource="&xsd;boolean"/>
-		<skos:definition xml:lang="en">Whether it is possible to substitute other obligations in place of the specified Deliverable Obligation.</skos:definition>
 	</owl:DatatypeProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;valuationDate">
-		<rdfs:label xml:lang="en">valuation date</rdfs:label>
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-dt-fd;hasDate"/>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;Date"/>
-		<skos:definition xml:lang="en">The date (however specified) after conditions to settlement have been satisfied, when the calculation agent obtains a price quotation on the Reference Obligation for purposes of cash settlement.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;valuationMethod">
-		<rdfs:label xml:lang="en">valuation method</rdfs:label>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-der-cr-cds;CDSCashSettlementValuationMethod"/>
-		<skos:definition xml:lang="en">The methodology for determining the final price of the reference obligation for purposes of cash settlement.</skos:definition>
 	</owl:ObjectProperty>
 	
 	<owl:ObjectProperty rdf:about="&fibo-der-cr-cds;valuationTime">
-		<rdfs:label xml:lang="en">valuation time</rdfs:label>
 		<rdfs:subPropertyOf rdf:resource="&fibo-fnd-dt-fd;hasDateTime"/>
 		<rdfs:domain rdf:resource="&fibo-der-cr-cds;CDSCashSettlement"/>
 		<rdfs:range rdf:resource="&fibo-fnd-dt-fd;DateTime"/>
-		<skos:definition xml:lang="en">The time of day in the specified business center when the calculation agent seeks quotations for an amount of the reference obligation for purposes of cash settlement.</skos:definition>
 	</owl:ObjectProperty>
 
 </rdf:RDF>
