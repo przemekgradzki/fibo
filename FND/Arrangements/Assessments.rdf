@@ -3,6 +3,7 @@
 	<!ENTITY dct "http://purl.org/dc/terms/">
 	<!ENTITY fibo-fnd-arr-asmt "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/">
 	<!ENTITY fibo-fnd-arr-rep "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Reporting/">
+	<!ENTITY fibo-fnd-dt-fd "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/">
 	<!ENTITY fibo-fnd-dt-oc "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/">
 	<!ENTITY fibo-fnd-pty-pty "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/">
 	<!ENTITY fibo-fnd-rel-rel "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/">
@@ -16,10 +17,9 @@
 ]>
 <rdf:RDF xml:base="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/"
 	xmlns:dct="http://purl.org/dc/terms/"
-	xmlns:fibo-fnd-dt-fd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/"
-
 	xmlns:fibo-fnd-arr-asmt="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/"
 	xmlns:fibo-fnd-arr-rep="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Reporting/"
+	xmlns:fibo-fnd-dt-fd="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/"
 	xmlns:fibo-fnd-dt-oc="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/"
 	xmlns:fibo-fnd-pty-pty="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/"
 	xmlns:fibo-fnd-rel-rel="https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/"
@@ -44,8 +44,8 @@
 		<sm:dependsOn rdf:datatype="&xsd;anyURI">https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/</sm:dependsOn>
 		<sm:fileAbbreviation>fibo-fnd-arr-asmt</sm:fileAbbreviation>
 		<sm:filename>Assessments.rdf</sm:filename>
-		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Reporting/"/>
+		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/"/>
 		<owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/"/>
@@ -65,8 +65,16 @@
 		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-dt-oc;hasOutput"/>
-				<owl:onClass rdf:resource="&fibo-fnd-arr-rep;Report"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+				<owl:someValuesFrom>
+					<owl:Class>
+						<owl:unionOf rdf:parseType="Collection">
+							<rdf:Description rdf:about="&fibo-fnd-arr-asmt;AssessmentReport">
+							</rdf:Description>
+							<rdf:Description rdf:about="&fibo-fnd-arr-asmt;Opinion">
+							</rdf:Description>
+						</owl:unionOf>
+					</owl:Class>
+				</owl:someValuesFrom>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -76,29 +84,31 @@
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:label>assessment activity</rdfs:label>
-		<skos:definition>an evaluation or estimation of the nature, quality, or ability of someone or something</skos:definition>
+		<skos:definition>activity involving the evaluation, estimation, or measurement of the nature, quality, ability, or value of someone or something</skos:definition>
 	</owl:Class>
 	
 	<owl:Class rdf:about="&fibo-fnd-arr-asmt;AssessmentEvent">
 		<rdfs:subClassOf rdf:resource="&fibo-fnd-dt-oc;Occurrence"/>
 		<rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/hasOutput"/>
-                <owl:someValuesFrom rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/Opinion"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-		<rdfs:subClassOf>
-			<owl:Restriction>
-				<owl:onProperty rdf:resource="&fibo-fnd-dt-oc;hasOutput"/>
-				<owl:onClass rdf:resource="&fibo-fnd-arr-rep;Report"/>
-				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
-			</owl:Restriction>
-		</rdfs:subClassOf>
-		<rdfs:subClassOf>
 			<owl:Restriction>
 				<owl:onProperty rdf:resource="&fibo-fnd-dt-oc;exemplifies"/>
 				<owl:onClass rdf:resource="&fibo-fnd-arr-asmt;AssessmentActivity"/>
 				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="&fibo-fnd-dt-oc;hasOutput"/>
+				<owl:someValuesFrom>
+					<owl:Class>
+						<owl:unionOf rdf:parseType="Collection">
+							<rdf:Description rdf:about="&fibo-fnd-arr-asmt;AssessmentReport">
+							</rdf:Description>
+							<rdf:Description rdf:about="&fibo-fnd-arr-asmt;Opinion">
+							</rdf:Description>
+						</owl:unionOf>
+					</owl:Class>
+				</owl:someValuesFrom>
 			</owl:Restriction>
 		</rdfs:subClassOf>
 		<rdfs:subClassOf>
@@ -111,89 +121,43 @@
 		<skos:definition>event involving the evaluation or estimation of the nature, quality, or ability of someone or something</skos:definition>
 	</owl:Class>
 	
+	<owl:Class rdf:about="&fibo-fnd-arr-asmt;AssessmentReport">
+		<rdfs:subClassOf rdf:resource="&fibo-fnd-arr-rep;Report"/>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="&fibo-fnd-arr-rep;reportsOn"/>
+				<owl:onClass rdf:resource="&fibo-fnd-arr-asmt;Opinion"/>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:minQualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:label>assessment report</rdfs:label>
+		<skos:definition>report that includes an opinion, judgement, appraisal, or view about something and typically the methodology and raw inputs used to arrive at that opinion</skos:definition>
+	</owl:Class>
 	
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Data properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+	<owl:Class rdf:about="&fibo-fnd-arr-asmt;Opinion">
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="&fibo-fnd-dt-oc;isOutputFrom"/>
+				<owl:someValuesFrom>
+					<owl:Class>
+						<owl:unionOf rdf:parseType="Collection">
+							<rdf:Description rdf:about="&fibo-fnd-arr-asmt;AssessmentActivity">
+							</rdf:Description>
+							<rdf:Description rdf:about="&fibo-fnd-arr-asmt;AssessmentEvent">
+							</rdf:Description>
+						</owl:unionOf>
+					</owl:Class>
+				</owl:someValuesFrom>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="&fibo-fnd-rel-rel;isProvidedBy"/>
+				<owl:someValuesFrom rdf:resource="&fibo-fnd-pty-pty;PartyInRole"/>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:label>opinion</rdfs:label>
+		<skos:definition>judgement, appraisal, or view about something</skos:definition>
+	</owl:Class>
 
-
-    
-
-
-    <!-- https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isEffectiveOn -->
-
-
-    <owl:DatatypeProperty rdf:about="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isEffectiveOn">
-        <rdfs:domain rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/Opinion"/>
-        <rdfs:range rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/CombinedDateTime"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">is effective on</rdfs:label>
-        <skos:definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">date or date/time at which something becomes valid or true.</skos:definition>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isIssuedOn -->
-
-
-    <owl:DatatypeProperty rdf:about="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isIssuedOn">
-        <rdfs:domain rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/Opinion"/>
-        <rdfs:range rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/CombinedDateTime"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">is issued on</rdfs:label>
-        <skos:definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">date or date/time at which something is issued.</skos:definition>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isNoLongerEffectiveOn -->
-
-
-    <owl:DatatypeProperty rdf:about="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isNoLongerEffectiveOn">
-        <rdfs:domain rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/Opinion"/>
-        <rdfs:range rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/CombinedDateTime"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">is no longer effective on</rdfs:label>
-        <skos:definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">date or date/time at which something is no longer valid or true.</skos:definition>
-    </owl:DatatypeProperty>
-	
-	<owl:Class rdf:about="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/AssessmentReport">
-        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Reporting/Report"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Reporting/reportsOn"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/Opinion"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">assessment report</rdfs:label>
-    </owl:Class>
-	
-    <owl:Class rdf:about="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/Opinion">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isEffectiveOn"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/CombinedDateTime"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isIssuedOn"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/CombinedDateTime"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/isNoLongerEffectiveOn"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/FinancialDates/CombinedDateTime"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">opinion</rdfs:label>
-        <skos:definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a view or judgment formed about something, not necessarily based on fact or knowledge. An opinion may be the result of an assessment</skos:definition>
-    </owl:Class>
 </rdf:RDF>
-
