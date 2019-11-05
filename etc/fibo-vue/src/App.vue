@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div v-if="$route && $route.query && $route.query.tag" class="tag-notification">
+      You are currently viewing historical version of site from git tag: {{ $route.query.tag }}
+    </div>
     <Header></Header>
     <Carousel></Carousel>
     <router-view/>
@@ -22,6 +25,10 @@ export default {
 
 
 <style lang="scss">
+.tag-notification {
+  color: red;
+  text-align: center;
+}
 
 form {
   width: 500px;
