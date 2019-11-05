@@ -53,13 +53,13 @@
         <ul>
           <li>
             <a
-              :href="hrefP('glossary-prod.csv','glossary')"
+              :href="hrefP('glossary-prod.csv','glossary') | applyTag(this)"
               v-on:click="outboundClick('glossary-prod.csv')"
             >Production</a>
           </li>
           <li>
             <a
-              :href="hrefD('glossary-dev.csv','glossary')"
+              :href="hrefD('glossary-dev.csv','glossary') | applyTag(this)"
               v-on:click="outboundClick('glossary-dev.csv')"
             >Development</a>
           </li>
@@ -73,13 +73,13 @@
         <ul>
           <li>
             <a
-              :href="hrefP('glossary-prod.xlsx','glossary')"
+              :href="hrefP('glossary-prod.xlsx','glossary') | applyTag(this)"
               v-on:click="outboundClick('glossary-prod.xlsx')"
             >Production</a>
           </li>
           <li>
             <a
-              :href="hrefD('glossary-dev.xlsx','glossary')"
+              :href="hrefD('glossary-dev.xlsx','glossary') | applyTag(this)"
               v-on:click="outboundClick('glossary-dev.xlsx')"
             >Development</a>
           </li>
@@ -93,7 +93,7 @@
         </h3>For application developers who want to be able to query for the human-readable versions of the FIBO logic,
         that is avaiable in
         <a
-          :href="hrefD('glossary-dev.ttl','glossary')"
+          :href="hrefD('glossary-dev.ttl','glossary') | applyTag(this)"
           v-on:click="outboundClick('glossary-dev.ttl')"
         >ttl</a> format.
         Release Notes:

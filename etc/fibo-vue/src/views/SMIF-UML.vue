@@ -37,13 +37,13 @@
                     <div class="ontology">
                       Corporations
                       <a
-                        v-bind:href="hrefP('BE/Corporations/Corporations.rdf','ontology')"
+                        v-bind:href="hrefP('BE/Corporations/Corporations.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/Corporations/Corporations.ttl','ontology')"
+                        v-bind:href="hrefP('BE/Corporations/Corporations.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/Corporations/Corporations.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/Corporations/Corporations.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -68,13 +68,13 @@
                     <div class="ontology">
                       FunctionalEntities
                       <a
-                        v-bind:href="hrefP('BE/FunctionalEntities/FunctionalEntities.rdf','ontology')"
+                        v-bind:href="hrefP('BE/FunctionalEntities/FunctionalEntities.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/FunctionalEntities/FunctionalEntities.rdf','ontology')"
+                        v-bind:href="hrefP('BE/FunctionalEntities/FunctionalEntities.rdf','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/FunctionalEntities/FunctionalEntities.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/FunctionalEntities/FunctionalEntities.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -82,13 +82,13 @@
                     <div class="ontology">
                       Publishers
                       <a
-                        v-bind:href="hrefP('BE/FunctionalEntities/Publishers.rdf','ontology')"
+                        v-bind:href="hrefP('BE/FunctionalEntities/Publishers.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/FunctionalEntities/Publishers.ttl','ontology')"
+                        v-bind:href="hrefP('BE/FunctionalEntities/Publishers.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/FunctionalEntities/Publishers.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/FunctionalEntities/Publishers.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -114,13 +114,13 @@
                     <div class="ontology">
                       CorporateBodies
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/CorporateBodies.rdf','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/CorporateBodies.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/CorporateBodies.ttl','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/CorporateBodies.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/CorporateBodies.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/CorporateBodies.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -180,13 +180,13 @@
                     <div class="ontology">
                       FormalBusinessOrganizations
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/FormalBusinessOrganizations.rdf','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/FormalBusinessOrganizations.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/FormalBusinessOrganizations.ttl','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/FormalBusinessOrganizations.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/FormalBusinessOrganizations.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/FormalBusinessOrganizations.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -206,13 +206,13 @@
                     <div class="ontology">
                       LegalPersons
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/LegalPersons.rdf','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/LegalPersons.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/LegalPersons.ttl','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/LegalPersons.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/LegalPersons.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/LegalPersons.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -229,13 +229,13 @@
                     <div class="ontology">
                       LEIEntities
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/LEIEntities.rdf','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/LEIEntities.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/LEIEntities.ttl','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/LEIEntities.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/LegalEntities/LEIEntities.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/LegalEntities/LEIEntities.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -248,13 +248,13 @@
                     <div class="ontology">
                       ControlParties
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/ControlParties.rdf','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/ControlParties.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/ControlParties.ttl','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/ControlParties.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/ControlParties.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/ControlParties.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -314,13 +314,13 @@
                     <div class="ontology">
                       CorporateControl
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateControl.rdf','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateControl.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateControl.ttl','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateControl.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateControl.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateControl.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -394,13 +394,13 @@
                     <div class="ontology">
                       CorporateOwnership
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateOwnership.rdf','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateOwnership.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateOwnership.ttl','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateOwnership.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateOwnership.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/CorporateOwnership.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -420,13 +420,13 @@
                     <div class="ontology">
                       Executives
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/Executives.rdf','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/Executives.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/Executives.ttl','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/Executives.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/Executives.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/Executives.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -496,13 +496,13 @@
                     <div class="ontology">
                       OwnershipParties
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/OwnershipParties.rdf','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/OwnershipParties.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/OwnershipParties.ttl','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/OwnershipParties.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/OwnershipAndControl/OwnershipParties.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/OwnershipAndControl/OwnershipParties.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -537,13 +537,13 @@
                     <div class="ontology">
                       Partnerships
                       <a
-                        v-bind:href="hrefP('BE/Partnerships/Partnerships.rdf','ontology')"
+                        v-bind:href="hrefP('BE/Partnerships/Partnerships.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/Partnerships/Partnerships.ttl','ontology')"
+                        v-bind:href="hrefP('BE/Partnerships/Partnerships.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/Partnerships/Partnerships.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/Partnerships/Partnerships.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -588,13 +588,13 @@
                     <div class="ontology">
                       PrivateLimitedCompanies
                       <a
-                        v-bind:href="hrefP('BE/PrivateLimitedCompanies/PrivateLimitedCompanies.rdf','ontology')"
+                        v-bind:href="hrefP('BE/PrivateLimitedCompanies/PrivateLimitedCompanies.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/PrivateLimitedCompanies/PrivateLimitedCompanies.ttl','ontology')"
+                        v-bind:href="hrefP('BE/PrivateLimitedCompanies/PrivateLimitedCompanies.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/PrivateLimitedCompanies/PrivateLimitedCompanies.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/PrivateLimitedCompanies/PrivateLimitedCompanies.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -619,13 +619,13 @@
                     <div class="ontology">
                       Sole Proprietorships
                       <a
-                        v-bind:href="hrefP('BE/SoleProprietorships//SoleProprietorships.rdf','ontology')"
+                        v-bind:href="hrefP('BE/SoleProprietorships//SoleProprietorships.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/SoleProprietorships//SoleProprietorships.ttl','ontology')"
+                        v-bind:href="hrefP('BE/SoleProprietorships//SoleProprietorships.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/SoleProprietorships//SoleProprietorships.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/SoleProprietorships//SoleProprietorships.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -638,13 +638,13 @@
                     <div class="ontology">
                       Trusts
                       <a
-                        v-bind:href="hrefP('BE/Trusts/Trusts.rdf','ontology')"
+                        v-bind:href="hrefP('BE/Trusts/Trusts.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('BE/Trusts/Trusts.ttl','ontology')"
+                        v-bind:href="hrefP('BE/Trusts/Trusts.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('BE/Trusts/Trusts.jsonld','ontology')"
+                        v-bind:href="hrefP('BE/Trusts/Trusts.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -691,13 +691,13 @@
                     <div class="ontology">
                       AccountingEquity
                       <a
-                        v-bind:href="hrefP('FND/Accounting/AccountingEquity.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Accounting/AccountingEquity.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Accounting/AccountingEquity.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Accounting/AccountingEquity.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Accounting/AccountingEquity.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Accounting/AccountingEquity.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -727,13 +727,13 @@
                     <div class="ontology">
                       CurrencyAmount
                       <a
-                        v-bind:href="hrefP('FND/Accounting/CurrencyAmount.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Accounting/CurrencyAmount.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Accounting/CurrencyAmount.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Accounting/CurrencyAmount.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Accounting/CurrencyAmount.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Accounting/CurrencyAmount.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -778,13 +778,13 @@
                     <div class="ontology">
                       Agents
                       <a
-                        v-bind:href="hrefP('FND/AgentsAndPeople/Agents.rdf','ontology')"
+                        v-bind:href="hrefP('FND/AgentsAndPeople/Agents.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/AgentsAndPeople/Agents.ttl','ontology')"
+                        v-bind:href="hrefP('FND/AgentsAndPeople/Agents.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/AgentsAndPeople/Agents.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/AgentsAndPeople/Agents.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -804,13 +804,13 @@
                     <div class="ontology">
                       People
                       <a
-                        v-bind:href="hrefP('FND/AgentsAndPeople/People.rdf','ontology')"
+                        v-bind:href="hrefP('FND/AgentsAndPeople/People.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/AgentsAndPeople/People.ttl','ontology')"
+                        v-bind:href="hrefP('FND/AgentsAndPeople/People.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/AgentsAndPeople/People.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/AgentsAndPeople/People.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -875,13 +875,13 @@
                     <div class="ontology">
                       Agreements
                       <a
-                        v-bind:href="hrefP('FND/Agreements/Agreements.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Agreements/Agreements.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Agreements/Agreements.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Agreements/Agreements.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Agreements/Agreements.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Agreements/Agreements.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -901,13 +901,13 @@
                     <div class="ontology">
                       Contracts
                       <a
-                        v-bind:href="hrefP('FND/Agreements/Contracts.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Agreements/Contracts.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Agreements/Contracts.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Agreements/Contracts.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Agreements/Contracts.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Agreements/Contracts.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -972,13 +972,13 @@
                     <div class="ontology">
                       Arrangements
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Arrangements.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Arrangements.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Arrangements.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Arrangements.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Arrangements.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Arrangements.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -998,13 +998,13 @@
                     <div class="ontology">
                       ClassificationSchemes
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/ClassificationSchemes.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/ClassificationSchemes.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/ClassificationSchemes.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/ClassificationSchemes.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/ClassificationSchemes.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/ClassificationSchemes.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1031,13 +1031,13 @@
                     <div class="ontology">
                       Codes
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Codes.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Codes.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Codes.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Codes.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Codes.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Codes.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1057,13 +1057,13 @@
                     <div class="ontology">
                       Documents
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Documents.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Documents.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Documents.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Documents.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/Documents.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/Documents.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1083,13 +1083,13 @@
                     <div class="ontology">
                       IdentifiersAndIndices
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/IdentifiersAndIndices.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/IdentifiersAndIndices.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/IdentifiersAndIndices.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/IdentifiersAndIndices.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Arrangements/IdentifiersAndIndices.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Arrangements/IdentifiersAndIndices.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1124,13 +1124,13 @@
                     <div class="ontology">
                       BusinessDates
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/BusinessDates.rdf','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/BusinessDates.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/BusinessDates.ttl','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/BusinessDates.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/BusinessDates.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/BusinessDates.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1138,13 +1138,13 @@
                     <div class="ontology">
                       FinancialDates
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/FinancialDates.rdf','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/FinancialDates.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/FinancialDates.ttl','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/FinancialDates.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/FinancialDates.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/FinancialDates.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1152,13 +1152,13 @@
                     <div class="ontology">
                       Occurrences
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/Occurrences.rdf','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/Occurrences.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/Occurrences.ttl','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/Occurrences.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/DatesAndTimes/Occurrences.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/DatesAndTimes/Occurrences.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1172,13 +1172,13 @@
                     <div class="ontology">
                       Jurisdiction
                       <a
-                        v-bind:href="hrefP('FND/Law/Jurisdiction.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Law/Jurisdiction.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Law/Jurisdiction.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Law/Jurisdiction.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Law/Jurisdiction.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Law/Jurisdiction.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1228,13 +1228,13 @@
                     <div class="ontology">
                       LegalCapacity
                       <a
-                        v-bind:href="hrefP('FND/Law/LegalCapacity.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Law/LegalCapacity.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Law/LegalCapacity.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Law/LegalCapacity.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Law/LegalCapacity.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Law/LegalCapacity.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1284,13 +1284,13 @@
                     <div class="ontology">
                       LegalCore
                       <a
-                        v-bind:href="hrefP('FND/Law/LegalCore.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Law/LegalCore.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Law/LegalCore.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Law/LegalCore.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Law/LegalCore.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Law/LegalCore.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1315,13 +1315,13 @@
                     <div class="ontology">
                       FormalOrganizations
                       <a
-                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1329,13 +1329,13 @@
                     <div class="ontology">
                       LegitimateOrganizations
                       <a
-                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/FormalOrganizations.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1343,13 +1343,13 @@
                     <div class="ontology">
                       Organizations
                       <a
-                        v-bind:href="hrefP('FND/Organizations/LegitimateOrganizations.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/LegitimateOrganizations.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Organizations/LegitimateOrganizations.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/LegitimateOrganizations.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Organizations/LegitimateOrganizations.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Organizations/LegitimateOrganizations.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1374,13 +1374,13 @@
                     <div class="ontology">
                       Control
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/Control.rdf','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/Control.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/Control.ttl','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/Control.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/Control.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/Control.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1410,13 +1410,13 @@
                     <div class="ontology">
                       Ownership
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/Ownership.rdf','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/Ownership.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/Ownership.ttl','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/Ownership.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/Ownership.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/Ownership.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1446,13 +1446,13 @@
                     <div class="ontology">
                       OwnershipAndControl
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/OwnershipAndControl.rdf','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/OwnershipAndControl.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/OwnershipAndControl.ttl','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/OwnershipAndControl.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/OwnershipAndControl/OwnershipAndControl.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/OwnershipAndControl/OwnershipAndControl.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1477,13 +1477,13 @@
                     <div class="ontology">
                       Parties
                       <a
-                        v-bind:href="hrefP('FND/Parties/Parties.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Parties/Parties.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Parties/Parties.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Parties/Parties.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Parties/Parties.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Parties/Parties.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1523,13 +1523,13 @@
                     <div class="ontology">
                       Roles
                       <a
-                        v-bind:href="hrefP('FND/Parties/Roles.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Parties/Roles.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Parties/Roles.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Parties/Roles.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Parties/Roles.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Parties/Roles.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1561,13 +1561,13 @@
                     <div class="ontology">
                       Addresses
                       <a
-                        v-bind:href="hrefP('FND/Places/Addresses.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Places/Addresses.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Addresses.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Places/Addresses.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Addresses.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Places/Addresses.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1587,13 +1587,13 @@
                     <div class="ontology">
                       Countries
                       <a
-                        v-bind:href="hrefP('FND/Places/Countries.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Places/Countries.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Countries.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Places/Countries.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Countries.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Places/Countries.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1602,13 +1602,13 @@
                     <div class="ontology">
                       Facilities
                       <a
-                        v-bind:href="hrefP('FND/Places/Facilities.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Places/Facilities.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Facilities.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Places/Facilities.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Facilities.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Places/Facilities.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1651,13 +1651,13 @@
                     <div class="ontology">
                       Locations
                       <a
-                        v-bind:href="hrefP('FND/Places/Locations.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Places/Locations.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Locations.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Places/Locations.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/Locations.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Places/Locations.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1677,13 +1677,13 @@
                     <div class="ontology">
                       VirtualPlaces
                       <a
-                        v-bind:href="hrefP('FND/Places/VirtualPlaces.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Places/VirtualPlaces.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/VirtualPlaces.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Places/VirtualPlaces.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Places/VirtualPlaces.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Places/VirtualPlaces.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1699,13 +1699,13 @@
                     <div class="ontology">
                       Analytics
                       <a
-                        v-bind:href="hrefP('FND/Utilities/Analytics.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/Analytics.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Utilities/Analytics.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/Analytics.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Utilities/Analytics.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/Analytics.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>
@@ -1725,13 +1725,13 @@
                     <div class="ontology">
                       AnnotationVocabulary
                       <a
-                        v-bind:href="hrefP('FND/Utilities/AnnotationVocabulary.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/AnnotationVocabulary.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Utilities/AnnotationVocabulary.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/AnnotationVocabulary.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Utilities/AnnotationVocabulary.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/AnnotationVocabulary.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                   </li>
@@ -1739,13 +1739,13 @@
                     <div class="ontology">
                       BusinessFacingTypes
                       <a
-                        v-bind:href="hrefP('FND/Utilities/BusinessFacingTypes.rdf','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/BusinessFacingTypes.rdf','ontology') | applyTag(this)"
                       >rdf</a>,
                       <a
-                        v-bind:href="hrefP('FND/Utilities/BusinessFacingTypes.ttl','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/BusinessFacingTypes.ttl','ontology') | applyTag(this)"
                       >turtle</a>,
                       <a
-                        v-bind:href="hrefP('FND/Utilities/BusinessFacingTypes.jsonld','ontology')"
+                        v-bind:href="hrefP('FND/Utilities/BusinessFacingTypes.jsonld','ontology') | applyTag(this)"
                       >json-ld</a>
                     </div>
                     <ul>

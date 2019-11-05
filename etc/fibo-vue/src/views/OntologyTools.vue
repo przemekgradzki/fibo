@@ -101,12 +101,12 @@
           <li>
             Download either the
             <a
-              :href="hrefD('dev.fibo-quickstart.ttl','ontology')"
+              :href="hrefD('dev.fibo-quickstart.ttl','ontology') | applyTag(this)"
               v-on:click="outboundClick('dev.fibo-quickstart.ttl')"
             >Development</a>
             or
             <a
-              :href="hrefP('prod.fibo-quickstart.ttl','ontology')"
+              :href="hrefP('prod.fibo-quickstart.ttl','ontology') | applyTag(this)"
               v-on:click="outboundClick('prod.fibo-quickstart.ttl')"
             >Production</a>
             version of Quickstart.
@@ -118,12 +118,12 @@
           <li>
             Download either the
             <a
-              :href="hrefD('dev.fibo-quickstart.ttl','ontology')"
+              :href="hrefD('dev.fibo-quickstart.ttl','ontology') | applyTag(this)"
               v-on:click="outboundClick('dev.fibo-quickstart.ttl')"
             >Development</a>
             or
             <a
-              :href="hrefP('prod.fibo-quickstart.ttl','ontology')"
+              :href="hrefP('prod.fibo-quickstart.ttl','ontology') | applyTag(this)"
               v-on:click="outboundClick('prod.fibo-quickstart.ttl')"
             >Production</a>
             version of Quickstart.
@@ -174,8 +174,8 @@
             <li>In Prot&eacute;g&eacute;, select File>Open from URL</li>
             <li>
               Copy and Paste the URL for the LoadFIBO.rdf file from the version you desire;
-              {{hrefD('LoadFIBODev.rdf','ontology')}} for the development version or
-              {{hrefP('LoadFIBOProd.rdf','ontology')}} for the production version
+              {{hrefD('LoadFIBODev.rdf','ontology') | applyTag(this)}} for the development version or
+              {{hrefP('LoadFIBOProd.rdf','ontology') | applyTag(this)}} for the production version
             </li>
           </ol>
           <p>
@@ -209,12 +209,12 @@
               which
               maturity level of FIBO you want; the
               <a
-                :href="hrefD('dev.rdf.zip','ontology')"
+                :href="hrefD('dev.rdf.zip','ontology') | applyTag(this)"
                 v-on:click="outboundClick('dev.rdf.zip')"
               >Development</a> version or
               the
               <a
-                :href="hrefP('prod.rdf.zip','ontology')"
+                :href="hrefP('prod.rdf.zip','ontology') | applyTag(this)"
                 v-on:click="outboundClick('prod.rdf.zip')"
               >Production</a>
               version.
@@ -228,7 +228,7 @@
             <li>Open Prot&eacute;g&eacute;.</li>
             <li>
               Select File>Open, and navigate to the folder where you unzipped FIBO.
-              Navigate (three levels down; typically {{hrefD('','ontology').replace(/^.*\/([^\/]*)\/([^\/]*)\/([^\/]*)$/g, "$1/$2/$3")}} or {{hrefP('','ontology').replace(/^.*\/([^\/]*)\/([^\/]*)\/([^\/]*)$/g, "$1/$2/$3")}}) to
+              Navigate (three levels down; typically {{hrefD('','ontology').replace(/^.*\/([^\/]*)\/([^\/]*)\/([^\/]*)$/g, "$1/$2/$3") | applyTag(this)}} or {{hrefP('','ontology').replace(/^.*\/([^\/]*)\/([^\/]*)\/([^\/]*)$/g, "$1/$2/$3") | applyTag(this)}}) to
               LoadFIBODev.rdf or LoadFiboProd.rdf (development and production, respectively), and select it.
             </li>
             <li>Protege will open all relevant FIBO files.</li>
@@ -252,12 +252,12 @@
             maturity
             level of FIBO you want; the
             <a
-              :href="hrefD('dev.ttl.zip','ontology')"
+              :href="hrefD('dev.ttl.zip','ontology') | applyTag(this)"
               v-on:click="outboundClick('dev.ttl.zip')"
             >Development</a>
             version or the
             <a
-              :href="hrefP('prod.ttl.zip','ontology')"
+              :href="hrefP('prod.ttl.zip','ontology') | applyTag(this)"
               v-on:click="outboundClick('prod.ttl.zip')"
             >Production</a> version.
           </li>
@@ -278,8 +278,8 @@
           </li>
           <li>
             Navigate through the fibo directory in the Navigator pane to
-            {{hrefD('LoadFIBODev.ttl','ontology').substring(1)}}
-            or {{hrefD('LoadFIBOProd.ttl','ontology').substring(1)}} (development and production, respectively) Double-click
+            {{hrefD('LoadFIBODev.ttl','ontology').substring(1) | applyTag(this)}}
+            or {{hrefD('LoadFIBOProd.ttl','ontology').substring(1) | applyTag(this)}} (development and production, respectively) Double-click
             on
             LoadFIBO.ttl to open all FIBO files.
           </li>
@@ -300,13 +300,13 @@
             Download a zipped file of FIBO in RDF/XML format from spec.edmcouncil.org. You'll need to specify
             which maturity level of FIBO you want; the
             <a
-              :href="hrefD('dev.rdf.zip','ontology')"
+              :href="hrefD('dev.rdf.zip','ontology') | applyTag(this)"
               v-on:click="outboundClick('dev.rdf.zip')"
             >Development</a> version
             or
             the
             <a
-              :href="hrefP('prod.rdf.zip','ontology')"
+              :href="hrefP('prod.rdf.zip','ontology') | applyTag(this)"
               v-on:click="outboundClick('prod.rdf.zip')"
             >Production</a>
             version.
@@ -362,19 +362,19 @@
           <li>
             Download the RDF/XML zip of the
             <a
-              :href="hrefD('dev.rdf.zip','ontology')"
+              :href="hrefD('dev.rdf.zip','ontology') | applyTag(this)"
               v-on:click="outboundClick('dev.rdf.zip')"
             >Development</a> version or
             the
             <a
-              :href="hrefP('prod.rdf.zip','ontology')"
+              :href="hrefP('prod.rdf.zip','ontology') | applyTag(this)"
               v-on:click="outboundClick('prod.rdf.zip')"
             >Production</a>
             version
             of FIBO.
           </li>
           <li>
-            Open the zip and extract the directory {{hrefD('','ontology').substring(1)}} which will be the subject of the
+            Open the zip and extract the directory {{hrefD('','ontology').substring(1) | applyTag(this)}} which will be the subject of the
             remaining instructions
           </li>
           <li>Delete the files matching About*.rdf. You'll delete about 70 files</li>
@@ -385,7 +385,7 @@
           </li>
           <pre>
 File names matching: *.rdf
-Search string: {{hrefD('','ontology').substring(1)}}/
+Search string: {{hrefD('','ontology').substring(1) | applyTag(this)}}/
 Replace string: fibo/ontology/
 </pre>It should make replacements in approx. 320 files.
           <li>Zip up the directory e.g. as FIBO.zip.</li>
@@ -424,19 +424,19 @@ Replace string: fibo/ontology/
         <p>
           As an assist for developers using FIBO, we provide the namespace prefixes in many formats,
           <a
-            :href="hrefD('prefixes.fibo.ttl','ontology')"
+            :href="hrefD('prefixes.fibo.ttl','ontology') | applyTag(this)"
             v-on:click="outboundClick('prefixes.fibo.ttl')"
           >
             prefixes.ttl
             (Turtle)
           </a>,
           <a
-            :href="hrefD('prefixes.fibo.sq','ontology')"
+            :href="hrefD('prefixes.fibo.sq','ontology') | applyTag(this)"
             v-on:click="outboundClick('prefixes.fibo.sq')"
           >prefixes.sq (SPARLQ)</a>,
           and
           <a
-            :href="hrefD('prefixes.fibo.csv','ontology')"
+            :href="hrefD('prefixes.fibo.csv','ontology') | applyTag(this)"
             v-on:click="outboundClick('prefixes.fibo.csv')"
           >prefixes.csv</a>.
         </p>

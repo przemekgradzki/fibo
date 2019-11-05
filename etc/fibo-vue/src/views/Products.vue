@@ -39,7 +39,7 @@
             </tr>
             <tr>
               <td>
-                <a :href="hrefP('/','datadictionary')">FIBO data dictionary</a>
+                <a :href="hrefP('/','datadictionary') | applyTag(this)">FIBO data dictionary</a>
               </td>
               <td>
                 data dictionary searchable from

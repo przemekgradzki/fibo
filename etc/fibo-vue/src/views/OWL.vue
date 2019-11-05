@@ -41,7 +41,7 @@
                 <span v-if="element.link && element.link.name">
                   (
                   <a
-                    :href="timestamped(element.link, timestamp)"
+                    :href="timestamped(element.link, timestamp) | applyTag(this)"
                     v-on:click="outboundClick(element.link.name)"
                   >{{element.link.name}}</a>)
                 </span>
@@ -50,7 +50,7 @@
                 <a
                   v-for="xmlLink in element.xml"
                   :key="xmlLink.name"
-                  :href="timestamped(xmlLink, timestamp)"
+                  :href="timestamped(xmlLink, timestamp) | applyTag(this)"
                   v-on:click="outboundClick(xmlLink.name)"
                   class="inline"
                 >{{xmlLink.name}}</a>
@@ -60,7 +60,7 @@
                 <a
                   v-for="xmlLink in element.ttl"
                   :key="xmlLink.name"
-                  :href="timestamped(xmlLink, timestamp)"
+                  :href="timestamped(xmlLink, timestamp) | applyTag(this)"
                   v-on:click="outboundClick(xmlLink.name)"
                   class="inline"
                 >{{xmlLink.name}}</a>
@@ -70,7 +70,7 @@
                 <a
                   v-for="xmlLink in element.json"
                   :key="xmlLink.name"
-                  :href="timestamped(xmlLink, timestamp)"
+                  :href="timestamped(xmlLink, timestamp) | applyTag(this)"
                   v-on:click="outboundClick(xmlLink.name)"
                   class="inline"
                 >{{xmlLink.name}}</a>
@@ -80,7 +80,7 @@
                 <a
                   v-for="xmlLink in element.nq"
                   :key="xmlLink.name"
-                  :href="timestamped(xmlLink, timestamp)"
+                  :href="timestamped(xmlLink, timestamp) | applyTag(this)"
                   v-on:click="outboundClick(xmlLink.name)"
                   class="inline"
                 >{{xmlLink.name}}</a>
