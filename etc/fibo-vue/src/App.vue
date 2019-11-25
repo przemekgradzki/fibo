@@ -4,7 +4,7 @@
       You are currently viewing historical version of site from git tag: {{ $route.query.tag }}
     </div>
     <Header></Header>
-    <Carousel></Carousel>
+    <Carousel v-if="!$route.meta.plainLayout"></Carousel>
     <router-view/>
     <Footer></Footer>
   </div>

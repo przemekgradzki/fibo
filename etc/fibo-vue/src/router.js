@@ -9,11 +9,6 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/:branch/:tag',
-      name: 'home',
-      component: Home,
-    },
-    {
       path: '/',
       name: 'home',
       component: Home,
@@ -72,6 +67,14 @@ const router = new Router({
       path: '/schema',
       name: 'Schema',
       component: () => import(/* webpackChunkName: "Schema" */ './views/Schema.vue'),
+    },
+    {
+      path: '/ontology/:1?/:2?/:3?/:4?/:5?',
+      name: 'ontology',
+      component: () => import(/* webpackChunkName: "Schema" */ './views/Ontology.vue'),
+      meta: {
+        plainLayout: false, // Layout without banner
+      },
     },
     {
       path: '*',
