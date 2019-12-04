@@ -135,10 +135,7 @@ export default {
 
     if (this.$route.query && this.$route.query.query) {
       queryParam = this.$route.query.query || '';
-    } else {
-      queryParam = 'https://spec.edmcouncil.org' + window.location.pathname;
     }
-    console.log(queryParam);
 
     if (this.$route.query && this.$route.query.domain) {
       this.ontologyServer = this.$route.query.domain;
