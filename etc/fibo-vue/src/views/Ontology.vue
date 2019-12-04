@@ -136,7 +136,7 @@ export default {
     if (this.$route.query && this.$route.query.query) {
       queryParam = this.$route.query.query || '';
     } else {
-      queryParam = 'https://spec.edmcouncil.org' + window.location.pathname;
+      queryParam = 'https://spec.edmcouncil.org' + (window.location.pathname === '/fibo/ontology' ? window.location.pathname+'/' : window.location.pathname);
     }
     console.log(queryParam);
 
