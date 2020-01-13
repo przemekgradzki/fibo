@@ -131,7 +131,7 @@ def publishScript_hygiene() {
 //
 // Return the stage that produces the output of the given product
 //
-def product(String product) {
+def publishScript_product(String product) {
 
   String[] unstashOutputDirs = []
 
