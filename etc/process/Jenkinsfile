@@ -1,4 +1,240 @@
 #!/usr/bin/env groovy
+
+//
+// Return a stage object that will get executed in the appropriate ontology-publisher container
+//
+def runInOntologyPublisherContainer(Map config, Closure body) {
+
+  assert config.shortStageName != null
+  assert config.longStageName != null
+  assert body != null
+
+  return {
+    stage(config.longStageName) {
+
+      echo "runInOntologyPublisherContainer shortStageName:${config.shortStageName}, longStageName:${config.longStageName}"
+
+      def containerName = "ontology-publisher-${env.EXECUTOR_NUMBER}-${config.shortStageName}"
+
+      node('docker') {
+        echo "Running in stage \"${config.longStageName}\" now"
+        checkOutGitRepos()
+        if (config.unstashOutputDirs) {
+          config.unstashOutputDirs.each { outputDir ->
+            unstash "output-${outputDir}"
+          }
+        }
+        //
+        // Make sure that the output and tmp directories are there
+        //
+        sh "mkdir output tmp || true"
+        echo "Launching docker container ${containerName}:"
+        try {
+          def dockerImage = docker.image(env.ONTPUB_IMAGE)
+          dockerImage.pull()
+          dockerImage.inside("""
+            --read-only
+            --name ${containerName}
+            --mount type=bind,source=${env.WORKSPACE}/input,target=/input,readonly,consistency=cached
+            --mount type=bind,source=${env.WORKSPACE}/output,target=/output,consistency=delegated
+            --mount type=bind,source=${env.WORKSPACE}/tmp,target=/var/tmp,consistency=delegated
+          """) {
+            echo "Running in docker container ${containerName}"
+            //
+            // Now execute whatever you had in the closure
+            //
+            body()
+          }
+        } catch (e) {
+          currentBuild.result = "FAILURE"
+          echo "Failed stage \"${config.longStageName}\": ${e}"
+          throw e
+        } finally {
+          echo "Tasks in docker container ${containerName} executed successfully"
+          if (config.archiveArtifacts == true) {
+            archiveArtifacts artifacts: "output/fibo/${config.shortStageName}/**/*.log", fingerprint: true
+          }
+          notifyStage()
+        }
+      }
+    }
+  }
+}
+
+def checkOutGitRepos() {
+
+  final String gitCredentialsId = '50cac519-d41c-4765-8563-c43b7f55c877'
+
+  dir('input') {
+    dir('fibo') {
+      //
+      // The fibo repo is the main repo which also has configuration in the global variable scm,
+      // inherit those settings and add some more here.
+      //
+      checkout([
+        $class                           : 'GitSCM',
+        branches                         : scm.branches,
+        doGenerateSubmoduleConfigurations: false,
+        extensions                       : scm.extensions + [
+          [$class: 'LocalBranch', localBranch: '**'],
+          [$class: 'CheckoutOption', timeout: 1],
+          [$class: 'AuthorInChangelog'],
+          [$class: 'PruneStaleBranch'],
+          [$class: 'IgnoreNotifyCommit']
+        ],
+        submoduleCfg                     : [],
+        userRemoteConfigs                : scm.userRemoteConfigs + [
+          [credentialsId: gitCredentialsId, url: 'https://github.com/edmcouncil/fibo.git']
+        ]
+      ])
+    }
+    dir('LCC') {
+      //
+      // The LCC repo is a secondary repo that we always use with its master branch. Do not inherit
+      // from the scm settings here.
+      //
+      checkout([
+        $class                           : 'GitSCM',
+        branches                         : [[name: '*/master']],
+        doGenerateSubmoduleConfigurations: false,
+        extensions                       : [
+          [$class: 'LocalBranch', localBranch: '**'],
+          [$class: 'CheckoutOption', timeout: 1],
+          [$class: 'AuthorInChangelog'],
+          [$class: 'PruneStaleBranch'],
+          [$class: 'IgnoreNotifyCommit']
+        ],
+        submoduleCfg                     : [],
+        userRemoteConfigs                : [
+          [credentialsId: gitCredentialsId, url: 'https://github.com/edmcouncil/LCC.git']
+        ]
+      ])
+    }
+  }
+}
+
+//
+// Return the stage object that runs the hygiene tests
+//
+def hygiene() {
+
+  return runInOntologyPublisherContainer(
+    shortStageName: 'hygiene',
+    longStageName: 'Hygiene Tests'
+  ) {
+    sh "/publisher/publish.sh hygiene"
+  }
+}
+
+//
+// Return the stage that produces the output of the given product
+//
+def product(String product) {
+
+  String[] unstashOutputDirs = []
+
+  if (product != "ontology") {
+    unstashOutputDirs = ['ontology']
+  }
+
+  return runInOntologyPublisherContainer(
+    shortStageName: product,
+    longStageName: "Build ${product.capitalize()}",
+    archiveArtifacts: true,
+    unstashOutputDirs: unstashOutputDirs
+  ) {
+    sh "/publisher/publish.sh ${product}"
+    stash name: "output-${product}", includes: "output/fibo/${product}/**"
+  }
+}
+
+//
+// Return the stage object that runs the publish action
+//
+def publish(String[] derivedProducts) {
+
+  return runInOntologyPublisherContainer(
+    shortStageName: 'publish',
+    longStageName: 'Build Final Content',
+    unstashOutputDirs: (derivedProducts - 'ontology')
+  ) {
+    //
+    // Now after all the above is done, make sure we run the final
+    // publish step which zips it all up into the output directory
+    //
+    sh "/publisher/publish.sh publish"
+    //
+    // Stash the artifacts generated by the publish command
+    //
+    dir('output') {
+      stash([
+        name              : 'publishable-output',
+        includes          : '**',
+        excludes          : '**/.git, **/.gitignore, **/.log, **/temp*, **/node_modules, **/build',
+        useDefaultExcludes: true
+      ])
+    }
+  }
+}
+
+import groovy.transform.Field
+@Field private mainSlackMessageObject = null
+
+def init() {
+  echo "Initialising slack functions"
+
+  mainSlackMessageObject = slackSend(
+    color: "good",
+    message: "Started build <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> on branch ${env.JOB_NAME}",
+    botUser: false,
+    baseUrl: null,
+    teamDomain: 'fibo-edmc'
+  )
+
+  if (mainSlackMessageObject == null) {
+    echo "ERROR: Could not initialise slack connection"
+  } else {
+    println ("mainSlackMessageObject: " + mainSlackMessageObject.dump())
+  }
+}
+
+def send(String color, String message) {
+
+  if (mainSlackMessageObject == null) {
+    init()
+    if (mainSlackMessageObject == null) {
+      slackSend color: color, message: "${message} (no main message)"
+      return
+    }
+  }
+
+  slackSend color: color, message: message, channel: mainSlackMessageObject.threadId, botUser: true
+}
+
+def notifyStage() {
+
+  String buildResult = currentBuild.currentResult
+
+  def message="Stage \"${STAGE_NAME}\" finished with status ${buildResult} in <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> on branch ${env.JOB_NAME}"
+
+  if (buildResult == "SUCCESS") {
+    echo "${message}"
+    send("good", message)
+  }
+  else if (buildResult == "FAILURE") {
+    echo "ERROR: ${message}"
+    send("danger", message)
+  }
+  else if (buildResult == "UNSTABLE") {
+    echo "WARNING: ${message}"
+    send("warning", message)
+  }
+  else {
+    echo "ERROR: ${message}"
+    send("danger", message)
+  }
+}
+
 //
 // The main Jenkinsfile for FIBO, defining the Build/Publish/Test/Deploy process that is
 // executed for each push into the repository.
@@ -7,12 +243,7 @@
 //
 // See https://jenkins.io/doc/book/pipeline/jenkinsfile/
 //
-//String[] derivedProducts = ['widoco', 'fibopedia', 'glossary', 'vocabulary', 'datadictionary', 'reference']
-//String[] derivedProducts = ['widoco', 'fibopedia', 'glossary', 'vocabulary', 'datadictionary']
 String[] derivedProducts = ['fibopedia', 'glossary', 'vocabulary', 'datadictionary','htmlpages']
-// String[] derivedProducts = ['htmlpages']
-//String[] derivedProducts = ['fibopedia' ]
-//String[] derivedProducts = ['widoco']
 
 env.ONTPUB_FAMILY='fibo'
 env.ONTPUB_SPEC_HOST='spec.edmcouncil.org'
@@ -27,89 +258,23 @@ properties([
   buildDiscarder(
           logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '30')
   ),
-  //
-  // We let each stage running on each jenkins slave / agent decide what to check out or not
-  //
-//  skipDefaultCheckout(),
-  //
-  // Skip stages once the build status has gone to UNSTABLE.
-  //
-//  skipStagesAfterUnstable(),
-  //
-  // There must be SOME limit, if it hangs or whatever then that's a bug and therefore cancel the job.
-  //
-//  timeout(time: 23, unit: 'HOURS'),
-  //
-  // Prepend all console output generated by the Pipeline run with the time at which the line was emitted
-  //
-  //timestamps()
-//  ansiColor('xterm')
 ])
 
 node {
   ansiColor('xterm') {
-    stage('Setup') {
-      //
-      // First load the library of vars/*.groovy files from the /etc/process/vars directory in the fibo repo.
-      // Do this on the master itself, no need to run this in a docker container on a slave, it's a light weight
-      // process.
-      //
-      node('master') { // load library
-        try {
-          dir('input/fibo') {
-            checkout([
-              $class                           : 'GitSCM',
-              branches                         : scm.branches,
-              doGenerateSubmoduleConfigurations: false,
-              submoduleCfg                     : [],
-              extensions                       : scm.extensions + [
-                [$class: 'LocalBranch', localBranch: '**'],
-                [$class: 'CheckoutOption', timeout: 1],
-                [$class: 'IgnoreNotifyCommit'],
-                [$class: 'WipeWorkspace'],
-                [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                  [$class: 'SparseCheckoutPath', path: 'etc/process/']
-                ]]
-              ],
-              userRemoteConfigs                : scm.userRemoteConfigs
-            ])
-          }
-          def repoPath = 'input/fibo/etc/process'
-          // create new git repo inside jenkins subdirectory
-          dir(repoPath) {
-            sh returnStdout: false, script: '''
-              set +x
-              rm -rf .git >/dev/null 2>&1 || true
-              git init 
-              git add --all .
-              git config --local user.name "jenkins"
-              git config --local user.email jenkins@edmcouncil.org
-              git commit -m init || true
-              git ls-tree -r master --name-only || true
-            '''
-            library(identifier: 'local-lib@master', retriever: modernSCM([$class: 'GitSCMSource', remote: "${env.WORKSPACE}/${repoPath}"])) _
-          }
-          initScript.isLoaded()
-        } catch (e) {
-          echo "Some error occurred during init stage: ${e}"
-          throw e
-        }
-        echo "All good to go"
-      }
-    }
 
-    publishScript.hygiene().call()
+    hygiene().call()
 
-    publishScript.product('ontology').call()
+    product('ontology').call()
 
     stage('Build Derived Products') {
       def parallelStages = derivedProducts.collectEntries { product ->
-        [ "Build ${product}" : publishScript.product(product)]
+        [ "Build ${product}" : product(product)]
       }
       parallel(parallelStages)
     }
 
-    publishScript.publish(derivedProducts).call()
+    publish(derivedProducts).call()
 
     //
     // Run the publish on the master jenkins agent by just copying all the generated artifacts right into the workspace
@@ -133,7 +298,7 @@ node {
           dir('output') {
             echo 'Unstashing the output of the publish stage'
             unstash 'publishable-output'
-            sh 'pwd && ls -al'
+            sh 'pwd && ls -al && set'
 
             echo "Copy all generated content to ${NGINX_SPEC_ROOT}:"
             sh '''
@@ -159,7 +324,7 @@ node {
           echo "Failed the \"${STAGE_NAME}\" stage: ${e}"
           throw e
         } finally {
-          slackScript.notifyStage()
+          notifyStage()
         }
       } // end of node('master')
     } // end of stage "Publish"
