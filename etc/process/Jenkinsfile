@@ -3,7 +3,7 @@
 //
 // Return a stage object that will get executed in the appropriate ontology-publisher container
 //
-def runInOntologyPublisherContainer(Map config, Closure body) {
+def dockerScript_runInOntologyPublisherContainer(Map config, Closure body) {
 
   assert config.shortStageName != null
   assert config.longStageName != null
@@ -18,7 +18,8 @@ def runInOntologyPublisherContainer(Map config, Closure body) {
 
       node('docker') {
         echo "Running in stage \"${config.longStageName}\" now"
-        checkOutGitRepos()
+        sh "set"
+        gitScript_checkOutGitRepos()
         if (config.unstashOutputDirs) {
           config.unstashOutputDirs.each { outputDir ->
             unstash "output-${outputDir}"
@@ -27,7 +28,8 @@ def runInOntologyPublisherContainer(Map config, Closure body) {
         //
         // Make sure that the output and tmp directories are there
         //
-        sh "mkdir output tmp || true"
+        sh "pwd"
+        sh "rm -rf output tmp && install -dv output tmp"
         echo "Launching docker container ${containerName}:"
         try {
           def dockerImage = docker.image(env.ONTPUB_IMAGE)
@@ -54,14 +56,14 @@ def runInOntologyPublisherContainer(Map config, Closure body) {
           if (config.archiveArtifacts == true) {
             archiveArtifacts artifacts: "output/fibo/${config.shortStageName}/**/*.log", fingerprint: true
           }
-          notifyStage()
+          slackScript_notifyStage()
         }
       }
     }
   }
 }
 
-def checkOutGitRepos() {
+def gitScript_checkOutGitRepos() {
 
   final String gitCredentialsId = '50cac519-d41c-4765-8563-c43b7f55c877'
 
@@ -116,9 +118,9 @@ def checkOutGitRepos() {
 //
 // Return the stage object that runs the hygiene tests
 //
-def hygiene() {
+def publishScript_hygiene() {
 
-  return runInOntologyPublisherContainer(
+  return dockerScript_runInOntologyPublisherContainer(
     shortStageName: 'hygiene',
     longStageName: 'Hygiene Tests'
   ) {
@@ -137,7 +139,7 @@ def product(String product) {
     unstashOutputDirs = ['ontology']
   }
 
-  return runInOntologyPublisherContainer(
+  return dockerScript_runInOntologyPublisherContainer(
     shortStageName: product,
     longStageName: "Build ${product.capitalize()}",
     archiveArtifacts: true,
@@ -151,9 +153,9 @@ def product(String product) {
 //
 // Return the stage object that runs the publish action
 //
-def publish(String[] derivedProducts) {
+def publishScript_publish(String[] derivedProducts) {
 
-  return runInOntologyPublisherContainer(
+  return dockerScript_runInOntologyPublisherContainer(
     shortStageName: 'publish',
     longStageName: 'Build Final Content',
     unstashOutputDirs: (derivedProducts - 'ontology')
@@ -180,7 +182,7 @@ def publish(String[] derivedProducts) {
 import groovy.transform.Field
 @Field private mainSlackMessageObject = null
 
-def init() {
+def slackScript_init() {
   echo "Initialising slack functions"
 
   mainSlackMessageObject = slackSend(
@@ -198,10 +200,10 @@ def init() {
   }
 }
 
-def send(String color, String message) {
+def slackScript_send(String color, String message) {
 
   if (mainSlackMessageObject == null) {
-    init()
+    slackScript_init()
     if (mainSlackMessageObject == null) {
       slackSend color: color, message: "${message} (no main message)"
       return
@@ -211,7 +213,7 @@ def send(String color, String message) {
   slackSend color: color, message: message, channel: mainSlackMessageObject.threadId, botUser: true
 }
 
-def notifyStage() {
+def slackScript_notifyStage() {
 
   String buildResult = currentBuild.currentResult
 
@@ -219,19 +221,19 @@ def notifyStage() {
 
   if (buildResult == "SUCCESS") {
     echo "${message}"
-    send("good", message)
+    slackScript_send("good", message)
   }
   else if (buildResult == "FAILURE") {
     echo "ERROR: ${message}"
-    send("danger", message)
+    slackScript_send("danger", message)
   }
   else if (buildResult == "UNSTABLE") {
     echo "WARNING: ${message}"
-    send("warning", message)
+    slackScript_send("warning", message)
   }
   else {
     echo "ERROR: ${message}"
-    send("danger", message)
+    slackScript_send("danger", message)
   }
 }
 
@@ -263,18 +265,18 @@ properties([
 node {
   ansiColor('xterm') {
 
-    hygiene().call()
+    publishScript_hygiene().call()
 
-    product('ontology').call()
+    publishScript_product('ontology').call()
 
     stage('Build Derived Products') {
       def parallelStages = derivedProducts.collectEntries { product ->
-        [ "Build ${product}" : product(product)]
+        [ "Build ${product}" : publishScript_product(product)]
       }
       parallel(parallelStages)
     }
 
-    publish(derivedProducts).call()
+    publishScript_publish(derivedProducts).call()
 
     //
     // Run the publish on the master jenkins agent by just copying all the generated artifacts right into the workspace
@@ -324,7 +326,7 @@ node {
           echo "Failed the \"${STAGE_NAME}\" stage: ${e}"
           throw e
         } finally {
-          notifyStage()
+          slackScript_notifyStage()
         }
       } // end of node('master')
     } // end of stage "Publish"
