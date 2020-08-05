@@ -22,7 +22,7 @@ env.ONTPUB_IMAGE='edmcouncil/ontology-publisher:v0.1.4'
 env.LC_ALL='en_US.UTF-8'
 env.LANG='en_US.UTF-8'
 env.LANGUAGE='en_US.UTF-8'
-env.NGINX_SPEC_ROOT='/mnt/jenkins-disk/spec.edmcouncil.org'
+env.NGINX_SPEC_ROOT='/opt/dev.spec.edmcouncil.org'
 
 properties([
   buildDiscarder(
